@@ -17,3 +17,33 @@ body {
   background: #0e0e0e;
   color: #fff;
 }
+
+@keyframes jvo-route-loader-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.03);
+  }
+}
+
+@keyframes jvo-route-loader-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.12);
+  }
+}
+
+.jvo-route-loader__mark {
+  animation: jvo-route-loader-float 2.35s ease-in-out infinite;
+}
+
+.jvo-route-loader__glow {
+  animation: jvo-route-loader-glow-pulse 2.35s ease-in-out infinite;
+}
