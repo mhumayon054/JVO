@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SiteHeader } from '../components/SiteHeader'
 import { PartnershipFooter } from '../components/PartnershipFooter'
+import { PageContent } from '../components/PageContent'
 import { InsightArticleCard } from '../components/InsightArticleCard'
 
 function IconArrowMd() {
@@ -67,7 +68,7 @@ export default function InsightsPage() {
       <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
         <SiteHeader />
 
-        <div className="flex flex-col gap-16 px-4 pb-20 pt-8 sm:px-8 lg:gap-[128px] lg:pb-20 lg:pt-[128px]">
+        <PageContent>
           {/* Featured */}
           <section className="mx-auto w-full max-w-[1216px]">
             <div className="overflow-hidden rounded-lg border border-[rgba(72,72,72,0.15)] bg-[#131313] lg:flex lg:min-h-[637px]">
@@ -229,7 +230,7 @@ export default function InsightsPage() {
               </aside>
             </div>
           </section>
-        </div>
+        </PageContent>
       </main>
 
       <PartnershipFooter />

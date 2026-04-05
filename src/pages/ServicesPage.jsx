@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { SiteHeader } from '../components/SiteHeader'
 import { PartnershipFooter } from '../components/PartnershipFooter'
+import { PageContent } from '../components/PageContent'
 import { ServiceSmallCard } from '../components/ServiceSmallCard'
 import { AISaaSServiceCard } from '../components/AISaaSServiceCard'
 
@@ -10,9 +11,9 @@ export default function ServicesPage() {
       <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
         <SiteHeader />
 
-        <div className="flex flex-col gap-[128px] pb-20 pt-[128px]">
+        <PageContent>
           {/* Hero */}
-          <section className="px-8">
+          <section>
             <div className="mx-auto flex max-w-[1216px] flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
               <div className="flex min-w-0 max-w-full flex-col gap-6 lg:max-w-[672px]">
                 <p className="text-[16px] font-semibold uppercase leading-[1.5] tracking-[0.2em] text-[#AFA2FF]">OUR EXPERTISE</p>
@@ -46,36 +47,32 @@ export default function ServicesPage() {
           </section>
 
           {/* Bento grid */}
-          <section className="px-8">
-            <div className="mx-auto w-full max-w-[1216px]">
+          <section>
+            <div className="mx-auto flex w-full max-w-[1216px] flex-col gap-8 lg:gap-0">
               <div className="flex flex-col lg:flex-row lg:items-stretch">
-                <div className="w-full shrink-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] lg:w-[832px] lg:rounded-l-lg lg:rounded-r-none lg:border-r-0">
+                <div className="w-full shrink-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] lg:w-[832px] lg:rounded-r-none lg:border-r-0">
                   <AISaaSServiceCard />
                 </div>
-                <div className="w-full shrink-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] lg:w-[384px] lg:rounded-l-none lg:rounded-r-lg lg:border-l-0">
+                <div className="w-full shrink-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] lg:w-[384px] lg:rounded-l-none lg:border-l-0">
                   <ServiceSmallCard
                     mvpLayout
                     variant="mvp"
                     title="MVP Development"
                     description={
-                      <>
-                        Zero to One in weeks, not months. We build battle-tested prototypes designed for rapid market feedback.
-                      </>
+                      'Zero to One in weeks, not months. We\nbuild battle-tested prototypes designed\nfor rapid market feedback.'
                     }
                     footerLabel="Ideal for"
                     footerValue="Pre-seed & Seed Stage Startups"
                   />
                 </div>
               </div>
-              <div className="mt-8 flex flex-col gap-8 lg:mt-0 lg:flex-row lg:gap-8">
+              <div className="flex flex-col gap-8 lg:flex-row lg:gap-8">
                 <div className="w-full lg:w-[384px] lg:shrink-0">
                   <ServiceSmallCard
                     variant="saas"
                     title="SaaS Scaling"
                     description={
-                      <>
-                        Optimization for the next 100k users. Infrastructure audits, performance tuning, and feature expansion.
-                      </>
+                      'Optimization for the next 100k users.\nInfrastructure audits, performance\ntuning, and feature expansion.'
                     }
                     footerLabel="Capabilities"
                     footerValue="AWS/GCP, Kubernetes, Auto-scaling"
@@ -86,9 +83,7 @@ export default function ServicesPage() {
                     variant="crm"
                     title="CRM/ERP Systems"
                     description={
-                      <>
-                        Custom internal tools designed for operational excellence. No generic plugins, just precision code.
-                      </>
+                      'Custom internal tools designed for\noperational excellence. No generic\nplugins, just precision code.'
                     }
                     footerLabel="Focus"
                     footerValue="Workflow Automation & Data Intelligence"
@@ -99,9 +94,7 @@ export default function ServicesPage() {
                     variant="mobile"
                     title="Mobile Apps"
                     description={
-                      <>
-                        High-performance iOS and Android applications with native-feel experiences and smooth interactions.
-                      </>
+                      'High-performance iOS and Android\napplications with native-feel\nexperiences and smooth interactions.'
                     }
                     footerLabel="Tech Stack"
                     footerValue="React Native, Flutter, Swift"
@@ -112,8 +105,8 @@ export default function ServicesPage() {
           </section>
 
           {/* Consultative */}
-          <section className="px-8">
-            <div className="mx-auto w-full max-w-[1216px] overflow-hidden rounded-lg bg-[rgba(38,38,38,0.4) backdrop-blur-[20px]">
+          <section>
+            <div className="mx-auto w-full max-w-[1216px] overflow-hidden rounded-lg bg-[rgba(38,38,38,0.4)] backdrop-blur-[20px]">
               <div className="relative flex flex-col gap-10 px-6 py-16 sm:px-12 lg:flex-row lg:items-center lg:gap-16 lg:px-20 lg:pb-20 lg:pt-[112px]">
                 <div
                   className="pointer-events-none absolute h-[320px] w-[320px] rounded-full bg-[rgba(116,89,247,0.2)] blur-[120px] max-lg:left-1/2 max-lg:top-1/2 max-lg:-translate-x-1/2 max-lg:-translate-y-1/2 lg:-left-20 lg:top-[284px]"
@@ -160,7 +153,7 @@ export default function ServicesPage() {
           </section>
 
           {/* CTA */}
-          <section className="px-8">
+          <section>
             <div className="mx-auto flex w-full max-w-[1216px] flex-col items-center gap-8 rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] px-8 py-16 sm:px-16 sm:pb-16 sm:pt-24">
               <h2 className="w-full text-center text-[40px] font-bold leading-none tracking-[-0.05em] sm:text-[44px] lg:text-[48px]">
                 Ready to build the future?
@@ -178,16 +171,16 @@ export default function ServicesPage() {
                 >
                   Book Your Strategy Session
                 </Link>
-                <button
-                  type="button"
+                <Link
+                  to="/case-studies"
                   className="rounded-[6px] border border-[rgba(72,72,72,0.15)] px-10 py-4 text-[16px] font-bold leading-[1.5] text-[#AFA2FF]"
                 >
                   View Case Studies
-                </button>
+                </Link>
               </div>
             </div>
           </section>
-        </div>
+        </PageContent>
 
         <PartnershipFooter />
       </main>

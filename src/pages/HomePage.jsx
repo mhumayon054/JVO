@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom'
 import { SiteHeader } from '../components/SiteHeader'
-import { HomeFooter } from '../components/HomeFooter'
+import { PageContent } from '../components/PageContent'
+import { PartnershipFooter } from '../components/PartnershipFooter'
 
 const stats = [
   { value: '50+', label: 'Startups Scaled' },
@@ -18,7 +20,8 @@ export default function HomePage() {
     <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
       <SiteHeader />
 
-      <section className="px-8 pt-8">
+      <PageContent gapClass="gap-0">
+      <section>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           <div className="pt-4">
             <h1 className="whitespace-pre-line text-[96px] leading-[1] font-bold tracking-[-0.04em] max-lg:text-[56px] max-md:text-[42px]">
@@ -28,12 +31,18 @@ export default function HomePage() {
               Precision engineering for the AI era. We partner with founders to architect, build, and scale high-performance intelligence platforms.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <button className="rounded-[6px] bg-gradient-to-r from-[#7459F7] to-[#AFA2FF] px-8 py-5 text-[18px] font-bold text-black">
-                Launch Your Product
-              </button>
-              <button className="rounded-[6px] border border-[rgba(72,72,72,0.15)] px-8 py-5 text-[18px] font-bold text-[#AFA2FF]">
+              <Link
+                to="/build-squad"
+                className="rounded-[6px] bg-gradient-to-r from-[#7459F7] to-[#AFA2FF] px-8 py-5 text-[18px] font-bold text-black"
+              >
+                Build Your Squad
+              </Link>
+              <Link
+                to="/case-studies"
+                className="rounded-[6px] border border-[rgba(72,72,72,0.15)] px-8 py-5 text-[18px] font-bold text-[#AFA2FF]"
+              >
                 View Our Work
-              </button>
+              </Link>
             </div>
           </div>
           <div className="relative">
@@ -47,7 +56,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-12 bg-[#131313] px-8 py-12">
+      <section className="mt-12 bg-[#131313] py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
           {stats.map((s) => (
             <div key={s.label}>
@@ -58,7 +67,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 py-16">
+      <section className="py-16">
         <p className="inline-block rounded-xl border border-[rgba(72,72,72,0.15)] px-4 py-1 text-[12px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF]">
           AI-Powered
         </p>
@@ -92,7 +101,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 py-16">
+      <section className="py-16">
         <h2 className="text-center text-[48px] font-bold tracking-[-0.025em] max-md:text-[32px]">Core Capabilities</h2>
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {cards.map((card) => (
@@ -112,7 +121,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 py-16">
+      <section className="py-16">
         <h2 className="text-center text-[36px] font-bold tracking-[-0.025em]">Engineering Methodology</h2>
         <div className="mt-10 grid grid-cols-1 gap-6 text-center sm:grid-cols-2 lg:grid-cols-4">
           {['Discovery Call', 'Architecture Match', 'Execution Sprint', 'Scale & Evolve'].map((step, i) => (
@@ -126,7 +135,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 py-16">
+      <section className="py-16">
         <h2 className="text-center text-[36px] font-bold tracking-[-0.025em]">The Precision Bench</h2>
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[['/figma/engineer-1.png', 'AI Engineer'], ['/figma/engineer-2.png', 'Tech Lead'], ['/figma/engineer-3.png', 'Cloud Architect']].map(
@@ -144,7 +153,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#131313] px-8 py-16">
+      <section className="bg-[#131313] py-16">
         <h2 className="text-center text-[48px] font-bold tracking-[-0.025em] max-md:text-[32px]">Industries We Serve</h2>
         <p className="mx-auto mt-4 max-w-[860px] text-center text-[18px] leading-[1.55] text-[#ABABAB]">
           Specialized intelligence engineering for mission-critical sectors.
@@ -162,7 +171,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 py-16">
+      <section className="py-16">
         <h2 className="text-center text-[48px] font-bold tracking-[-0.025em] max-md:text-[32px]">A Message from Our Founders</h2>
         <p className="mx-auto mt-4 max-w-[820px] text-center text-[18px] leading-[1.55] text-[#ABABAB]">
           Our commitment to engineering excellence is what drives every project we touch. Hear directly from our team about the JVO Labs philosophy.
@@ -175,7 +184,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 py-16">
+      <section className="py-16">
         <h2 className="text-[36px] font-bold tracking-[-0.025em]">Success Stories</h2>
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
           <article className="overflow-hidden rounded-2xl border border-[rgba(72,72,72,0.15)]">
@@ -187,7 +196,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 py-16">
+      <section className="py-16">
         <p className="mx-auto inline-block rounded-xl border border-[rgba(72,72,72,0.15)] px-4 py-1 text-[12px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF]">
           Inquiry
         </p>
@@ -206,19 +215,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-8 pb-24 pt-16 text-center">
+      <section className="pb-24 pt-16 text-center">
         <h2 className="mx-auto max-w-[900px] whitespace-pre-line text-[72px] leading-[1] font-bold tracking-[-0.025em] max-md:text-[40px]">
           Build Your Engineering{'\n'}Team Without Hiring{'\n'}Stress.
         </h2>
         <p className="mx-auto mt-6 max-w-[760px] text-[18px] leading-[1.55] text-[#ABABAB]">
           Stop the endless search for senior talent. Access a battle-tested studio that delivers from day one.
         </p>
-        <button className="mt-8 rounded-[6px] bg-gradient-to-r from-[#7459F7] to-[#AFA2FF] px-10 py-5 text-[18px] font-bold text-black">
+        <Link
+          to="/contact"
+          className="mt-8 inline-block rounded-[6px] bg-gradient-to-r from-[#7459F7] to-[#AFA2FF] px-10 py-5 text-[18px] font-bold text-black"
+        >
           Book Discovery Call
-        </button>
+        </Link>
       </section>
+      </PageContent>
 
-      <HomeFooter />
+      <PartnershipFooter />
     </main>
   )
 }

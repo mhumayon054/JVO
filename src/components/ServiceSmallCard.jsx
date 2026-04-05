@@ -74,7 +74,7 @@ export function ServiceSmallCard({ variant, title, description, footerLabel, foo
         <h3 className="absolute left-0 top-16 max-w-[302px] text-[24px] font-bold leading-[1.3333333333333333] tracking-[-0.025em] text-white">
           {title}
         </h3>
-        <p className="absolute left-0 top-[112px] max-w-[302px] text-[16px] font-normal leading-[1.625] text-[#ABABAB]">
+        <p className="absolute left-0 top-[112px] max-w-[302px] whitespace-pre-line text-[16px] font-normal leading-[1.625] text-[#ABABAB]">
           {description}
         </p>
       </div>

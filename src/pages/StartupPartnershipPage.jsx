@@ -30,7 +30,7 @@ export default function StartupPartnershipPage() {
       <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
         <SiteHeader />
 
-        <div className="flex flex-col gap-24 pb-16 pt-8 lg:gap-[160px]">
+        <div className="flex flex-col gap-24 pb-16 pt-[24px] lg:gap-[160px]">
           {/* Hero */}
           <section className="px-4 sm:px-8">
             <div className="mx-auto grid max-w-[1216px] grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12">

@@ -4,6 +4,9 @@ import StartupPartnershipPage from './pages/StartupPartnershipPage'
 import AboutUsPage from './pages/AboutUsPage'
 import ContactPage from './pages/ContactPage'
 import InsightsPage from './pages/InsightsPage'
+import ServicesPage from './pages/ServicesPage'
+import CaseStudiesPage from './pages/CaseStudiesPage'
+import BuildSquadPage from './pages/BuildSquadPage'
 
 export default function App() {
   return (
@@ -14,6 +17,9 @@ export default function App() {
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/insights" element={<InsightsPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/case-studies" element={<CaseStudiesPage />} />
+        <Route path="/build-squad" element={<BuildSquadPage />} />
       </Routes>
     </BrowserRouter>
   )
