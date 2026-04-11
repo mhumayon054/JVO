@@ -2,17 +2,12 @@ import { Link } from 'react-router-dom'
 import { SiteHeader } from '../components/SiteHeader'
 import { PageContent } from '../components/PageContent'
 import { PartnershipFooter } from '../components/PartnershipFooter'
+import { CoreCapabilitiesCards } from '../components/CoreCapabilitiesCards'
 
 const stats = [
   { value: '50+', label: 'Startups Scaled' },
   { value: '$500M+', label: 'Funding Raised' },
   { value: '100+', label: 'Projects Delivered' },
-]
-
-const cards = [
-  { title: 'Product Development', points: ['Web Apps', 'Cloud Systems', 'AI Products'] },
-  { title: 'Dedicated Teams', points: ['Embedded Engineers', 'Project Squads', 'Tech Leadership'] },
-  { title: 'MVP Launch', points: ['Rapid Builds', 'Validated Scope', 'Production Ready'] },
 ]
 
 export default function HomePage() {
@@ -101,25 +96,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-16">
-        <h2 className="text-center text-[48px] font-bold tracking-[-0.025em] max-md:text-[32px]">Core Capabilities</h2>
-        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {cards.map((card) => (
-            <article key={card.title} className="rounded-2xl border border-[rgba(72,72,72,0.15)] bg-[rgba(72,72,72,0.2)] p-8">
-              <div className="h-8 w-8 rounded bg-[#7459F7]" />
-              <h3 className="mt-6 text-[24px] font-bold">{card.title}</h3>
-              <ul className="mt-6 space-y-2 text-[14px] text-[#ABABAB]">
-                {card.points.map((point) => (
-                  <li key={point} className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#AFA2FF]" />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
+      <CoreCapabilitiesCards />
 
       <section className="py-16">
         <h2 className="text-center text-[36px] font-bold tracking-[-0.025em]">Engineering Methodology</h2>
