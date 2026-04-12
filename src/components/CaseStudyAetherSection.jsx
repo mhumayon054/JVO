@@ -1,14 +1,41 @@
+import { useRef } from 'react'
+import { useViewportCountersOnce } from '../hooks/useViewportCountersOnce'
+
 const STATS = [
-  { value: '88%', label: 'REDUCTION IN MANUAL AUDIT TIME' },
-  { value: '0.02%', label: 'DOCUMENT HALLUCINATION RATE' },
-  { value: '$2.4M', label: 'ANNUAL OPEX RECLAIMED' },
+  {
+    target: 88,
+    prefix: '',
+    suffix: '%',
+    decimals: '0',
+    initial: '0%',
+    label: 'REDUCTION IN MANUAL AUDIT TIME',
+  },
+  {
+    target: 0.02,
+    prefix: '',
+    suffix: '%',
+    decimals: '2',
+    initial: '0.00%',
+    label: 'DOCUMENT HALLUCINATION RATE',
+  },
+  {
+    target: 2.4,
+    prefix: '$',
+    suffix: 'M',
+    decimals: '1',
+    initial: '$0.0M',
+    label: 'ANNUAL OPEX RECLAIMED',
+  },
 ]
 
 const STACK = ['Next.js 14', 'OpenAI GPT-4o', 'Pinecone DB', 'Kubernetes', 'Python / FastAPI']
 
 export function CaseStudyAetherSection() {
+  const rootRef = useRef(null)
+  useViewportCountersOnce(rootRef, { threshold: 0.2, duration: 1800 })
+
   return (
-    <div className="grid w-full max-w-[1216px] grid-cols-1 gap-[48px] lg:grid-cols-[752px_416px] lg:items-start">
+    <div ref={rootRef} className="grid w-full max-w-[1216px] grid-cols-1 gap-[48px] lg:grid-cols-[752px_416px] lg:items-start">
       <div className="flex min-w-0 flex-col">
         <div className="relative w-full overflow-hidden bg-[#131313]">
           <img
@@ -55,7 +82,18 @@ export function CaseStudyAetherSection() {
           <div className="flex flex-col gap-[36px]">
             {STATS.map((s) => (
               <div key={s.label}>
-                <p className="text-left text-[40px] font-bold leading-[1em] tracking-[-0.03em] text-white lg:text-[44px]">{s.value}</p>
+                <p className="text-left text-[40px] font-bold leading-[1em] tracking-[-0.03em] text-white tabular-nums lg:text-[44px]">
+                  <span
+                    className="counter"
+                    data-counter
+                    data-target={String(s.target)}
+                    data-prefix={s.prefix}
+                    data-suffix={s.suffix}
+                    data-decimals={s.decimals}
+                  >
+                    {s.initial}
+                  </span>
+                </p>
                 <p className="mt-[12px] max-w-[320px] text-left text-[10px] font-bold uppercase leading-[1.5em] tracking-[0.12em] text-[#ABABAB]">
                   {s.label}
                 </p>

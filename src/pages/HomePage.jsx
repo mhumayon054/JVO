@@ -3,12 +3,12 @@ import { SiteHeader } from '../components/SiteHeader'
 import { PageContent } from '../components/PageContent'
 import { PartnershipFooter } from '../components/PartnershipFooter'
 import { CoreCapabilitiesCards } from '../components/CoreCapabilitiesCards'
-
-const stats = [
-  { value: '50+', label: 'Startups Scaled' },
-  { value: '$500M+', label: 'Funding Raised' },
-  { value: '100+', label: 'Projects Delivered' },
-]
+import { HomeMethodologySection } from '../components/home/HomeMethodologySection'
+import { HomePrecisionBench } from '../components/home/HomePrecisionBench'
+import { HomeIndustriesSection } from '../components/home/HomeIndustriesSection'
+import { HomeSuccessStoriesSection } from '../components/home/HomeSuccessStoriesSection'
+import { HomeFaqSection } from '../components/home/HomeFaqSection'
+import { HomeStatsSection } from '../components/home/HomeStatsSection'
 
 export default function HomePage() {
   return (
@@ -51,16 +51,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-12 bg-[#131313] py-12">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
-          {stats.map((s) => (
-            <div key={s.label}>
-              <p className="text-[36px] font-bold leading-[1.11] text-[#AFA2FF]">{s.value}</p>
-              <p className="mt-2 text-[14px] font-normal uppercase tracking-[0.1em] text-[#ABABAB]">{s.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <HomeStatsSection />
 
       <section className="py-16">
         <p className="inline-block rounded-xl border border-[rgba(72,72,72,0.15)] px-4 py-1 text-[12px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF]">
@@ -98,55 +89,11 @@ export default function HomePage() {
 
       <CoreCapabilitiesCards />
 
-      <section className="py-16">
-        <h2 className="text-center text-[36px] font-bold tracking-[-0.025em]">Engineering Methodology</h2>
-        <div className="mt-10 grid grid-cols-1 gap-6 text-center sm:grid-cols-2 lg:grid-cols-4">
-          {['Discovery Call', 'Architecture Match', 'Execution Sprint', 'Scale & Evolve'].map((step, i) => (
-            <div key={step} className="rounded-xl border border-[rgba(72,72,72,0.15)] bg-[rgba(72,72,72,0.2)] p-6">
-              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-[#131313] text-[24px] font-bold text-[#AFA2FF]">
-                {`0${i + 1}`}
-              </div>
-              <h3 className="mt-4 text-[20px] font-bold">{step}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
+      <HomeMethodologySection />
 
-      <section className="py-16">
-        <h2 className="text-center text-[36px] font-bold tracking-[-0.025em]">The Precision Bench</h2>
-        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {[['/figma/engineer-1.png', 'AI Engineer'], ['/figma/engineer-2.png', 'Tech Lead'], ['/figma/engineer-3.png', 'Cloud Architect']].map(
-            ([src, role], idx) => (
-              <article key={role} className="rounded-2xl border border-[rgba(72,72,72,0.15)] bg-[rgba(72,72,72,0.2)] p-6">
-                <img src={src} className="h-16 w-16 rounded-lg object-cover" alt={role} />
-                <h3 className="mt-4 text-[24px] font-bold text-white">{['Ari Voss', 'Mira Chen', 'Noah Kim'][idx]}</h3>
-                <p className="mt-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#AFA2FF]">{role}</p>
-                <p className="mt-4 text-[14px] leading-[1.42] text-[#ABABAB]">
-                  Battle-tested specialist with production experience in high-stakes AI systems.
-                </p>
-              </article>
-            ),
-          )}
-        </div>
-      </section>
+      <HomePrecisionBench />
 
-      <section className="bg-[#131313] py-16">
-        <h2 className="text-center text-[48px] font-bold tracking-[-0.025em] max-md:text-[32px]">Industries We Serve</h2>
-        <p className="mx-auto mt-4 max-w-[860px] text-center text-[18px] leading-[1.55] text-[#ABABAB]">
-          Specialized intelligence engineering for mission-critical sectors.
-        </p>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {['FinTech', 'HealthTech', 'Enterprise AI', 'Cybersecurity', 'Logistics'].map((name) => (
-            <article key={name} className="rounded-2xl border border-[rgba(72,72,72,0.15)] bg-[rgba(72,72,72,0.2)] p-5 backdrop-blur-[20px]">
-              <div className="h-7 w-7 rounded bg-[#7459F7]" />
-              <h3 className="mt-4 text-[20px] font-bold">{name}</h3>
-              <p className="mt-3 text-[14px] leading-[1.42] text-[#ABABAB]">
-                Tailored solutions with precision architecture and regulatory-grade engineering.
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
+      <HomeIndustriesSection />
 
       <section className="py-16">
         <h2 className="text-center text-[48px] font-bold tracking-[-0.025em] max-md:text-[32px]">A Message from Our Founders</h2>
@@ -161,36 +108,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-16">
-        <h2 className="text-[36px] font-bold tracking-[-0.025em]">Success Stories</h2>
-        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <article className="overflow-hidden rounded-2xl border border-[rgba(72,72,72,0.15)]">
-            <img src="/figma/story-1.png" className="h-[363px] w-full object-cover opacity-60 max-md:h-[240px]" alt="FinTech AI Advisor" />
-          </article>
-          <article className="overflow-hidden rounded-2xl border border-[rgba(72,72,72,0.15)]">
-            <img src="/figma/story-2.png" className="h-[363px] w-full object-cover opacity-60 max-md:h-[240px]" alt="Logistics Neural Hub" />
-          </article>
-        </div>
-      </section>
+      <HomeSuccessStoriesSection />
 
-      <section className="py-16">
-        <p className="mx-auto inline-block rounded-xl border border-[rgba(72,72,72,0.15)] px-4 py-1 text-[12px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF]">
-          Inquiry
-        </p>
-        <h2 className="mt-4 text-center text-[36px] font-bold tracking-[-0.025em]">Common Questions</h2>
-        <div className="mx-auto mt-8 max-w-[1216px] space-y-3">
-          {[
-            'How long is an average MVP build?',
-            'Do you provide post-launch support?',
-            'Can you integrate with our existing team?',
-            'What does engagement pricing look like?',
-          ].map((q) => (
-            <details key={q} className="rounded-lg border border-[rgba(72,72,72,0.15)] bg-[#0E0E0E] px-6 py-5">
-              <summary className="cursor-pointer list-none text-[20px] font-bold text-white">{q}</summary>
-            </details>
-          ))}
-        </div>
-      </section>
+      <HomeFaqSection />
 
       <section className="pb-24 pt-16 text-center">
         <h2 className="mx-auto max-w-[900px] whitespace-pre-line text-[72px] leading-[1] font-bold tracking-[-0.025em] max-md:text-[40px]">

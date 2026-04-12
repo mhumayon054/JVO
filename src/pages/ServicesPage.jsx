@@ -142,11 +142,11 @@ export default function ServicesPage() {
                       className="h-[240px] w-full object-cover sm:h-full sm:min-h-[240px]"
                     />
                   </div>
-                  <div className="pt-8">
+                  {/* <div className="pt-8">
                     <div className="overflow-hidden rounded">
                       <img src="/figma/services/consult-2-56586a.png" alt="" className="w-full object-cover" />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

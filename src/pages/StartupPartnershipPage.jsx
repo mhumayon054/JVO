@@ -48,7 +48,7 @@ export default function StartupPartnershipPage() {
                   high-performance AI infrastructure of tomorrow.
                 </p>
               </div>
-              <div className="relative mx-auto aspect-square w-full max-w-[373px] overflow-hidden rounded-lg bg-[#131313] lg:mx-0 lg:max-w-none lg:justify-self-end">
+              <div className="relative mx-auto aspect-square max-w-[373px] overflow-hidden rounded-lg bg-[#131313] lg:mx-0 lg:max-w-none lg:justify-self-end">
                 <img
                   src="/figma/partnership/hero-photo-56586a.png"
                   alt=""
@@ -75,7 +75,7 @@ export default function StartupPartnershipPage() {
               {/* Model 01 */}
               <article className="overflow-hidden rounded-lg bg-[#131313]">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
-                  <div className="flex flex-col gap-6 p-8 sm:p-12 lg:order-1">
+                  <div className="flex flex-col gap-6 p-8 sm:p-12">
                     <p className="text-[48px] font-bold leading-none text-[#7459F7]/20 sm:text-[60px]">01</p>
                     <h3 className="text-[28px] font-bold leading-[1.11] tracking-[-0.025em] sm:text-[36px]">
                       Product Development
