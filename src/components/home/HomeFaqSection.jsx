@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { EASE, fadeUp, staggerContainer, viewportOnce } from './homeMotion'
 
 const FAQS = [
   {
@@ -39,20 +41,37 @@ export function HomeFaqSection() {
 
   return (
     <section className="py-16 md:py-20">
-      <div className="mx-auto w-full max-w-[1216px] px-4 sm:px-8">
-        <p className="mx-auto block w-fit rounded-xl border border-[rgba(72,72,72,0.15)] px-4 py-1 text-center text-[12px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF]">
+      <motion.div
+        className="mx-auto w-full max-w-[1216px] px-4 sm:px-8"
+        variants={staggerContainer(0.08, 0.12)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOnce}
+      >
+        <motion.p
+          variants={fadeUp(12)}
+          className="mx-auto block w-fit rounded-xl border border-[rgba(72,72,72,0.15)] px-4 py-1 text-center text-[12px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF]"
+        >
           Inquiry
-        </p>
-        <h2 className="mt-4 text-center text-[36px] font-bold leading-[1.1] tracking-[-0.025em] text-white md:text-[40px]">
+        </motion.p>
+        <motion.h2
+          variants={fadeUp(16)}
+          className="mt-4 text-center text-[36px] font-bold leading-[1.1] tracking-[-0.025em] text-white md:text-[40px]"
+        >
           Common Questions
-        </h2>
-        <div className="mx-auto mt-10 max-w-[1216px] space-y-3">
+        </motion.h2>
+        <motion.div className="mx-auto mt-10 max-w-[1216px] space-y-3" variants={staggerContainer(0.04, 0.08)}>
           {FAQS.map((item, i) => {
             const open = openIndex === i
             return (
-              <div
+              <motion.div
                 key={item.q}
+                variants={fadeUp(10)}
                 className="overflow-hidden rounded-xl border border-[rgba(72,72,72,0.15)] bg-[#0E0E0E] transition-[border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-[rgba(72,72,72,0.28)]"
+                whileHover={{
+                  borderColor: 'rgba(116, 89, 247, 0.12)',
+                  transition: { duration: 0.28, ease: EASE },
+                }}
               >
                 <button
                   type="button"
@@ -83,11 +102,11 @@ export function HomeFaqSection() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   )
 }

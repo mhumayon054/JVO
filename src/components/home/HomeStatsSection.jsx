@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { animateCounter } from '../../utils/animateCounter'
+import { fadeUp, sectionStagger, viewportOnce } from './homeMotion'
 
 const STATS = [
   { target: 50, prefix: '', suffix: '+', label: 'Startups Scaled' },
@@ -51,31 +53,31 @@ export function HomeStatsSection() {
   }, [])
 
   return (
-    <section
+    <motion.section
       ref={sectionRef}
-      className="mt-12 bg-[#131313] py-12 px-12"
+      className="mt-12 grid grid-cols-1 gap-8 bg-[#131313] px-12 py-12 md:grid-cols-3 md:gap-6"
       aria-label="Company statistics"
+      variants={sectionStagger}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
     >
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
-        {STATS.map((s) => (
-          <div key={s.label}>
-            <p className="text-[36px] font-bold leading-[1.11] text-[#AFA2FF]">
-              <span
-                className="counter tabular-nums"
-                data-counter
-                data-target={String(s.target)}
-                data-prefix={s.prefix}
-                data-suffix={s.suffix}
-              >
-                {`${s.prefix}0${s.suffix}`}
-              </span>
-            </p>
-            <p className="mt-2 text-[14px] font-normal uppercase tracking-[0.1em] text-[#ABABAB]">
-              {s.label}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
+      {STATS.map((s) => (
+        <motion.div key={s.label} variants={fadeUp(18)}>
+          <p className="text-[36px] font-bold leading-[1.11] text-[#AFA2FF]">
+            <span
+              className="counter tabular-nums"
+              data-counter
+              data-target={String(s.target)}
+              data-prefix={s.prefix}
+              data-suffix={s.suffix}
+            >
+              {`${s.prefix}0${s.suffix}`}
+            </span>
+          </p>
+          <p className="mt-2 text-[14px] font-normal uppercase tracking-[0.1em] text-[#ABABAB]">{s.label}</p>
+        </motion.div>
+      ))}
+    </motion.section>
   )
 }

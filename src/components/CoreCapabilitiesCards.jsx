@@ -1,4 +1,7 @@
 import { useCallback, useEffect, useId, useState } from 'react'
+/* framer-motion `motion.*` is used below; some ESLint configs don't count JSX member refs */
+import { motion } from 'framer-motion' // eslint-disable-line no-unused-vars -- motion.section / motion.article
+import { EASE, fadeUp, staggerContainer, viewportOnce } from './home/homeMotion'
 import proddev from '../assets/icons/proddev.svg'
 import dediteam from '../assets/icons/dediteam.svg'
 import mvplaunch from '../assets/icons/mvplaunch.svg'
@@ -94,17 +97,38 @@ export function CoreCapabilitiesCards() {
   )
 
   return (
-    <section className="py-16">
-      <h2 className="text-center text-[48px] font-bold tracking-[-0.025em] max-md:text-[32px]">Core Capabilities</h2>
-      <div className="mt-10 grid grid-cols-1 items-start gap-6 overflow-visible md:grid-cols-2 lg:grid-cols-3">
+    <motion.section
+      className="py-16"
+      variants={staggerContainer(0.1, 0.14)}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
+    >
+      <motion.h2
+        variants={fadeUp(18)}
+        className="text-center text-[48px] font-bold tracking-[-0.025em] max-md:text-[32px]"
+      >
+        Core Capabilities
+      </motion.h2>
+      <motion.div
+        className="mt-10 grid grid-cols-1 items-start gap-6 overflow-visible md:grid-cols-2 lg:grid-cols-3"
+        variants={staggerContainer(0.08, 0.12)}
+      >
         {CAPABILITY_CARDS.map((card, index) => {
           const expanded = isExpanded(card.title)
           const dimmed = prefersHover && hoveredTitle !== null && hoveredTitle !== card.title
           const panelId = `${sectionId}-panel-${index}`
 
           return (
-            <article
+            <motion.article
               key={card.title}
+              variants={fadeUp(20)}
+              whileHover={{
+                y: -3,
+                borderColor: 'rgba(116, 89, 247, 0.26)',
+                boxShadow: '0 24px 52px -28px rgba(0, 0, 0, 0.55)',
+                transition: { duration: 0.32, ease: EASE },
+              }}
               className={[
                 'relative flex w-full max-w-full flex-col self-start rounded-2xl border border-[rgba(72,72,72,0.15)] bg-[rgba(72,72,72,0.2)] p-8',
                 `transition-[box-shadow,opacity,border-color] duration-[400ms] ${easePremium}`,
@@ -166,10 +190,10 @@ export function CoreCapabilitiesCards() {
                   </ul>
                 </div>
               </div>
-            </article>
+            </motion.article>
           )
         })}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   )
 }
