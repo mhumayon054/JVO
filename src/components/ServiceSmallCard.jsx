@@ -41,6 +41,9 @@ function ServiceIconMobile() {
   )
 }
 
+import { motion } from 'framer-motion'
+import { hoverCardBorderGlow } from './home/homeMotion'
+
 const icons = {
   mvp: ServiceIconMvp,
   saas: ServiceIconSaaS,
@@ -52,10 +55,11 @@ export function ServiceSmallCard({ variant, title, description, footerLabel, foo
   const Icon = icons[variant]
 
   return (
-    <article
+    <motion.article
       className={`flex h-full flex-col rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] p-10 ${
         mvpLayout ? 'gap-[105px]' : 'justify-between'
       }`}
+      {...hoverCardBorderGlow}
     >
       <div className="relative min-h-[190px]">
         <div
@@ -86,6 +90,6 @@ export function ServiceSmallCard({ variant, title, description, footerLabel, foo
           <p className="text-[14px] font-medium leading-[1.4285714285714286] text-white">{footerValue}</p>
         </div>
       </div>
-    </article>
+    </motion.article>
   )
 }

@@ -1,4 +1,9 @@
-import { Link } from 'react-router-dom'
+import { MotionConfig, motion } from 'framer-motion'
+import {
+  fadeFromX,
+  staggerContainer,
+  viewportOnce,
+} from '../components/home/homeMotion'
 import { SiteHeader } from '../components/SiteHeader'
 import { PartnershipFooter } from '../components/PartnershipFooter'
 import { PageContent } from '../components/PageContent'
@@ -12,45 +17,62 @@ export default function CaseStudiesPage() {
       <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
         <SiteHeader />
 
-        <PageContent>
-          <section className="w-full max-w-[1280px]">
-            <div className="mx-auto w-full max-w-[1216px]">
-              <div className="flex flex-col gap-[24px]">
-                <p
-                  className="text-left font-semibold uppercase text-[#AFA2FF]"
-                  style={{ fontSize: '16px', lineHeight: '1.5em', letterSpacing: '0.2em', fontWeight: 600 }}
-                >
-                  Real outcomes from partne
-                </p>
-                <h1 className="whitespace-pre-line text-left text-[56px] font-bold leading-[1em] tracking-[-0.05em] text-white sm:text-[72px] lg:text-[96px]">
-                  {`Engineering\nPrecision for the AI\nFrontier.`}
-                </h1>
-                <div className="max-w-[672px] pt-[8px]">
-                  <p className="text-left text-[24px] font-normal leading-[1.3333333333333333em] text-[#ABABAB]">
-                    We don&apos;t just build software. We engineer high-stakes AI infrastructure
-                    and products that deliver measurable competitive advantages.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="w-full max-w-[1280px]">
-            <div className="mx-auto flex w-full max-w-[1216px] flex-col gap-[64px]">
-              <h2
-                className="text-left text-white"
-                style={{ fontSize: '36px', lineHeight: '1.1111111111111112em', fontWeight: 700, letterSpacing: '-0.025em' }}
+        <MotionConfig reducedMotion="user">
+          <PageContent>
+            <section className="w-full max-w-[1280px]">
+              <motion.div
+                className="mx-auto w-full max-w-[1216px]"
+                variants={staggerContainer(0.08, 0.14)}
+                initial="hidden"
+                animate="visible"
               >
-                Success Stories
-              </h2>
-              <CaseStudyAetherSection />
-              <CaseStudyFeaturedSection />
-            </div>
-          </section>
+                <div className="flex flex-col gap-[24px]">
+                  <motion.p
+                    variants={fadeFromX(-14)}
+                    className="text-left font-semibold uppercase text-[#AFA2FF]"
+                    style={{ fontSize: '16px', lineHeight: '1.5em', letterSpacing: '0.2em', fontWeight: 600 }}
+                  >
+                    Real outcomes from partne
+                  </motion.p>
+                  <motion.h1
+                    variants={fadeFromX(-18)}
+                    className="whitespace-pre-line text-left text-[56px] font-bold leading-[1em] tracking-[-0.05em] text-white sm:text-[72px] lg:text-[96px]"
+                  >
+                    {`Engineering\nPrecision for the AI\nFrontier.`}
+                  </motion.h1>
+                  <motion.div variants={fadeFromX(-16)} className="max-w-[672px] pt-[8px]">
+                    <p className="text-left text-[24px] font-normal leading-[1.3333333333333333em] text-[#ABABAB]">
+                      We don&apos;t just build software. We engineer high-stakes AI infrastructure
+                      and products that deliver measurable competitive advantages.
+                    </p>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </section>
 
-          <CaseStudiesVoidCta />
+            <section className="w-full max-w-[1280px]">
+              <motion.div
+                className="mx-auto flex w-full max-w-[1216px] flex-col gap-[64px]"
+                variants={staggerContainer(0.1, 0.14)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+              >
+                <motion.h2
+                  variants={fadeFromX(-18)}
+                  className="text-left text-white"
+                  style={{ fontSize: '36px', lineHeight: '1.1111111111111112em', fontWeight: 700, letterSpacing: '-0.025em' }}
+                >
+                  Success Stories
+                </motion.h2>
+                <CaseStudyAetherSection />
+                <CaseStudyFeaturedSection />
+              </motion.div>
+            </section>
 
-          <section className="relative w-full max-w-[1280px] overflow-hidden">
+            <CaseStudiesVoidCta />
+
+            <section className="relative w-full max-w-[1280px] overflow-hidden">
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.03]"
               style={{
@@ -79,8 +101,9 @@ export default function CaseStudiesPage() {
                 Start Your Project Now
               </Link>
             </div> */}
-          </section>
-        </PageContent>
+            </section>
+          </PageContent>
+        </MotionConfig>
 
         <PartnershipFooter />
       </main>

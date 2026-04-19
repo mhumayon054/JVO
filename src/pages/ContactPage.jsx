@@ -1,4 +1,13 @@
 import { useState } from 'react'
+import { MotionConfig, motion } from 'framer-motion'
+import {
+  EASE,
+  fadeUp,
+  hoverCardBorderGlow,
+  hoverMediaKen,
+  hoverPrimaryCta,
+  staggerContainer,
+} from '../components/home/homeMotion'
 import { SiteHeader } from '../components/SiteHeader'
 import { PartnershipFooter } from '../components/PartnershipFooter'
 
@@ -59,21 +68,31 @@ export default function ContactPage() {
       <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
         <SiteHeader />
 
-        <div className="px-4 pb-16 pt-8 sm:px-8">
-          <div className="mx-auto flex max-w-[1216px] flex-col gap-12 lg:flex-row lg:gap-[56px]">
-            {/* Lead form — width 576px Figma */}
-            <div className="w-full shrink-0 lg:max-w-[576px]">
-              <div className="flex flex-col gap-6">
-                <h1 className="whitespace-pre-line text-[48px] font-bold leading-none tracking-[-0.05em] sm:text-[64px] lg:text-[72px]">
-                  Scale your{'\n'}ambition.
-                </h1>
-                <p className="text-[18px] font-normal leading-[1.625] text-[#ABABAB]">
-                  We don&apos;t just build software; we engineer competitive advantages. Tell us about your project to see if we&apos;re the
-                  right precision partner for your vision.
-                </p>
-              </div>
+        <MotionConfig reducedMotion="user">
+          <div className="px-4 pb-16 pt-8 sm:px-8">
+            <motion.div
+              className="mx-auto flex max-w-[1216px] flex-col gap-12 lg:flex-row lg:gap-[56px]"
+              variants={staggerContainer(0.1, 0.14)}
+              initial="hidden"
+              animate="visible"
+            >
+              {/* Lead form — width 576px Figma */}
+              <motion.div className="w-full shrink-0 lg:max-w-[576px]" variants={fadeUp(18)}>
+                <motion.div className="flex flex-col gap-6" variants={staggerContainer(0.05, 0.1)}>
+                  <motion.h1
+                    variants={fadeUp(22)}
+                    className="whitespace-pre-line text-[48px] font-bold leading-none tracking-[-0.05em] sm:text-[64px] lg:text-[72px]"
+                  >
+                    Scale your{'\n'}ambition.
+                  </motion.h1>
+                  <motion.p variants={fadeUp(16)} className="text-[18px] font-normal leading-[1.625] text-[#ABABAB]">
+                    We don&apos;t just build software; we engineer competitive advantages. Tell us about your project to see if we&apos;re the
+                    right precision partner for your vision.
+                  </motion.p>
+                </motion.div>
 
-              <form
+              <motion.form
+                variants={fadeUp(16)}
                 className="mt-12 flex w-full flex-col gap-8 lg:mt-[48px]"
                 onSubmit={(e) => e.preventDefault()}
               >
@@ -143,21 +162,29 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div>
-                  <button
+                <motion.div variants={fadeUp(12)}>
+                  <motion.button
                     type="submit"
                     className="relative rounded-[6px] px-12 py-4 text-[16px] font-bold leading-[1.5] text-black shadow-[0px_8px_10px_-6px_rgba(0,0,0,0.1),0px_20px_25px_-5px_rgba(0,0,0,0.1)]"
                     style={{ background: 'linear-gradient(174deg, #7459F7 0%, #AFA2FF 100%)' }}
+                    {...hoverPrimaryCta}
                   >
                     Send Brief
-                  </button>
-                </div>
-              </form>
-            </div>
+                  </motion.button>
+                </motion.div>
+              </motion.form>
+              </motion.div>
 
-            {/* Aside — gap 48px between blocks */}
-            <aside className="flex min-w-0 flex-1 flex-col gap-12 lg:gap-[48px]">
-              <div className="relative overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[rgba(38,38,38,0.4)] p-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] backdrop-blur-[20px] sm:p-[32px]">
+              {/* Aside — gap 48px between blocks */}
+              <motion.aside
+                className="flex min-w-0 flex-1 flex-col gap-12 lg:gap-[48px]"
+                variants={staggerContainer(0.08, 0.12)}
+              >
+              <motion.div
+                variants={fadeUp(18)}
+                className="relative overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[rgba(38,38,38,0.4)] p-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] backdrop-blur-[20px] sm:p-[32px]"
+                {...hoverCardBorderGlow}
+              >
                 <div
                   className="pointer-events-none absolute right-[-33px] top-[-95px] h-64 w-64 rounded-full bg-[rgba(175,162,255,0.1)] blur-[100px]"
                   aria-hidden
@@ -182,17 +209,20 @@ export default function ContactPage() {
                       </p>
                     </div>
                   </div>
-                  <button
+                  <motion.button
                     type="button"
                     className="mt-8 flex w-full items-center justify-center gap-2 rounded-md bg-white py-4 text-[16px] font-bold leading-[1.5] text-black"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.985 }}
+                    transition={{ duration: 0.28, ease: EASE }}
                   >
                     Schedule Session
                     <IconArrowUpRight />
-                  </button>
+                  </motion.button>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 sm:gap-8 sm:px-4 md:gap-x-16">
+              <motion.div variants={fadeUp(16)} className="grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 sm:gap-8 sm:px-4 md:gap-x-16">
                 <div className="flex flex-col gap-[16.5px] pb-[17.5px]">
                   <span className="text-[12px] font-bold uppercase leading-[1.33] tracking-[0.1em] text-[#AFA2FF]">Email</span>
                   <a href="mailto:hello@jvolabs.ai" className="text-[20px] font-medium leading-[1.4] tracking-[-0.025em] text-white hover:text-[#AFA2FF]">
@@ -207,9 +237,13 @@ export default function ContactPage() {
                     Greenwich Village, NY 10003
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="relative overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[rgba(38,38,38,0.4)] p-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] backdrop-blur-[20px] sm:p-[32px]">
+              <motion.div
+                variants={fadeUp(18)}
+                className="relative overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[rgba(38,38,38,0.4)] p-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] backdrop-blur-[20px] sm:p-[32px]"
+                {...hoverCardBorderGlow}
+              >
                 <div
                   className="pointer-events-none absolute right-[-33px] top-[-95px] h-64 w-64 rounded-full bg-[rgba(175,162,255,0.1)] blur-[100px]"
                   aria-hidden
@@ -220,27 +254,25 @@ export default function ContactPage() {
                     <span className="text-[12px] font-bold uppercase leading-[1.33] tracking-[0.2em] text-[#ABABAB]">Our Studio</span>
                   </div>
                   <div className="overflow-hidden rounded border border-[rgba(72,72,72,0.2)] bg-black">
-                    <div className="h-[289.38px] w-full">
-                      <img
+                    <div className="h-[289.38px] w-full overflow-hidden">
+                      <motion.img
                         src="/figma/contact/office-broadway-7bfe37.png"
                         alt="JVO Labs office at 799 Broadway"
                         className="h-full w-full object-cover opacity-80"
+                        {...hoverMediaKen}
                       />
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="h-[192px] w-full overflow-hidden rounded-lg opacity-40">
-                <img
-                  src="/figma/contact/map-texture-299a83.png"
-                  alt=""
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </aside>
+              <motion.div variants={fadeUp(14)} className="h-[192px] w-full overflow-hidden rounded-lg opacity-40">
+                <motion.img src="/figma/contact/map-texture-299a83.png" alt="" className="h-full w-full object-cover" {...hoverMediaKen} />
+              </motion.div>
+              </motion.aside>
+            </motion.div>
           </div>
-        </div>
+        </MotionConfig>
       </main>
 
       <PartnershipFooter />

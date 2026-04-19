@@ -1,5 +1,7 @@
 import { useRef } from 'react'
+import { motion } from 'framer-motion'
 import { useViewportCountersOnce } from '../hooks/useViewportCountersOnce'
+import { fadeUp, staggerContainer, viewportOnce } from './home/homeMotion'
 
 const STATS = [
   {
@@ -35,9 +37,16 @@ export function CaseStudyAetherSection() {
   useViewportCountersOnce(rootRef, { threshold: 0.2, duration: 1800 })
 
   return (
-    <div ref={rootRef} className="grid w-full max-w-[1216px] grid-cols-1 gap-[48px] lg:grid-cols-[752px_416px] lg:items-start">
-      <div className="flex min-w-0 flex-col">
-        <div className="relative w-full overflow-hidden bg-[#131313]">
+    <motion.div
+      ref={rootRef}
+      className="grid w-full max-w-[1216px] grid-cols-1 gap-[48px] lg:grid-cols-[752px_416px] lg:items-start"
+      variants={staggerContainer(0.08, 0.12)}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
+    >
+      <motion.div className="flex min-w-0 flex-col" variants={fadeUp(18)}>
+        <motion.div className="relative w-full overflow-hidden bg-[#131313]" variants={fadeUp(14)}>
           <img
             src="/figma/case-studies/AI Visualization.png"
             alt=""
@@ -57,27 +66,27 @@ export function CaseStudyAetherSection() {
               Enterprise-Grade Financial LLM Implementation
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mt-[40px] grid grid-cols-1 gap-[32px] sm:grid-cols-2 sm:gap-x-[48px] sm:gap-y-0">
-          <div>
+        <motion.div className="mt-[40px] grid grid-cols-1 gap-[32px] sm:grid-cols-2 sm:gap-x-[48px] sm:gap-y-0" variants={staggerContainer(0.06, 0.1)}>
+          <motion.div variants={fadeUp(14)}>
             <p className="text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.14em] text-[#AFA2FF]">THE PROBLEM</p>
             <p className="mt-[16px] text-left text-[15px] font-normal leading-[1.625em] text-[#ABABAB] sm:text-[16px]">
               A Tier-1 financial institution struggled with 40,000+ manual compliance reviews per month. Latency and hallucination
               risks prevented automation.
             </p>
-          </div>
-          <div>
+          </motion.div>
+          <motion.div variants={fadeUp(14)}>
             <p className="text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.14em] text-[#AFA2FF]">THE SOLUTION</p>
             <p className="mt-[16px] text-left text-[15px] font-normal leading-[1.625em] text-[#ABABAB] sm:text-[16px]">
               JVO Labs engineered a custom RAG architecture with sub-200ms latency, utilizing specialized embeddings for financial
               taxonomy and multi-agent verification.
             </p>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
 
-      <div className="flex min-w-0 flex-col gap-[24px]">
+      <motion.div className="flex min-w-0 flex-col gap-[24px]" variants={fadeUp(18)}>
         <div className="box-border rounded-[16px] border-y-[1px] border-r-[1px] border-[rgba(72,72,72,0.15)] border-l-[4px] border-l-[#AFA2FF] bg-[#131313] py-[40px] pl-[32px] pr-[40px]">
           <div className="flex flex-col gap-[36px]">
             {STATS.map((s) => (
@@ -115,7 +124,7 @@ export function CaseStudyAetherSection() {
             ))}
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }

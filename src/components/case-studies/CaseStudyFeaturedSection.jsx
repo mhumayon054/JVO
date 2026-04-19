@@ -1,5 +1,7 @@
 import { useRef } from 'react'
+import { motion } from 'framer-motion'
 import { useViewportCountersOnce } from '../../hooks/useViewportCountersOnce'
+import { fadeUp, staggerContainer, viewportOnce } from '../home/homeMotion'
 import { OmniProjectLockVisual } from './OmniProjectLockVisual'
 
 const STACK = ['Next.js 14', 'OpenAI GPT-4o', 'Pinecone DB', 'Kubernetes', 'Python / FastAPI']
@@ -36,8 +38,15 @@ export function CaseStudyFeaturedSection() {
   useViewportCountersOnce(sectionRef, { threshold: 0.2, duration: 1800 })
 
   return (
-    <div ref={sectionRef} className="grid w-full max-w-[1216px] grid-cols-1 gap-[32px] lg:grid-cols-[416px_minmax(0,1fr)] lg:items-stretch">
-      <div className="relative min-h-0 overflow-hidden rounded-[16px] border border-[rgba(72,72,72,0.15)] bg-[#131313]">
+    <motion.div
+      ref={sectionRef}
+      className="grid w-full max-w-[1216px] grid-cols-1 gap-[32px] lg:grid-cols-[416px_minmax(0,1fr)] lg:items-stretch"
+      variants={staggerContainer(0.08, 0.12)}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
+    >
+      <motion.div className="relative min-h-0 overflow-hidden rounded-[16px] border border-[rgba(72,72,72,0.15)] bg-[#131313]" variants={fadeUp(18)}>
         <div
           className="pointer-events-none absolute right-0 top-0 z-[1] h-full w-[4px]"
           style={{
@@ -68,9 +77,10 @@ export function CaseStudyFeaturedSection() {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div
+      <motion.div
+        variants={fadeUp(18)}
         className="relative flex min-h-[320px] min-w-0 flex-col items-center justify-center overflow-hidden rounded-[16px] border border-[rgba(72,72,72,0.15)] px-8 py-12 sm:min-h-[420px] lg:min-h-[520px] lg:px-12 lg:py-16"
         style={{
           background:
@@ -93,10 +103,13 @@ export function CaseStudyFeaturedSection() {
             Personalized Recommendation Engine at Scale
           </p>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="col-span-1 mt-[8px] grid grid-cols-1 gap-[32px] sm:gap-x-[48px] lg:col-span-2 lg:mt-[40px] lg:grid-cols-3 lg:gap-[48px]">
-        <div className="min-w-0">
+      <motion.div
+        className="col-span-1 mt-[8px] grid grid-cols-1 gap-[32px] sm:gap-x-[48px] lg:col-span-2 lg:mt-[40px] lg:grid-cols-3 lg:gap-[48px]"
+        variants={staggerContainer(0.06, 0.1)}
+      >
+        <motion.div className="min-w-0" variants={fadeUp(14)}>
           <p className="text-left text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.12em] text-white">
             TECHNOLOGY STACK
           </p>
@@ -110,22 +123,22 @@ export function CaseStudyFeaturedSection() {
               </span>
             ))}
           </div>
-        </div>
-        <div className="min-w-0">
+        </motion.div>
+        <motion.div className="min-w-0" variants={fadeUp(14)}>
           <p className="text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.14em] text-[#AFA2FF]">THE PROBLEM</p>
           <p className="mt-[16px] text-left text-[15px] font-normal leading-[1.625em] text-[#ABABAB] sm:text-[16px]">
             A global e-commerce platform faced stagnating conversion rates. Static recommendation blocks failed to capture evolving
             user intent, leaving high-value sessions under-monetized across regions and device types.
           </p>
-        </div>
-        <div className="min-w-0">
+        </motion.div>
+        <motion.div className="min-w-0" variants={fadeUp(14)}>
           <p className="text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.14em] text-[#AFA2FF]">THE SOLUTION</p>
           <p className="mt-[16px] text-left text-[15px] font-normal leading-[1.625em] text-[#ABABAB] sm:text-[16px]">
             We deployed a behavioral embedding model that updates user personas per session, powering hyper-personalized ranking and
             real-time content assembly—without compromising latency or governance.
           </p>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   )
 }

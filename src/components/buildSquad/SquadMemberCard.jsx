@@ -1,15 +1,29 @@
+import { motion } from 'framer-motion'
+import { EASE, fadeUp } from '../home/homeMotion'
+
 const skillKeys = ['velocity', 'security', 'ai']
 
 export function SquadMemberCard({ member, selected, onToggle }) {
   return (
-    <button
+    <motion.button
       type="button"
+      variants={fadeUp(14)}
       onClick={() => onToggle(member.id)}
-      className={`w-full rounded-lg border bg-[#131313] p-6 text-left transition-all ${
+      className={`w-full rounded-lg border bg-[#131313] p-6 text-left transition-colors ${
         selected
           ? 'border-[#7459F7] ring-2 ring-[#7459F7]/40'
           : 'border-[rgba(72,72,72,0.15)] hover:border-[rgba(72,72,72,0.3)]'
       }`}
+      whileHover={
+        selected
+          ? undefined
+          : {
+              borderColor: 'rgba(116, 89, 247, 0.35)',
+              transition: { duration: 0.35, ease: EASE },
+            }
+      }
+      whileTap={{ scale: 0.985 }}
+      transition={{ duration: 0.18, ease: EASE }}
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md bg-[#262626]">
         <img src={member.avatar} alt="" className="h-full w-full object-cover opacity-90" />
@@ -46,6 +60,6 @@ export function SquadMemberCard({ member, selected, onToggle }) {
           </div>
         ))}
       </div>
-    </button>
+    </motion.button>
   )
 }

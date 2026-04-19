@@ -1,3 +1,6 @@
+import { motion } from 'framer-motion'
+import { EASE, fadeUp, hoverMediaKen } from './home/homeMotion'
+
 function IconArrowSm() {
   return (
     <svg className="h-[9.33px] w-[9.33px] shrink-0 text-[#AFA2FF]" viewBox="0 0 10 10" fill="none" aria-hidden>
@@ -8,10 +11,10 @@ function IconArrowSm() {
 
 export function InsightArticleCard({ image, imageAlt, category, title, description }) {
   return (
-    <article className="w-full max-w-[400px]">
+    <motion.article variants={fadeUp(22)} className="w-full max-w-[400px]">
       <div className="overflow-hidden bg-[#131313]">
-        <div className="aspect-[400/250] w-full max-w-[400px]">
-          <img src={image} alt={imageAlt} className="h-full w-full object-cover opacity-60" />
+        <div className="aspect-[400/250] w-full max-w-[400px] overflow-hidden">
+          <motion.img src={image} alt={imageAlt} className="h-full w-full object-cover opacity-60" {...hoverMediaKen} />
         </div>
       </div>
       <p className="mt-6 text-[10px] font-bold uppercase leading-[1.5] tracking-[0.2em] text-[#AFA2FF]">{category}</p>
@@ -19,13 +22,15 @@ export function InsightArticleCard({ image, imageAlt, category, title, descripti
         {title}
       </h3>
       <p className="mt-4 max-w-[400px] text-[14px] font-normal leading-[1.625em] text-[#ABABAB]">{description}</p>
-      <a
+      <motion.a
         href="#"
-        className="mt-6 inline-flex items-center gap-2 text-[14px] font-bold leading-[1.4285714285714286em] text-[#AFA2FF] transition-opacity hover:opacity-90"
+        className="mt-6 inline-flex items-center gap-2 text-[14px] font-bold leading-[1.4285714285714286em] text-[#AFA2FF]"
+        whileHover={{ x: 2 }}
+        transition={{ duration: 0.28, ease: EASE }}
       >
         Read Article
         <IconArrowSm />
-      </a>
-    </article>
+      </motion.a>
+    </motion.article>
   )
 }

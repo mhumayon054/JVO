@@ -26,6 +26,9 @@ function ArrowIcon() {
   )
 }
 
+import { motion } from 'framer-motion'
+import { hoverCardBorderGlow } from './home/homeMotion'
+
 const bullets = [
   'Custom LLM Fine-tuning & Integration',
   'Autonomous Agent Workflows',
@@ -34,7 +37,10 @@ const bullets = [
 
 export function AISaaSServiceCard() {
   return (
-    <article className="relative flex min-h-0 flex-col justify-center overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] p-10 lg:min-h-[518px]">
+    <motion.article
+      className="relative flex min-h-0 flex-col justify-center overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] p-10 lg:min-h-[518px]"
+      {...hoverCardBorderGlow}
+    >
       <div
         className="pointer-events-none absolute h-[256px] w-[256px] rounded-full bg-[rgba(175,162,255,0.1)] blur-[100px] max-lg:right-[-80px] max-lg:top-0 lg:left-[543px] lg:top-px"
         aria-hidden
@@ -68,6 +74,6 @@ export function AISaaSServiceCard() {
           <ArrowIcon />
         </button>
       </div>
-    </article>
+    </motion.article>
   )
 }

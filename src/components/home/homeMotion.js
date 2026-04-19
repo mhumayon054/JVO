@@ -68,3 +68,39 @@ export const sectionStagger = {
 }
 
 export const MotionLink = motion(Link)
+
+/** Primary gradient CTA — matches HomePage “Book Discovery Call” */
+export const hoverPrimaryCta = {
+  whileHover: { y: -2, boxShadow: '0 18px 40px -16px rgba(116, 89, 247, 0.35)' },
+  whileTap: { scale: 0.985 },
+  transition: { duration: 0.28, ease: EASE },
+}
+
+/** Compact press feedback for links / ghost buttons */
+export const hoverTapSoft = {
+  whileTap: { scale: 0.985 },
+  transition: { duration: 0.16, ease: EASE },
+}
+
+/** Bordered surface — matches HomeSuccessStoriesSection cards */
+export const hoverCardBorderGlow = {
+  whileHover: {
+    borderColor: 'rgba(116, 89, 247, 0.2)',
+    transition: { duration: 0.35, ease: EASE },
+  },
+}
+
+/** Media inside a framed card */
+export const hoverMediaKen = {
+  whileHover: { scale: 1.03, opacity: 0.82 },
+  transition: { duration: 0.55, ease: EASE },
+}
+
+/** Founders-style framed media block */
+export const hoverFramedMedia = {
+  container: {
+    whileHover: { borderColor: 'rgba(116, 89, 247, 0.2)', transition: { duration: 0.35, ease: EASE } },
+  },
+  image: hoverMediaKen,
+}
+
