@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "squad_brief_submissions",
+  "info": {
+    "singularName": "squad-brief-submission",
+    "pluralName": "squad-brief-submissions",
+    "displayName": "Squad Brief Submission"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "company": {
+      "type": "string"
+    },
+    "selectedMembers": {
+      "type": "json"
+    },
+    "selectedMemberIds": {
+      "type": "json"
+    },
+    "monthlyBurn": {
+      "type": "integer"
+    },
+    "projectTotal": {
+      "type": "integer"
+    },
+    "notes": {
+      "type": "text"
+    },
+    "sourcePage": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["new", "reviewed", "contacted", "closed"],
+      "default": "new"
+    }
+  }
+}

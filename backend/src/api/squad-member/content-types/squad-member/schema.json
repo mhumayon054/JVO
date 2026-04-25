@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "squad_members",
+  "info": {
+    "singularName": "squad-member",
+    "pluralName": "squad-members",
+    "displayName": "Squad Member"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "seniority": {
+      "type": "string"
+    },
+    "monthlyRate": {
+      "type": "integer"
+    },
+    "skills": {
+      "type": "json"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "availability": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

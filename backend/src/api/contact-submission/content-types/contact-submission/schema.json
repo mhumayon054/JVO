@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contact_submissions",
+  "info": {
+    "singularName": "contact-submission",
+    "pluralName": "contact-submissions",
+    "displayName": "Contact Submission"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "startupName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "projectDescription": {
+      "type": "text",
+      "required": true
+    },
+    "budgetRange": {
+      "type": "enumeration",
+      "enum": ["range_10k_25k", "range_25k_100k", "range_100k_500k", "range_500k_plus"]
+    },
+    "sourcePage": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["new", "contacted", "qualified", "rejected"],
+      "default": "new"
+    },
+    "internalNotes": {
+      "type": "richtext"
+    }
+  }
+}

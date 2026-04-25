@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "case_studies",
+  "info": {
+    "singularName": "case-study",
+    "pluralName": "case-studies",
+    "displayName": "Case Study"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "industry": {
+      "type": "string"
+    },
+    "shortDescription": {
+      "type": "text"
+    },
+    "problem": {
+      "type": "richtext"
+    },
+    "solution": {
+      "type": "richtext"
+    },
+    "resultSummary": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "stats": {
+      "type": "json"
+    },
+    "techStack": {
+      "type": "json"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}
