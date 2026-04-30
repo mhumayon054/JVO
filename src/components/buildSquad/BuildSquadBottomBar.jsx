@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom'
-
-export function BuildSquadBottomBar({ selectedCount }) {
+export function BuildSquadBottomBar({ selectedCount, onDeploy, deployState = 'idle' }) {
   const handleExport = () => {
     window.print()
   }
@@ -19,15 +17,17 @@ export function BuildSquadBottomBar({ selectedCount }) {
           >
             Export brief
           </button>
-          <Link
-            to="/contact"
-            className="rounded-[6px] px-10 py-3 text-center text-[14px] font-bold leading-[1.43] text-black transition-opacity hover:opacity-95"
+          <button
+            type="button"
+            onClick={onDeploy}
+            disabled={deployState === 'loading'}
+            className="rounded-[6px] px-10 py-3 text-center text-[14px] font-bold leading-[1.43] text-black transition-opacity hover:opacity-95 disabled:opacity-70"
             style={{
               background: 'linear-gradient(169deg, rgba(116, 89, 247, 1) 0%, rgba(175, 162, 255, 1) 100%)',
             }}
           >
-            Deploy Squad
-          </Link>
+            {deployState === 'loading' ? 'Submitting...' : 'Deploy Squad'}
+          </button>
         </div>
       </div>
     </div>

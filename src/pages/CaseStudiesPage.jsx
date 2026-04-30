@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import { MotionConfig, motion } from 'framer-motion'
 import {
   fadeFromX,
@@ -10,8 +11,35 @@ import { PageContent } from '../components/PageContent'
 import { CaseStudyAetherSection } from '../components/CaseStudyAetherSection'
 import { CaseStudyFeaturedSection } from '../components/case-studies/CaseStudyFeaturedSection'
 import { CaseStudiesVoidCta } from '../components/case-studies/CaseStudiesVoidCta'
+import { getCaseStudies } from '../lib/strapi'
 
 export default function CaseStudiesPage() {
+  const [caseStudies, setCaseStudies] = useState([])
+  const [caseState, setCaseState] = useState({ loading: false, error: '' })
+
+  useEffect(() => {
+    let mounted = true
+    async function loadCaseStudies() {
+      setCaseState({ loading: true, error: '' })
+      try {
+        const data = await getCaseStudies()
+        if (!mounted || !Array.isArray(data) || data.length === 0) return
+        setCaseStudies(data)
+      } catch (error) {
+        if (mounted) setCaseState({ loading: false, error: error.message || 'Failed to load case studies.' })
+        return
+      }
+      if (mounted) setCaseState({ loading: false, error: '' })
+    }
+    loadCaseStudies()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  const firstCaseStudy = useMemo(() => caseStudies[0] || null, [caseStudies])
+  const secondCaseStudy = useMemo(() => caseStudies[1] || null, [caseStudies])
+
   return (
     <>
       <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
@@ -65,8 +93,8 @@ export default function CaseStudiesPage() {
                 >
                   Success Stories
                 </motion.h2>
-                <CaseStudyAetherSection />
-                <CaseStudyFeaturedSection />
+                <CaseStudyAetherSection entry={firstCaseStudy} />
+                <CaseStudyFeaturedSection entry={secondCaseStudy} />
               </motion.div>
             </section>
 
@@ -102,6 +130,8 @@ export default function CaseStudiesPage() {
               </Link>
             </div> */}
             </section>
+            {caseState.loading ? <p className="text-center text-sm text-[#ABABAB]">Loading case studies...</p> : null}
+            {caseState.error ? <p className="text-center text-sm text-[#ff8c8c]">Using fallback case studies: {caseState.error}</p> : null}
           </PageContent>
         </MotionConfig>
 

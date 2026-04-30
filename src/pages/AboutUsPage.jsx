@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { MotionConfig, motion } from 'framer-motion'
 import {
   MotionLink,
@@ -10,6 +11,7 @@ import {
 } from '../components/home/homeMotion'
 import { SiteHeader } from '../components/SiteHeader'
 import { PartnershipFooter } from '../components/PartnershipFooter'
+import { getStrapiMediaUrl, getTeamMembers } from '../lib/strapi'
 
 function StoryIconRoots() {
   return (
@@ -73,6 +75,37 @@ const leaders = [
 ]
 
 export default function AboutUsPage() {
+  const [teamMembers, setTeamMembers] = useState(leaders)
+  const [teamState, setTeamState] = useState({ loading: false, error: '' })
+
+  useEffect(() => {
+    let mounted = true
+    async function loadMembers() {
+      setTeamState({ loading: true, error: '' })
+      try {
+        const data = await getTeamMembers()
+        if (!mounted || !Array.isArray(data) || data.length === 0) return
+        const mapped = data.map((item) => {
+          const attrs = item.attributes || item
+          return {
+            name: attrs.name || 'Team Member',
+            role: attrs.role || '',
+            bio: attrs.bio || '',
+            img: getStrapiMediaUrl(attrs.image) || '/figma/about/leader-julian-543c57.png',
+          }
+        })
+        setTeamMembers(mapped)
+      } catch (error) {
+        if (mounted) setTeamState({ loading: false, error: error.message || 'Failed to load team members.' })
+        return
+      }
+      if (mounted) setTeamState({ loading: false, error: '' })
+    }
+    loadMembers()
+    return () => {
+      mounted = false
+    }
+  }, [])
   return (
     <>
       <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
@@ -210,7 +243,7 @@ export default function AboutUsPage() {
                   Leadership Team
                 </motion.h2>
                 <motion.div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-8" variants={staggerContainer(0.06, 0.12)}>
-                  {leaders.map((l) => (
+                  {teamMembers.map((l) => (
                     <motion.article
                       key={l.name}
                       variants={fadeUp(22)}
@@ -228,6 +261,8 @@ export default function AboutUsPage() {
                     </motion.article>
                   ))}
                 </motion.div>
+                {teamState.loading ? <p className="text-sm text-[#ABABAB]">Loading team members...</p> : null}
+                {teamState.error ? <p className="text-sm text-[#ff8c8c]">Using fallback team data: {teamState.error}</p> : null}
               </motion.div>
             </section>
 

@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import { MotionConfig, motion } from 'framer-motion'
 import {
   MotionLink,
@@ -13,8 +14,85 @@ import { PartnershipFooter } from '../components/PartnershipFooter'
 import { PageContent } from '../components/PageContent'
 import { ServiceSmallCard } from '../components/ServiceSmallCard'
 import { AISaaSServiceCard } from '../components/AISaaSServiceCard'
+import { getServices } from '../lib/strapi'
+
+const fallbackServices = [
+  {
+    title: 'AI SaaS Development',
+    shortDescription:
+      'Transform your business logic into intelligent automation. We specialize in custom LLM orchestrations, agentic workflows, and production-grade RAG pipelines.',
+    bullets: ['Custom LLM Fine-tuning & Integration', 'Autonomous Agent Workflows', 'Vector Database Architecture'],
+  },
+  {
+    title: 'MVP Development',
+    shortDescription: 'Zero to One in weeks, not months. We build battle-tested prototypes designed for rapid market feedback.',
+    footerLabel: 'Ideal for',
+    footerValue: 'Pre-seed & Seed Stage Startups',
+  },
+  {
+    title: 'SaaS Scaling',
+    shortDescription: 'Optimization for the next 100k users. Infrastructure audits, performance tuning, and feature expansion.',
+    footerLabel: 'Capabilities',
+    footerValue: 'AWS/GCP, Kubernetes, Auto-scaling',
+  },
+  {
+    title: 'CRM/ERP Systems',
+    shortDescription: 'Custom internal tools designed for operational excellence. No generic plugins, just precision code.',
+    footerLabel: 'Focus',
+    footerValue: 'Workflow Automation & Data Intelligence',
+  },
+  {
+    title: 'Mobile Apps',
+    shortDescription: 'High-performance iOS and Android applications with native-feel experiences and smooth interactions.',
+    footerLabel: 'Tech Stack',
+    footerValue: 'React Native, Flutter, Swift',
+  },
+]
 
 export default function ServicesPage() {
+  const [services, setServices] = useState(fallbackServices)
+  const [serviceState, setServiceState] = useState({ loading: false, error: '' })
+
+  useEffect(() => {
+    let mounted = true
+    async function loadServices() {
+      setServiceState({ loading: true, error: '' })
+      try {
+        const data = await getServices()
+        if (!mounted || !Array.isArray(data) || data.length === 0) return
+        const mapped = data.map((item) => {
+          const attrs = item.attributes || item
+          const bullets = Array.isArray(attrs.bullets) ? attrs.bullets : []
+          return {
+            title: attrs.title || 'Service',
+            shortDescription: attrs.shortDescription || '',
+            bullets,
+            footerLabel: attrs.footerLabel || '',
+            footerValue: attrs.footerValue || '',
+          }
+        })
+        setServices(mapped)
+      } catch (error) {
+        if (mounted) setServiceState({ loading: false, error: error.message || 'Failed to load services.' })
+        return
+      }
+      if (mounted) setServiceState({ loading: false, error: '' })
+    }
+    loadServices()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  const bigService = useMemo(() => services[0] || fallbackServices[0], [services])
+  const smallServices = useMemo(() => {
+    const fallbackSmall = fallbackServices.slice(1, 5)
+    const input = services.slice(1, 5)
+    if (input.length === 0) return fallbackSmall
+    while (input.length < 4) input.push(fallbackSmall[input.length])
+    return input
+  }, [services])
+
   return (
     <>
       <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
@@ -81,7 +159,11 @@ export default function ServicesPage() {
                   variants={fadeUp(22)}
                   className="w-full shrink-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] lg:w-[832px] lg:rounded-r-none lg:border-r-0"
                 >
-                  <AISaaSServiceCard />
+                  <AISaaSServiceCard
+                    title={bigService.title}
+                    description={bigService.shortDescription}
+                    bullets={bigService.bullets}
+                  />
                 </motion.div>
                 <motion.div
                   variants={fadeUp(22)}
@@ -90,12 +172,10 @@ export default function ServicesPage() {
                   <ServiceSmallCard
                     mvpLayout
                     variant="mvp"
-                    title="MVP Development"
-                    description={
-                      'Zero to One in weeks, not months. We\nbuild battle-tested prototypes designed\nfor rapid market feedback.'
-                    }
-                    footerLabel="Ideal for"
-                    footerValue="Pre-seed & Seed Stage Startups"
+                    title={smallServices[0].title}
+                    description={smallServices[0].shortDescription}
+                    footerLabel={smallServices[0].footerLabel || 'Ideal for'}
+                    footerValue={smallServices[0].footerValue || 'Pre-seed & Seed Stage Startups'}
                   />
                 </motion.div>
               </motion.div>
@@ -103,39 +183,35 @@ export default function ServicesPage() {
                 <motion.div variants={fadeUp(22)} className="w-full lg:w-[384px] lg:shrink-0">
                   <ServiceSmallCard
                     variant="saas"
-                    title="SaaS Scaling"
-                    description={
-                      'Optimization for the next 100k users.\nInfrastructure audits, performance\ntuning, and feature expansion.'
-                    }
-                    footerLabel="Capabilities"
-                    footerValue="AWS/GCP, Kubernetes, Auto-scaling"
+                    title={smallServices[1].title}
+                    description={smallServices[1].shortDescription}
+                    footerLabel={smallServices[1].footerLabel || 'Capabilities'}
+                    footerValue={smallServices[1].footerValue || 'AWS/GCP, Kubernetes, Auto-scaling'}
                   />
                 </motion.div>
                 <motion.div variants={fadeUp(22)} className="w-full lg:w-[384px] lg:shrink-0">
                   <ServiceSmallCard
                     variant="crm"
-                    title="CRM/ERP Systems"
-                    description={
-                      'Custom internal tools designed for\noperational excellence. No generic\nplugins, just precision code.'
-                    }
-                    footerLabel="Focus"
-                    footerValue="Workflow Automation & Data Intelligence"
+                    title={smallServices[2].title}
+                    description={smallServices[2].shortDescription}
+                    footerLabel={smallServices[2].footerLabel || 'Focus'}
+                    footerValue={smallServices[2].footerValue || 'Workflow Automation & Data Intelligence'}
                   />
                 </motion.div>
                 <motion.div variants={fadeUp(22)} className="w-full lg:w-[384px] lg:shrink-0">
                   <ServiceSmallCard
                     variant="mobile"
-                    title="Mobile Apps"
-                    description={
-                      'High-performance iOS and Android\napplications with native-feel\nexperiences and smooth interactions.'
-                    }
-                    footerLabel="Tech Stack"
-                    footerValue="React Native, Flutter, Swift"
+                    title={smallServices[3].title}
+                    description={smallServices[3].shortDescription}
+                    footerLabel={smallServices[3].footerLabel || 'Tech Stack'}
+                    footerValue={smallServices[3].footerValue || 'React Native, Flutter, Swift'}
                   />
                 </motion.div>
               </motion.div>
               </motion.div>
             </section>
+            {serviceState.loading ? <p className="text-center text-sm text-[#ABABAB]">Loading services...</p> : null}
+            {serviceState.error ? <p className="text-center text-sm text-[#ff8c8c]">Using fallback services: {serviceState.error}</p> : null}
 
             {/* Consultative */}
             <section>

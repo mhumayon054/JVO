@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { MotionConfig, motion } from 'framer-motion'
 import { SiteHeader } from '../components/SiteHeader'
 import { PartnershipFooter } from '../components/PartnershipFooter'
@@ -13,6 +13,7 @@ import {
   staggerContainer,
   viewportOnce,
 } from '../components/home/homeMotion'
+import { getInsights, getStrapiMediaUrl, subscribeNewsletter } from '../lib/strapi'
 
 function IconArrowMd() {
   return (
@@ -71,6 +72,76 @@ const trending = [
 
 export default function InsightsPage() {
   const [page, setPage] = useState(1)
+  const [items, setItems] = useState(articles)
+  const [taxonomyItems, setTaxonomyItems] = useState(taxonomy)
+  const [trendingItems, setTrendingItems] = useState(trending)
+  const [loadingInsights, setLoadingInsights] = useState(false)
+  const [insightsError, setInsightsError] = useState('')
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+  const [newsletterStatus, setNewsletterStatus] = useState('idle')
+  const [newsletterMessage, setNewsletterMessage] = useState('')
+
+  useEffect(() => {
+    let mounted = true
+    async function loadInsights() {
+      setLoadingInsights(true)
+      setInsightsError('')
+      try {
+        const data = await getInsights()
+        if (!mounted || !Array.isArray(data) || data.length === 0) return
+        const mapped = data.map((item) => {
+          const attrs = item.attributes || item
+          return {
+            image: getStrapiMediaUrl(attrs.image) || '/figma/insights/article-1-5f259e.png',
+            category: attrs.category || 'Insights',
+            title: attrs.title || 'Untitled',
+            description: attrs.excerpt || '',
+            trending: Boolean(attrs.trending),
+          }
+        })
+        setItems(mapped)
+        const dynamicTags = [...new Set(mapped.map((x) => x.category).filter(Boolean))]
+        if (dynamicTags.length) setTaxonomyItems(dynamicTags)
+        const dynamicTrending = mapped
+          .filter((x) => x.trending)
+          .slice(0, 3)
+          .map((x, idx) => ({ n: `${String(idx + 1).padStart(2, '0')}.`, title: x.title }))
+        if (dynamicTrending.length) setTrendingItems(dynamicTrending)
+      } catch (error) {
+        if (mounted) setInsightsError(error.message || 'Failed to load insights.')
+      } finally {
+        if (mounted) setLoadingInsights(false)
+      }
+    }
+    loadInsights()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  const featured = useMemo(() => items[0] || null, [items])
+
+  async function onSubmitNewsletter(event) {
+    event.preventDefault()
+    const email = newsletterEmail.trim()
+    if (!email) {
+      setNewsletterStatus('error')
+      setNewsletterMessage('Please enter your email.')
+      return
+    }
+    setNewsletterStatus('loading')
+    setNewsletterMessage('')
+    try {
+      await subscribeNewsletter(email, 'insights')
+      setNewsletterStatus('success')
+      setNewsletterMessage('You are subscribed. Check your inbox for updates.')
+      setNewsletterEmail('')
+    } catch (error) {
+      const isDuplicate = error?.status === 400 || /unique|already/i.test(error?.message || '')
+      setNewsletterStatus('error')
+      setNewsletterMessage(isDuplicate ? 'This email is already subscribed.' : 'Unable to subscribe right now.')
+    }
+  }
 
   return (
     <>
@@ -89,7 +160,7 @@ export default function InsightsPage() {
               >
                 <motion.div className="relative h-[320px] w-full shrink-0 lg:h-auto lg:min-h-[637px] lg:w-[708px] lg:max-w-[58.24%]" variants={fadeUp(18)}>
                   <motion.img
-                    src="/figma/insights/featured-hero-49fd9d.png"
+                    src={featured?.image || '/figma/insights/featured-hero-49fd9d.png'}
                     alt=""
                     className="absolute inset-0 h-full w-full object-cover"
                     {...hoverMediaKen}
@@ -109,12 +180,12 @@ export default function InsightsPage() {
                       <span className="text-[12px] font-medium leading-[1.33] text-[#ABABAB]">12 Min Read</span>
                     </div>
                     <h1 className="whitespace-pre-line text-[48px] font-bold leading-none tracking-[-0.05em] sm:text-[64px] lg:text-[72px]">
-                      The Post-{'\n'}SaaS{'\n'}Architecture.
+                      {featured?.title || `The Post-\nSaaS\nArchitecture.`}
                     </h1>
                   </motion.div>
                   <motion.p variants={fadeUp(16)} className="mt-10 max-w-[560px] text-[18px] font-normal leading-[1.625] text-[#ABABAB]">
-                    Why the next generation of decacorns won&apos;t be built on multi-tenant monoliths, but on sovereign AI agents and
-                    decentralized compute clusters.
+                    {featured?.description ||
+                      'Why the next generation of decacorns won’t be built on multi-tenant monoliths, but on sovereign AI agents and decentralized compute clusters.'}
                   </motion.p>
                   <motion.a
                     href="#"
@@ -147,23 +218,29 @@ export default function InsightsPage() {
                     Weekly notes on scaling engineering teams and AI-first product strategy.
                   </p>
                 </motion.div>
-                <motion.div variants={fadeUp(16)} className="flex flex-col gap-4 sm:flex-row sm:items-stretch sm:gap-4">
+                <motion.form variants={fadeUp(16)} className="flex flex-col gap-4 sm:flex-row sm:items-stretch sm:gap-4" onSubmit={onSubmitNewsletter}>
                 <label className="sr-only" htmlFor="insights-newsletter-email">
                   Email
                 </label>
                 <input
                   id="insights-newsletter-email"
                   type="email"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="founder@company.com"
                   className="min-h-[52px] min-w-0 flex-1 border-0 border-b-2 border-[rgba(72,72,72,0.3)] bg-[#0E0E0E] px-4 py-[14px] text-[16px] leading-[1.21] text-white placeholder:text-[#6B7280] outline-none focus-visible:border-[#AFA2FF] sm:min-w-[240px]"
                 />
                 <button
-                  type="button"
+                  type="submit"
+                  disabled={newsletterStatus === 'loading'}
                   className="shrink-0 bg-[#262626] px-8 py-[13px] text-[16px] font-bold leading-[1.5] text-white"
                 >
-                  Join
+                  {newsletterStatus === 'loading' ? 'Joining...' : 'Join'}
                 </button>
-                </motion.div>
+                </motion.form>
+                {newsletterMessage ? (
+                  <p className={`text-[13px] ${newsletterStatus === 'success' ? 'text-[#AFA2FF]' : 'text-[#ff8c8c]'}`}>{newsletterMessage}</p>
+                ) : null}
               </motion.div>
             </section>
 
@@ -181,7 +258,7 @@ export default function InsightsPage() {
                     className="grid grid-cols-1 gap-x-[32px] gap-y-[80px] sm:grid-cols-2 sm:justify-items-start"
                     variants={staggerContainer(0.06, 0.11)}
                   >
-                    {articles.map((a) => (
+                    {items.map((a) => (
                       <InsightArticleCard
                         key={a.title}
                         image={a.image}
@@ -229,7 +306,7 @@ export default function InsightsPage() {
                       </div>
                       <div className="relative min-h-[94px]">
                         <div className="flex flex-wrap gap-2">
-                          {taxonomy.map((t) => (
+                          {taxonomyItems.map((t) => (
                             <motion.a
                               key={t}
                               href="#"
@@ -249,7 +326,7 @@ export default function InsightsPage() {
                         <h3 className="text-[12px] font-bold uppercase leading-[1.33] tracking-[0.2em] text-white">Popular Now</h3>
                       </div>
                       <div className="flex flex-col gap-8">
-                        {trending.map((item) => (
+                        {trendingItems.map((item) => (
                           <motion.a
                             key={item.n}
                             href="#"
@@ -283,6 +360,8 @@ export default function InsightsPage() {
                 </motion.aside>
               </motion.div>
             </section>
+            {loadingInsights ? <p className="text-center text-sm text-[#ABABAB]">Loading insights...</p> : null}
+            {insightsError ? <p className="text-center text-sm text-[#ff8c8c]">Using fallback content: {insightsError}</p> : null}
           </PageContent>
         </MotionConfig>
       </main>

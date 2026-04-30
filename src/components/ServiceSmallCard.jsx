@@ -1,3 +1,6 @@
+import { motion } from 'framer-motion'
+import { hoverCardBorderGlow } from './home/homeMotion'
+
 function ServiceIconMvp() {
   return (
     <svg className="text-[#AFA2FF]" width={28} height={28} viewBox="0 0 28 28" fill="none" aria-hidden>
@@ -40,9 +43,6 @@ function ServiceIconMobile() {
     </svg>
   )
 }
-
-import { motion } from 'framer-motion'
-import { hoverCardBorderGlow } from './home/homeMotion'
 
 const icons = {
   mvp: ServiceIconMvp,

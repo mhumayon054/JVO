@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useViewportCountersOnce } from '../hooks/useViewportCountersOnce'
 import { fadeUp, staggerContainer, viewportOnce } from './home/homeMotion'
+import { getStrapiMediaUrl } from '../lib/strapi'
 
 const STATS = [
   {
@@ -32,9 +33,19 @@ const STATS = [
 
 const STACK = ['Next.js 14', 'OpenAI GPT-4o', 'Pinecone DB', 'Kubernetes', 'Python / FastAPI']
 
-export function CaseStudyAetherSection() {
+export function CaseStudyAetherSection({ entry }) {
   const rootRef = useRef(null)
   useViewportCountersOnce(rootRef, { threshold: 0.2, duration: 1800 })
+  const attrs = entry?.attributes || entry || {}
+  const statsFromCms = Array.isArray(attrs.stats) ? attrs.stats : null
+  const stackFromCms = Array.isArray(attrs.techStack) ? attrs.techStack : null
+  const title = attrs.title || 'Aether Neural Engine'
+  const shortDescription = attrs.shortDescription || 'Enterprise-Grade Financial LLM Implementation'
+  const image = getStrapiMediaUrl(attrs.image) || '/figma/case-studies/AI Visualization.png'
+  const problem = attrs.problem || 'A Tier-1 financial institution struggled with 40,000+ manual compliance reviews per month. Latency and hallucination risks prevented automation.'
+  const solution = attrs.solution || 'JVO Labs engineered a custom RAG architecture with sub-200ms latency, utilizing specialized embeddings for financial taxonomy and multi-agent verification.'
+  const finalStats = statsFromCms || STATS
+  const finalStack = stackFromCms || STACK
 
   return (
     <motion.div
@@ -48,7 +59,7 @@ export function CaseStudyAetherSection() {
       <motion.div className="flex min-w-0 flex-col" variants={fadeUp(18)}>
         <motion.div className="relative w-full overflow-hidden bg-[#131313]" variants={fadeUp(14)}>
           <img
-            src="/figma/case-studies/AI Visualization.png"
+            src={image}
             alt=""
             className="min-h-[320px] w-full object-cover object-[center_20%] grayscale sm:min-h-[420px] lg:min-h-[520px]"
           />
@@ -60,10 +71,10 @@ export function CaseStudyAetherSection() {
           />
           <div className="absolute bottom-0 left-0 w-full p-[32px] pb-[28px] pt-[80px]">
             <h3 className="text-left text-[32px] font-bold leading-[1.1em] tracking-[-0.02em] text-white sm:text-[36px] lg:text-[40px]">
-              Project: Aether Neural Engine
+              Project: {title}
             </h3>
             <p className="mt-[10px] max-w-[560px] text-left text-[16px] font-normal leading-[1.5em] text-[#ABABAB] lg:text-[18px] lg:leading-[1.55em]">
-              Enterprise-Grade Financial LLM Implementation
+              {shortDescription}
             </p>
           </div>
         </motion.div>
@@ -72,15 +83,13 @@ export function CaseStudyAetherSection() {
           <motion.div variants={fadeUp(14)}>
             <p className="text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.14em] text-[#AFA2FF]">THE PROBLEM</p>
             <p className="mt-[16px] text-left text-[15px] font-normal leading-[1.625em] text-[#ABABAB] sm:text-[16px]">
-              A Tier-1 financial institution struggled with 40,000+ manual compliance reviews per month. Latency and hallucination
-              risks prevented automation.
+              {problem}
             </p>
           </motion.div>
           <motion.div variants={fadeUp(14)}>
             <p className="text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.14em] text-[#AFA2FF]">THE SOLUTION</p>
             <p className="mt-[16px] text-left text-[15px] font-normal leading-[1.625em] text-[#ABABAB] sm:text-[16px]">
-              JVO Labs engineered a custom RAG architecture with sub-200ms latency, utilizing specialized embeddings for financial
-              taxonomy and multi-agent verification.
+              {solution}
             </p>
           </motion.div>
         </motion.div>
@@ -89,7 +98,7 @@ export function CaseStudyAetherSection() {
       <motion.div className="flex min-w-0 flex-col gap-[24px]" variants={fadeUp(18)}>
         <div className="box-border rounded-[16px] border-y-[1px] border-r-[1px] border-[rgba(72,72,72,0.15)] border-l-[4px] border-l-[#AFA2FF] bg-[#131313] py-[40px] pl-[32px] pr-[40px]">
           <div className="flex flex-col gap-[36px]">
-            {STATS.map((s) => (
+            {finalStats.map((s) => (
               <div key={s.label}>
                 <p className="text-left text-[40px] font-bold leading-[1em] tracking-[-0.03em] text-white tabular-nums lg:text-[44px]">
                   <span
@@ -114,7 +123,7 @@ export function CaseStudyAetherSection() {
         <div className="box-border rounded-[16px] border-[1px] border-[rgba(72,72,72,0.15)] bg-[#131313] p-[40px]">
           <p className="text-left text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.12em] text-white">TECHNOLOGY STACK</p>
           <div className="mt-[24px] flex flex-wrap gap-[10px]">
-            {STACK.map((t) => (
+            {finalStack.map((t) => (
               <span
                 key={t}
                 className="inline-flex items-center rounded-[6px] bg-[#262626] px-[14px] py-[9px] text-left text-[13px] font-medium leading-[1.3em] text-[#E8E8E8]"

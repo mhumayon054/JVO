@@ -1,3 +1,6 @@
+import { motion } from 'framer-motion'
+import { hoverCardBorderGlow } from './home/homeMotion'
+
 function ServiceIconAI() {
   return (
     <svg className="text-[#AFA2FF]" width={26} height={26} viewBox="0 0 26 26" fill="none" aria-hidden>
@@ -26,16 +29,16 @@ function ArrowIcon() {
   )
 }
 
-import { motion } from 'framer-motion'
-import { hoverCardBorderGlow } from './home/homeMotion'
-
-const bullets = [
+const defaultBullets = [
   'Custom LLM Fine-tuning & Integration',
   'Autonomous Agent Workflows',
   'Vector Database Architecture',
 ]
 
-export function AISaaSServiceCard() {
+export function AISaaSServiceCard({ title = 'AI SaaS Development', description, bullets = defaultBullets }) {
+  const summary =
+    description ||
+    'Transform your business logic into intelligent automation. We specialize in custom LLM orchestrations, agentic workflows, and production-grade RAG pipelines.'
   return (
     <motion.article
       className="relative flex min-h-0 flex-col justify-center overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] p-10 lg:min-h-[518px]"
@@ -51,11 +54,10 @@ export function AISaaSServiceCard() {
             <ServiceIconAI />
           </div>
           <h3 className="absolute left-0 top-16 max-w-[718px] text-[36px] font-bold leading-[1.1111111111111112] tracking-[-0.025em] text-white">
-            AI SaaS Development
+            {title}
           </h3>
           <p className="absolute left-0 top-[120px] max-w-[576px] text-[18px] font-normal leading-[1.5555555555555556] text-[#ABABAB]">
-            Transform your business logic into intelligent automation. We specialize in custom LLM orchestrations, agentic
-            workflows, and production-grade RAG pipelines.
+            {summary}
           </p>
           <ul className="absolute left-0 top-[236px] flex max-w-[718px] flex-col gap-3">
             {bullets.map((t) => (

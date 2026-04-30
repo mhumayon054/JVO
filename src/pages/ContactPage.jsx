@@ -10,6 +10,7 @@ import {
 } from '../components/home/homeMotion'
 import { SiteHeader } from '../components/SiteHeader'
 import { PartnershipFooter } from '../components/PartnershipFooter'
+import { submitContact } from '../lib/strapi'
 
 function IconBolt() {
   return (
@@ -62,6 +63,51 @@ const inputBase =
 
 export default function ContactPage() {
   const [budget, setBudget] = useState('10k-25k')
+  const [form, setForm] = useState({
+    name: '',
+    startupName: '',
+    email: '',
+    projectDescription: '',
+  })
+  const [submitState, setSubmitState] = useState('idle')
+  const [submitMessage, setSubmitMessage] = useState('')
+  const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || ''
+
+  function updateField(key, value) {
+    setForm((prev) => ({ ...prev, [key]: value }))
+  }
+
+  async function onSubmitContact(event) {
+    event.preventDefault()
+    if (!form.name.trim() || !form.projectDescription.trim()) {
+      setSubmitState('error')
+      setSubmitMessage('Name and project description are required.')
+      return
+    }
+    setSubmitState('loading')
+    setSubmitMessage('')
+    try {
+      await submitContact({
+        name: form.name.trim(),
+        startupName: form.startupName.trim(),
+        email: form.email.trim(),
+        projectDescription: form.projectDescription.trim(),
+        budgetRange: budget,
+        sourcePage: 'contact',
+      })
+      setSubmitState('success')
+      setSubmitMessage('Brief submitted successfully. Our team will contact you soon.')
+      setForm({ name: '', startupName: '', email: '', projectDescription: '' })
+    } catch (error) {
+      setSubmitState('error')
+      setSubmitMessage(error.message || 'Unable to submit your brief right now.')
+    }
+  }
+
+  function onScheduleSession() {
+    if (!calendlyUrl) return
+    window.open(calendlyUrl, '_blank', 'noopener,noreferrer')
+  }
 
   return (
     <>
@@ -94,7 +140,7 @@ export default function ContactPage() {
               <motion.form
                 variants={fadeUp(16)}
                 className="mt-12 flex w-full flex-col gap-8 lg:mt-[48px]"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={onSubmitContact}
               >
                 <div className="flex flex-col gap-2">
                   <label htmlFor="contact-name" className="text-[12px] font-bold uppercase leading-[1.33] tracking-[0.1em] text-[#757575]">
@@ -104,6 +150,8 @@ export default function ContactPage() {
                     id="contact-name"
                     name="name"
                     type="text"
+                    value={form.name}
+                    onChange={(e) => updateField('name', e.target.value)}
                     placeholder="Alex Sterling"
                     className={`${inputBase} py-[18px] leading-[1.21]`}
                     autoComplete="name"
@@ -118,8 +166,26 @@ export default function ContactPage() {
                     id="contact-startup"
                     name="startup"
                     type="text"
+                    value={form.startupName}
+                    onChange={(e) => updateField('startupName', e.target.value)}
                     placeholder="Vertex Intelligence"
                     className={`${inputBase} py-[18px] leading-[1.21]`}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="contact-email" className="text-[12px] font-bold uppercase leading-[1.33] tracking-[0.1em] text-[#757575]">
+                    Email
+                  </label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => updateField('email', e.target.value)}
+                    placeholder="alex@startup.io"
+                    className={`${inputBase} py-[18px] leading-[1.21]`}
+                    autoComplete="email"
                   />
                 </div>
 
@@ -131,6 +197,8 @@ export default function ContactPage() {
                     id="contact-desc"
                     name="description"
                     rows={4}
+                    value={form.projectDescription}
+                    onChange={(e) => updateField('projectDescription', e.target.value)}
                     placeholder="What technical challenge are we solving?"
                     className={`${inputBase} min-h-[152px] resize-y py-4 pb-[88px] leading-[1.5] placeholder:leading-[1.5]`}
                   />
@@ -165,12 +233,16 @@ export default function ContactPage() {
                 <motion.div variants={fadeUp(12)}>
                   <motion.button
                     type="submit"
+                    disabled={submitState === 'loading'}
                     className="relative rounded-[6px] px-12 py-4 text-[16px] font-bold leading-[1.5] text-black shadow-[0px_8px_10px_-6px_rgba(0,0,0,0.1),0px_20px_25px_-5px_rgba(0,0,0,0.1)]"
                     style={{ background: 'linear-gradient(174deg, #7459F7 0%, #AFA2FF 100%)' }}
                     {...hoverPrimaryCta}
                   >
-                    Send Brief
+                    {submitState === 'loading' ? 'Sending...' : 'Send Brief'}
                   </motion.button>
+                  {submitMessage ? (
+                    <p className={`mt-3 text-sm ${submitState === 'success' ? 'text-[#AFA2FF]' : 'text-[#ff8c8c]'}`}>{submitMessage}</p>
+                  ) : null}
                 </motion.div>
               </motion.form>
               </motion.div>
@@ -212,6 +284,8 @@ export default function ContactPage() {
                   <motion.button
                     type="button"
                     className="mt-8 flex w-full items-center justify-center gap-2 rounded-md bg-white py-4 text-[16px] font-bold leading-[1.5] text-black"
+                    onClick={onScheduleSession}
+                    disabled={!calendlyUrl}
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.985 }}
                     transition={{ duration: 0.28, ease: EASE }}

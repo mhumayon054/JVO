@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
+import { useEffect } from 'react'
 import { MotionConfig, motion } from 'framer-motion'
 import { FORECAST_LABELS, SQUAD_MEMBERS } from '../data/buildSquadMembers'
 import { BuildSquadTopBar } from '../components/buildSquad/BuildSquadTopBar'
@@ -8,15 +9,56 @@ import { CapabilityForecast } from '../components/buildSquad/CapabilityForecast'
 import { BuildSquadSummary } from '../components/buildSquad/BuildSquadSummary'
 import { BuildSquadBottomBar } from '../components/buildSquad/BuildSquadBottomBar'
 import { fadeUp, staggerContainer, viewportOnce } from '../components/home/homeMotion'
+import { getSquadMembers, getStrapiMediaUrl, submitSquadBrief } from '../lib/strapi'
 
 function toggleIn(setter, id) {
   setter((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
 }
 
 export default function BuildSquadPage() {
+  const [members, setMembers] = useState(SQUAD_MEMBERS)
   const [selectedRoles, setSelectedRoles] = useState([])
   const [selectedSeniority, setSelectedSeniority] = useState([])
   const [selectedIds, setSelectedIds] = useState([])
+  const [briefContact, setBriefContact] = useState({ name: '', email: '', company: '', notes: '' })
+  const [briefState, setBriefState] = useState('idle')
+  const [briefMessage, setBriefMessage] = useState('')
+  const [membersError, setMembersError] = useState('')
+
+  useEffect(() => {
+    let mounted = true
+    async function loadSquadMembers() {
+      try {
+        const data = await getSquadMembers()
+        if (!mounted || !Array.isArray(data) || data.length === 0) return
+        const mapped = data.map((item, idx) => {
+          const attrs = item.attributes || item
+          const roles = Array.isArray(attrs.roles)
+            ? attrs.roles
+            : attrs.role
+              ? [String(attrs.role).toLowerCase()]
+              : ['engineering']
+          return {
+            id: attrs.slug || attrs.documentId || String(item.id || idx),
+            name: attrs.name || 'Squad Member',
+            title: attrs.title || '',
+            avatar: getStrapiMediaUrl(attrs.image) || '/figma/engineer-1.png',
+            monthlyRate: Number(attrs.monthlyRate || 0),
+            roles,
+            seniority: attrs.seniority || 'mid',
+            skills: attrs.skills || { velocity: 0.7, security: 0.7, ai: 0.7, scale: 0.7 },
+          }
+        })
+        setMembers(mapped)
+      } catch (error) {
+        if (mounted) setMembersError(error.message || 'Failed to load squad members.')
+      }
+    }
+    loadSquadMembers()
+    return () => {
+      mounted = false
+    }
+  }, [])
 
   const onToggleRole = useCallback((id) => toggleIn(setSelectedRoles, id), [])
   const onToggleSeniority = useCallback((id) => toggleIn(setSelectedSeniority, id), [])
@@ -26,16 +68,16 @@ export default function BuildSquadPage() {
   }, [])
 
   const visibleMembers = useMemo(() => {
-    return SQUAD_MEMBERS.filter((m) => {
+    return members.filter((m) => {
       if (selectedRoles.length > 0 && !m.roles.some((r) => selectedRoles.includes(r))) return false
       if (selectedSeniority.length > 0 && !selectedSeniority.includes(m.seniority)) return false
       return true
     })
-  }, [selectedRoles, selectedSeniority])
+  }, [members, selectedRoles, selectedSeniority])
 
   const selectedMembers = useMemo(
-    () => SQUAD_MEMBERS.filter((m) => selectedIds.includes(m.id)),
-    [selectedIds],
+    () => members.filter((m) => selectedIds.includes(m.id)),
+    [members, selectedIds],
   )
 
   const monthlyBurn = useMemo(
@@ -58,6 +100,36 @@ export default function BuildSquadPage() {
     })
     return out
   }, [selectedMembers])
+
+  async function onDeployBrief() {
+    if (selectedMembers.length === 0) {
+      setBriefState('error')
+      setBriefMessage('Select at least one squad member before deploying.')
+      return
+    }
+    setBriefState('loading')
+    setBriefMessage('')
+    try {
+      await submitSquadBrief({
+        name: briefContact.name.trim(),
+        email: briefContact.email.trim(),
+        company: briefContact.company.trim(),
+        selectedMembers,
+        selectedMemberIds: selectedMembers.map((m) => m.id),
+        monthlyBurn,
+        projectTotal,
+        notes: briefContact.notes.trim(),
+        sourcePage: 'build-squad',
+        status: 'new',
+      })
+      setBriefState('success')
+      setBriefMessage('Squad brief submitted successfully.')
+      setBriefContact({ name: '', email: '', company: '', notes: '' })
+    } catch (error) {
+      setBriefState('error')
+      setBriefMessage(error.message || 'Unable to submit squad brief.')
+    }
+  }
 
   return (
     <MotionConfig reducedMotion="user">
@@ -108,6 +180,7 @@ export default function BuildSquadPage() {
               )}
 
               <CapabilityForecast averages={averages} />
+              {membersError ? <p className="mt-4 text-sm text-[#ff8c8c]">Using fallback squad members: {membersError}</p> : null}
             </div>
 
             <div className="border-t border-[rgba(72,72,72,0.15)] px-4 py-8 sm:px-8 lg:px-10 xl:border-t-0 xl:px-8 xl:pt-10">
@@ -116,7 +189,14 @@ export default function BuildSquadPage() {
           </div>
         </div>
 
-        <BuildSquadBottomBar selectedCount={selectedMembers.length} />
+        <BuildSquadBottomBar selectedCount={selectedMembers.length} onDeploy={onDeployBrief} deployState={briefState} />
+        {briefMessage ? (
+          <div className="fixed bottom-24 left-1/2 z-50 -translate-x-1/2 rounded-md border border-[rgba(72,72,72,0.2)] bg-[#131313] px-4 py-2 text-sm text-[#ABABAB]">
+            <span className={briefState === 'success' ? 'text-[#AFA2FF]' : briefState === 'error' ? 'text-[#ff8c8c]' : 'text-[#ABABAB]'}>
+              {briefMessage}
+            </span>
+          </div>
+        ) : null}
       </div>
     </MotionConfig>
   )

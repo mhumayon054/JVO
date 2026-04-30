@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useViewportCountersOnce } from '../../hooks/useViewportCountersOnce'
 import { fadeUp, staggerContainer, viewportOnce } from '../home/homeMotion'
 import { OmniProjectLockVisual } from './OmniProjectLockVisual'
+import { getStrapiMediaUrl } from '../../lib/strapi'
 
 const STACK = ['Next.js 14', 'OpenAI GPT-4o', 'Pinecone DB', 'Kubernetes', 'Python / FastAPI']
 
@@ -33,9 +34,19 @@ const CASE_STATS = [
   },
 ]
 
-export function CaseStudyFeaturedSection() {
+export function CaseStudyFeaturedSection({ entry }) {
   const sectionRef = useRef(null)
   useViewportCountersOnce(sectionRef, { threshold: 0.2, duration: 1800 })
+  const attrs = entry?.attributes || entry || {}
+  const statsFromCms = Array.isArray(attrs.stats) ? attrs.stats : null
+  const stackFromCms = Array.isArray(attrs.techStack) ? attrs.techStack : null
+  const title = attrs.title || 'Omni-Commerce AI'
+  const shortDescription = attrs.shortDescription || 'Personalized Recommendation Engine at Scale'
+  const problem = attrs.problem || 'A global e-commerce platform faced stagnating conversion rates. Static recommendation blocks failed to capture evolving user intent, leaving high-value sessions under-monetized across regions and device types.'
+  const solution = attrs.solution || 'We deployed a behavioral embedding model that updates user personas per session, powering hyper-personalized ranking and real-time content assembly without compromising latency or governance.'
+  const image = getStrapiMediaUrl(attrs.image)
+  const finalStats = statsFromCms || CASE_STATS
+  const finalStack = stackFromCms || STACK
 
   return (
     <motion.div
@@ -56,7 +67,7 @@ export function CaseStudyFeaturedSection() {
         />
         <div className="relative box-border flex flex-col justify-center py-[40px] pl-[32px] pr-[44px] lg:min-h-[520px]">
           <div className="flex flex-col gap-[36px]">
-            {CASE_STATS.map((s) => (
+            {finalStats.map((s) => (
               <div key={s.label} className="text-right">
                 <p className="text-[40px] font-bold leading-[1em] tracking-[-0.03em] text-white tabular-nums lg:text-[44px]">
                   <span
@@ -95,12 +106,12 @@ export function CaseStudyFeaturedSection() {
           aria-hidden
         />
         <div className="relative z-[1] flex w-full max-w-[560px] flex-col items-center text-center">
-          <OmniProjectLockVisual />
+          {image ? <img src={image} alt={title} className="mb-8 h-24 w-24 rounded-xl object-cover" /> : <OmniProjectLockVisual />}
           <h3 className="text-[32px] font-bold leading-[1.1em] tracking-[-0.02em] text-white sm:text-[36px] lg:text-[40px]">
-            Project: Omni-Commerce AI
+            Project: {title}
           </h3>
           <p className="mt-[10px] text-[16px] font-normal leading-[1.5em] text-[#ABABAB] sm:text-[18px] sm:leading-[1.55em]">
-            Personalized Recommendation Engine at Scale
+            {shortDescription}
           </p>
         </div>
       </motion.div>
@@ -114,7 +125,7 @@ export function CaseStudyFeaturedSection() {
             TECHNOLOGY STACK
           </p>
           <div className="mt-[24px] flex flex-wrap gap-[10px]">
-            {STACK.map((t) => (
+            {finalStack.map((t) => (
               <span
                 key={t}
                 className="inline-flex items-center rounded-[6px] bg-[#262626] px-[14px] py-[9px] text-left text-[13px] font-medium leading-[1.3em] text-[#E8E8E8]"
@@ -127,15 +138,13 @@ export function CaseStudyFeaturedSection() {
         <motion.div className="min-w-0" variants={fadeUp(14)}>
           <p className="text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.14em] text-[#AFA2FF]">THE PROBLEM</p>
           <p className="mt-[16px] text-left text-[15px] font-normal leading-[1.625em] text-[#ABABAB] sm:text-[16px]">
-            A global e-commerce platform faced stagnating conversion rates. Static recommendation blocks failed to capture evolving
-            user intent, leaving high-value sessions under-monetized across regions and device types.
+            {problem}
           </p>
         </motion.div>
         <motion.div className="min-w-0" variants={fadeUp(14)}>
           <p className="text-[11px] font-bold uppercase leading-[1.45em] tracking-[0.14em] text-[#AFA2FF]">THE SOLUTION</p>
           <p className="mt-[16px] text-left text-[15px] font-normal leading-[1.625em] text-[#ABABAB] sm:text-[16px]">
-            We deployed a behavioral embedding model that updates user personas per session, powering hyper-personalized ranking and
-            real-time content assembly—without compromising latency or governance.
+            {solution}
           </p>
         </motion.div>
       </motion.div>
