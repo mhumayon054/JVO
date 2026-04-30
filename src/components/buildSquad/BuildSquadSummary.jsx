@@ -7,9 +7,9 @@ function formatUsd(n) {
 
 export function BuildSquadSummary({ monthlyBurn, projectTotal, selectedCount }) {
   return (
-    <aside className="w-full shrink-0 lg:w-[300px]">
+    <aside className="w-full min-w-0 shrink-0 xl:w-full">
       <motion.div
-        className="sticky top-6 rounded-lg border border-[rgba(72,72,72,0.15)] bg-[#131313] p-8"
+        className="sticky top-6 rounded-lg border border-[rgba(72,72,72,0.15)] bg-[#131313] p-6 2xl:p-8"
         variants={staggerContainer(0.06, 0.09)}
         initial="hidden"
         whileInView="visible"

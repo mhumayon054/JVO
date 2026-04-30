@@ -41,7 +41,7 @@ export function AISaaSServiceCard({ title = 'AI SaaS Development', description, 
     'Transform your business logic into intelligent automation. We specialize in custom LLM orchestrations, agentic workflows, and production-grade RAG pipelines.'
   return (
     <motion.article
-      className="relative flex min-h-0 flex-col justify-center overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] p-10 lg:min-h-[518px]"
+      className="relative flex min-h-0 min-w-0 flex-col justify-center overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] p-6 sm:p-10 lg:min-h-[518px]"
       {...hoverCardBorderGlow}
     >
       <div

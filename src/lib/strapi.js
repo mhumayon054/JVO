@@ -152,7 +152,7 @@ export async function getSquadMembers() {
 }
 
 export async function submitSquadBrief(payload) {
-  return strapiRequest('/api/squad-brief-submissions', {
+  return strapiRequest('/api/squad-brief-submissions/submit-and-notify', {
     method: 'POST',
     body: { data: payload },
   })

@@ -16,8 +16,14 @@
     "email": {
       "type": "email"
     },
+    "phone": {
+      "type": "string"
+    },
     "company": {
       "type": "string"
+    },
+    "projectSummary": {
+      "type": "text"
     },
     "selectedMembers": {
       "type": "json"

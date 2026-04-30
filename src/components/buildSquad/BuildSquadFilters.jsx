@@ -21,7 +21,7 @@ function FilterChip({ active, label, onClick }) {
 export function BuildSquadFilters({ selectedRoles, selectedSeniority, onToggleRole, onToggleSeniority }) {
   return (
     <motion.aside
-      className="w-full shrink-0 border-b border-[rgba(72,72,72,0.15)] bg-[#0E0E0E] p-8 lg:w-[300px] lg:border-b-0 lg:border-r"
+      className="w-full min-w-0 shrink-0 border-b border-[rgba(72,72,72,0.15)] bg-[#0E0E0E] p-4 sm:p-8 lg:w-[300px] lg:border-b-0 lg:border-r"
       variants={staggerContainer(0.06, 0.1)}
       initial="hidden"
       whileInView="visible"

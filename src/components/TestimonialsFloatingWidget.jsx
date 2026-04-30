@@ -44,7 +44,11 @@ const DRAG_THRESHOLD = 55
 const VELOCITY_THRESHOLD = 450
 
 export function TestimonialsFloatingWidget() {
-  const [isOpen, setIsOpen] = useState(true)
+    function getInitialWidgetState() {
+        if (typeof window === 'undefined') return true
+        return window.matchMedia('(min-width: 768px)').matches
+      }
+      const [isOpen, setIsOpen] = useState(getInitialWidgetState)
   const [[activeIndex, direction], setSlide] = useState([0, 1])
   const [isHovered, setIsHovered] = useState(false)
   const shouldReduceMotion = useReducedMotion()
@@ -136,7 +140,7 @@ export function TestimonialsFloatingWidget() {
             transition={{ duration: shouldReduceMotion ? 0.2 : 0.55, ease: EASE }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="absolute bottom-[76px] right-0 h-[285px] w-[calc(100vw-32px)] max-w-[640px] overflow-hidden rounded-[22px] border border-[rgba(72,72,72,0.18)] bg-[#0E0E0E]/85 p-4 shadow-[0_28px_90px_rgba(0,0,0,0.58),0_0_60px_rgba(116,89,247,0.16)] backdrop-blur-[22px] sm:w-[640px] sm:p-5"
+            className="absolute bottom-[72px] right-0 h-auto max-h-[min(430px,calc(100vh-120px))] w-[calc(100vw-32px)] max-w-[640px] overflow-hidden rounded-[22px] border border-[rgba(72,72,72,0.18)] bg-[#0E0E0E]/85 p-3 shadow-[0_28px_90px_rgba(0,0,0,0.58),0_0_60px_rgba(116,89,247,0.16)] backdrop-blur-[22px] sm:bottom-[76px] sm:h-[285px] sm:p-5 md:w-[640px]"
           >
             <div
               className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#7459F7]/20 blur-[72px]"
@@ -157,7 +161,7 @@ export function TestimonialsFloatingWidget() {
                   <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#AFA2FF]">
                     Client Signals
                   </p>
-                  <h2 className="mt-1 text-[18px] font-bold leading-tight tracking-[-0.02em] text-white sm:text-[20px]">
+                  <h2 className="mt-1 text-[16px] font-bold leading-tight tracking-[-0.02em] text-white sm:text-[20px]">
                     Founder feedback from high-velocity builds.
                   </h2>
                 </div>
@@ -172,7 +176,7 @@ export function TestimonialsFloatingWidget() {
                 </button>
               </div>
 
-              <div className="relative mt-4 min-h-0 flex-1 overflow-hidden rounded-2xl border border-[rgba(72,72,72,0.15)] bg-[#131313]/70 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.035)] sm:p-5">
+              <div className="relative mt-3 min-h-0 flex-1 overflow-hidden rounded-2xl border border-[rgba(72,72,72,0.15)] bg-[#131313]/70 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.035)] sm:mt-4 sm:p-5">
                 <AnimatePresence mode="wait" custom={direction}>
                   <motion.article
                     key={activeTestimonial.name}
@@ -216,7 +220,7 @@ export function TestimonialsFloatingWidget() {
                         {activeTestimonial.metric}
                       </div>
 
-                      <p className="max-w-[540px] text-[15px] leading-[1.55] text-[#E7E7E7] sm:text-[16px]">
+                      <p className="max-w-[540px] text-[13px] leading-[1.5] text-[#E7E7E7] sm:text-[16px]">
                         “{activeTestimonial.quote}”
                       </p>
                     </div>

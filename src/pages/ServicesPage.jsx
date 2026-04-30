@@ -154,33 +154,40 @@ export default function ServicesPage() {
                 whileInView="visible"
                 viewport={viewportOnce}
               >
-              <motion.div variants={staggerContainer(0.06, 0.11)} className="flex flex-col lg:flex-row lg:items-stretch">
-                <motion.div
-                  variants={fadeUp(22)}
-                  className="w-full shrink-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] lg:w-[832px] lg:rounded-r-none lg:border-r-0"
-                >
-                  <AISaaSServiceCard
-                    title={bigService.title}
-                    description={bigService.shortDescription}
-                    bullets={bigService.bullets}
-                  />
-                </motion.div>
-                <motion.div
-                  variants={fadeUp(22)}
-                  className="w-full shrink-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] lg:w-[384px] lg:rounded-l-none lg:border-l-0"
-                >
-                  <ServiceSmallCard
-                    mvpLayout
-                    variant="mvp"
-                    title={smallServices[0].title}
-                    description={smallServices[0].shortDescription}
-                    footerLabel={smallServices[0].footerLabel || 'Ideal for'}
-                    footerValue={smallServices[0].footerValue || 'Pre-seed & Seed Stage Startups'}
-                  />
-                </motion.div>
-              </motion.div>
-              <motion.div variants={staggerContainer(0.06, 0.11)} className="flex flex-col gap-8 lg:flex-row lg:gap-8">
-                <motion.div variants={fadeUp(22)} className="w-full lg:w-[384px] lg:shrink-0">
+              <motion.div
+  variants={staggerContainer(0.06, 0.11)}
+  className="grid min-w-0 grid-cols-1 gap-8 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] xl:gap-0"
+>
+  <motion.div
+    variants={fadeUp(22)}
+    className="min-w-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] xl:rounded-r-none xl:border-r-0"
+  >
+    <AISaaSServiceCard
+      title={bigService.title}
+      description={bigService.shortDescription}
+      bullets={bigService.bullets}
+    />
+  </motion.div>
+
+  <motion.div
+    variants={fadeUp(22)}
+    className="min-w-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] xl:rounded-l-none xl:border-l-0"
+  >
+    <ServiceSmallCard
+      mvpLayout
+      variant="mvp"
+      title={smallServices[0].title}
+      description={smallServices[0].shortDescription}
+      footerLabel={smallServices[0].footerLabel || 'Ideal for'}
+      footerValue={smallServices[0].footerValue || 'Pre-seed & Seed Stage Startups'}
+    />
+  </motion.div>
+</motion.div>
+<motion.div
+  variants={staggerContainer(0.06, 0.11)}
+  className="grid min-w-0 grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3"
+>
+                <motion.div variants={fadeUp(22)} className="min-w-0">
                   <ServiceSmallCard
                     variant="saas"
                     title={smallServices[1].title}

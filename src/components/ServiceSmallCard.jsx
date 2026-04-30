@@ -56,7 +56,7 @@ export function ServiceSmallCard({ variant, title, description, footerLabel, foo
 
   return (
     <motion.article
-      className={`flex h-full flex-col rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] p-10 ${
+    className={`flex h-full min-w-0 flex-col rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] p-6 sm:p-10 ${
         mvpLayout ? 'gap-[105px]' : 'justify-between'
       }`}
       {...hoverCardBorderGlow}
