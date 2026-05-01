@@ -105,7 +105,7 @@ export function SiteHeader() {
         <div ref={headerBarRef} className="mx-auto flex w-full max-w-[1280px] items-center justify-between gap-3 px-4 py-4 sm:gap-6 sm:px-8 sm:py-5">
           <Link
   to="/"
-  className="flex h-10 w-10 shrink-0 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7459F7]"
+  className="flex h-12 w-12 shrink-0 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7459F7]"
   aria-label="JVO Labs home"
 >
   <img
