@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ai_strategy_submissions",
+  "info": {
+    "singularName": "ai-strategy-submission",
+    "pluralName": "ai-strategy-submissions",
+    "displayName": "AI Strategy Submission"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "mode": {
+      "type": "enumeration",
+      "enum": ["auto", "deeper"],
+      "required": true,
+      "default": "auto"
+    },
+    "workEmail": {
+      "type": "email",
+      "required": true
+    },
+    "ideaText": {
+      "type": "text",
+      "required": true
+    },
+    "questionnaire": {
+      "type": "json"
+    },
+    "answers": {
+      "type": "json"
+    },
+    "strategyResult": {
+      "type": "json"
+    },
+    "retrievalContextMeta": {
+      "type": "json"
+    },
+    "moderationMeta": {
+      "type": "json"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["draft", "questionnaire_ready", "in_progress", "completed", "failed"],
+      "default": "draft"
+    },
+    "sourcePage": {
+      "type": "string"
+    },
+    "pdfFileName": {
+      "type": "string"
+    },
+    "emailSent": {
+      "type": "boolean",
+      "default": false
+    },
+    "emailMessage": {
+      "type": "text"
+    },
+    "errorMessage": {
+      "type": "text"
+    },
+    "tokenUsage": {
+      "type": "json"
+    }
+  }
+}

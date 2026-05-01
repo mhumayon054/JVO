@@ -11,6 +11,7 @@ import { HomeSuccessStoriesSection } from '../components/home/HomeSuccessStories
 import { HomeFaqSection } from '../components/home/HomeFaqSection'
 import { HomeStatsSection } from '../components/home/HomeStatsSection'
 import { HomeHeroVisual } from '../components/home/HomeHeroVisual'
+import { AIStrategyBuilderSection } from '../components/home/AIStrategyBuilderSection'
 import { MotionLink, fadeUp, staggerContainer, viewportOnce, EASE } from '../components/home/homeMotion'
 
 
@@ -149,58 +150,7 @@ export default function HomePage() {
 
           <HomeStatsSection />
 
-          <motion.section
-            className="py-16"
-            variants={staggerContainer(0.08, 0.11)}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportOnce}
-          >
-            <motion.p
-              variants={fadeUp(14)}
-              className="inline-block rounded-xl border border-[rgba(72,72,72,0.15)] px-4 py-1 text-[12px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF]"
-            >
-              AI-Powered
-            </motion.p>
-            <motion.h2
-              variants={fadeUp(18)}
-              className="mt-4 text-[48px] font-bold tracking-[-0.025em] max-md:text-[32px]"
-            >
-              AI Strategy Builder
-            </motion.h2>
-            <motion.div
-              variants={fadeUp(22)}
-              className="mt-4 grid grid-cols-1 rounded-2xl border border-[rgba(72,72,72,0.15)] bg-[rgba(72,72,72,0.2)] lg:grid-cols-2"
-            >
-              <div className="bg-[#131313] p-12 max-md:p-8">
-                <p className="text-[16px] leading-[1.5] text-[#ABABAB]">
-                  Describe your vision to receive a technical roadmap and high-level architecture proposal instantly.
-                </p>
-                <div className="mt-8 space-y-6">
-                  <div>
-                    <p className="mb-2 text-[14px] uppercase tracking-[0.1em] text-[#AFA2FF]">
-                      What are you trying to build?
-                    </p>
-                    <div className="rounded-md border border-transparent bg-[#191919] px-4 py-4 pb-16 text-[16px] text-[#757575]">
-                      e.g., A multi-tenant LLM platform for automated legal document analysis...
-                    </div>
-                  </div>
-                  <div>
-                    <p className="mb-2 text-[14px] uppercase tracking-[0.1em] text-[#AFA2FF]">Work Email</p>
-                    <div className="rounded-md bg-[#191919] px-4 py-[18px] text-[16px] text-[#757575]">alex@startup.io</div>
-                  </div>
-                  <button className="w-full rounded-md bg-gradient-to-r from-[#7459F7] to-[#AFA2FF] py-5 text-[18px] font-bold text-black">
-                    Generate Strategy
-                  </button>
-                </div>
-              </div>
-              <div className="flex items-center justify-center p-12 max-md:p-8">
-                <div className="w-full rounded-xl border border-[rgba(72,72,72,0.15)] bg-[#0F0F0F] p-12 text-center text-[#757575]">
-                  Your AI architecture blueprint will appear here once generated.
-                </div>
-              </div>
-            </motion.div>
-          </motion.section>
+          <AIStrategyBuilderSection />
 
           <CoreCapabilitiesCards />
 
@@ -308,3 +258,4 @@ export default function HomePage() {
     </main>
   )
 }
+

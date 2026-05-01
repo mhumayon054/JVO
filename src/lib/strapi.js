@@ -157,3 +157,26 @@ export async function submitSquadBrief(payload) {
     body: { data: payload },
   })
 }
+export async function startAIStrategySubmission(payload) {
+  return strapiRequest('/api/ai-strategy-submissions/start', {
+    method: 'POST',
+    body: { data: payload },
+  })
+}
+
+export async function submitAIStrategyQuestionnaire(id, answers) {
+  return strapiRequest(`/api/ai-strategy-submissions/${id}/questionnaire`, {
+    method: 'POST',
+    body: { data: { answers } },
+  })
+}
+
+export async function getAIStrategySubmission(id) {
+  return strapiRequest(`/api/ai-strategy-submissions/${id}`)
+}
+
+export async function resendAIStrategyEmail(id) {
+  return strapiRequest(`/api/ai-strategy-submissions/${id}/resend-email`, {
+    method: 'POST',
+  })
+}

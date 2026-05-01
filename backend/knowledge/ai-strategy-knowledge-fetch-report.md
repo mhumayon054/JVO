@@ -1,0 +1,47 @@
+# AI Strategy Knowledge Fetch Report
+
+- Total attempted: 40
+- Success: 19
+- Failed: 21
+
+## Details
+- FAIL: https://platform.openai.com/docs/quickstart -> HTTP 403
+- FAIL: https://platform.openai.com/docs/api-reference/responses -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/structured-outputs -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/function-calling -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/tools-file-search -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/retrieval -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/text -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/images -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/audio -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/embeddings -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/safety-best-practices -> HTTP 403
+- FAIL: https://platform.openai.com/docs/guides/prompt-engineering -> HTTP 403
+- FAIL: https://platform.openai.com/docs/models -> HTTP 403
+- FAIL: https://platform.openai.com/docs/pricing -> HTTP 403
+- OK: https://github.com/openai/openai-node -> knowledge\sources\015-github-com-openai-openai-node.md
+- OK: https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html -> knowledge\sources\016-docs-aws-amazon-com-wellarchitected-latest-framework-welcome-html.md
+- OK: https://docs.aws.amazon.com/wellarchitected/latest/framework/definitions.html -> knowledge\sources\017-docs-aws-amazon-com-wellarchitected-latest-framework-definitions-html.md
+- OK: https://docs.aws.amazon.com/wellarchitected/latest/framework/the-pillars-of-the-framework.html -> knowledge\sources\018-docs-aws-amazon-com-wellarchitected-latest-framework-the-pillars-of-the-framework-html.md
+- FAIL: https://docs.aws.amazon.com/wellarchitected/latest/framework/operational-excellence-pillar.html -> Content too short after cleaning
+- FAIL: https://docs.aws.amazon.com/wellarchitected/latest/framework/security-pillar.html -> Content too short after cleaning
+- FAIL: https://docs.aws.amazon.com/wellarchitected/latest/framework/reliability-pillar.html -> Content too short after cleaning
+- FAIL: https://docs.aws.amazon.com/wellarchitected/latest/framework/performance-efficiency-pillar.html -> Content too short after cleaning
+- FAIL: https://docs.aws.amazon.com/wellarchitected/latest/framework/cost-optimization-pillar.html -> Content too short after cleaning
+- FAIL: https://docs.aws.amazon.com/wellarchitected/latest/framework/sustainability-pillar.html -> Content too short after cleaning
+- OK: https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html -> knowledge\sources\025-docs-aws-amazon-com-wellarchitected-latest-reliability-pillar-welcome-html.md
+- OK: https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html -> knowledge\sources\026-docs-aws-amazon-com-wellarchitected-latest-security-pillar-welcome-html.md
+- OK: https://docs.aws.amazon.com/wellarchitected/latest/operational-excellence-pillar/welcome.html -> knowledge\sources\027-docs-aws-amazon-com-wellarchitected-latest-operational-excellence-pillar-welcome-html.md
+- OK: https://docs.aws.amazon.com/wellarchitected/latest/performance-efficiency-pillar/welcome.html -> knowledge\sources\028-docs-aws-amazon-com-wellarchitected-latest-performance-efficiency-pillar-welcome-html.md
+- OK: https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html -> knowledge\sources\029-docs-aws-amazon-com-wellarchitected-latest-cost-optimization-pillar-welcome-html.md
+- FAIL: https://docs.aws.amazon.com/wellarchitected/latest/sustainability-pillar/welcome.html -> Content too short after cleaning
+- OK: https://learn.microsoft.com/en-us/azure/well-architected/ -> knowledge\sources\031-learn-microsoft-com-en-us-azure-well-architected.md
+- OK: https://learn.microsoft.com/en-us/azure/well-architected/what-is-well-architected-framework -> knowledge\sources\032-learn-microsoft-com-en-us-azure-well-architected-what-is-well-architected-framework.md
+- OK: https://learn.microsoft.com/en-us/azure/well-architected/reliability/ -> knowledge\sources\033-learn-microsoft-com-en-us-azure-well-architected-reliability.md
+- OK: https://learn.microsoft.com/en-us/azure/well-architected/security/ -> knowledge\sources\034-learn-microsoft-com-en-us-azure-well-architected-security.md
+- OK: https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/ -> knowledge\sources\035-learn-microsoft-com-en-us-azure-well-architected-cost-optimization.md
+- OK: https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/ -> knowledge\sources\036-learn-microsoft-com-en-us-azure-well-architected-operational-excellence.md
+- OK: https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/ -> knowledge\sources\037-learn-microsoft-com-en-us-azure-well-architected-performance-efficiency.md
+- OK: https://learn.microsoft.com/en-us/azure/architecture/ -> knowledge\sources\038-learn-microsoft-com-en-us-azure-architecture.md
+- OK: https://learn.microsoft.com/en-us/azure/architecture/patterns/ -> knowledge\sources\039-learn-microsoft-com-en-us-azure-architecture-patterns.md
+- OK: https://learn.microsoft.com/en-us/azure/architecture/guide/ -> knowledge\sources\040-learn-microsoft-com-en-us-azure-architecture-guide.md
