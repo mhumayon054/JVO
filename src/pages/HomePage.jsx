@@ -1,4 +1,5 @@
-import { MotionConfig, motion } from 'framer-motion'
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { SiteHeader } from '../components/SiteHeader'
 import { PageContent } from '../components/PageContent'
 import { PartnershipFooter } from '../components/PartnershipFooter'
@@ -12,7 +13,86 @@ import { HomeStatsSection } from '../components/home/HomeStatsSection'
 import { HomeHeroVisual } from '../components/home/HomeHeroVisual'
 import { MotionLink, fadeUp, staggerContainer, viewportOnce, EASE } from '../components/home/homeMotion'
 
+
+const FOUNDER_VIDEO = {
+  thumbnail: '/figma/founder_thumbnail.png',
+  videoSrc: '/videos/founder-message.mp4',
+  title: 'A Message from Our Founders',
+  label: "Founder’s Message",
+}
+
+function FounderVideoModal({ video, onClose }) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') onClose()
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [onClose])
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-6 backdrop-blur-xl sm:px-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.28, ease: EASE }}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={video.title}
+    >
+      <motion.div
+        className="relative w-full max-w-[1120px] overflow-hidden rounded-[28px] border border-white/10 bg-[#101010] shadow-[0_35px_90px_rgba(0,0,0,0.7)]"
+        initial={{ y: 28, scale: 0.96, opacity: 0 }}
+        animate={{ y: 0, scale: 1, opacity: 1 }}
+        exit={{ y: 18, scale: 0.97, opacity: 0 }}
+        transition={{ duration: 0.35, ease: EASE }}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="absolute right-4 top-4 z-30 flex items-center gap-2">
+          <span className="hidden rounded-full border border-white/10 bg-black/35 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#AFA2FF] backdrop-blur-md sm:inline-flex">
+            {video.label}
+          </span>
+          <button
+            type="button"
+            aria-label="Close founder video"
+            onClick={onClose}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/45 text-xl leading-none text-white backdrop-blur-md transition hover:border-[#8B5CF6]/50 hover:bg-[#8B5CF6]/25"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="relative flex max-h-[82vh] min-h-[280px] w-full items-center justify-center bg-[#070707] p-2 sm:min-h-[420px] sm:p-4">
+          <video
+            src={video.videoSrc}
+            poster={video.thumbnail}
+            className="max-h-[78vh] w-full rounded-2xl object-contain"
+            controls
+            autoPlay
+            playsInline
+            preload="metadata"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 export default function HomePage() {
+  const [founderVideoOpen, setFounderVideoOpen] = useState(false)
+
   return (
     <main className="mx-auto w-full max-w-[1280px] bg-[#0E0E0E] text-white">
       <SiteHeader />
@@ -150,22 +230,36 @@ export default function HomePage() {
               Our commitment to engineering excellence is what drives every project we touch. Hear directly from our team
               about the JVO Labs philosophy.
             </motion.p>
-            <motion.div
+            <motion.button
+              type="button"
               variants={fadeUp(26)}
-              className="relative mx-auto mt-10 max-w-[1022px] overflow-hidden rounded-3xl border border-[rgba(72,72,72,0.15)]"
-              whileHover={{ borderColor: 'rgba(116, 89, 247, 0.2)', transition: { duration: 0.35, ease: EASE } }}
+              className="group relative mx-auto mt-10 block w-full max-w-[1022px] overflow-hidden rounded-3xl border border-[rgba(72,72,72,0.15)] text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7459F7]"
+              whileHover={{ borderColor: 'rgba(116, 89, 247, 0.26)', transition: { duration: 0.35, ease: EASE } }}
+              whileTap={{ scale: 0.99 }}
+              onClick={() => setFounderVideoOpen(true)}
+              aria-label="Open founder message video"
             >
               <motion.img
-                src="/figma/founders.png"
-                className="h-[574px] w-full object-cover opacity-60 max-md:h-[320px]"
-                alt="Founders message"
-                whileHover={{ scale: 1.02, opacity: 0.68 }}
+                src={FOUNDER_VIDEO.thumbnail}
+                className="h-[574px] w-full object-cover opacity-75 transition duration-500 group-hover:opacity-90 max-md:h-[320px]"
+                alt="Founder message thumbnail"
+                whileHover={{ scale: 1.025 }}
                 transition={{ duration: 0.55, ease: EASE }}
               />
-              <button className="absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[rgba(72,72,72,0.15)] bg-[rgba(19,19,19,0.7)] text-[#AFA2FF]">
-                ▶
-              </button>
-            </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E0E]/78 via-[#0E0E0E]/18 to-transparent" aria-hidden />
+              <div className="absolute inset-0 bg-[#7459F7]/0 transition duration-500 group-hover:bg-[#7459F7]/8" aria-hidden />
+              <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-[rgba(19,19,19,0.72)] text-[#AFA2FF] shadow-[0_18px_45px_rgba(0,0,0,0.45)] backdrop-blur-md transition duration-300 group-hover:scale-105 group-hover:border-[#8B5CF6]/45 group-hover:bg-[#8B5CF6]/20 max-sm:h-14 max-sm:w-14">
+                <span className="ml-1 text-[26px] leading-none" aria-hidden>
+                  ▶
+                </span>
+              </span>
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#AFA2FF]">{FOUNDER_VIDEO.label}</p>
+                <p className="mt-2 max-w-[560px] text-[20px] font-bold leading-[1.25] tracking-[-0.02em] text-white md:text-[24px]">
+                  Watch the founder message
+                </p>
+              </div>
+            </motion.button>
           </motion.section>
 
           <HomeSuccessStoriesSection />
@@ -205,6 +299,10 @@ export default function HomePage() {
           </motion.section>
         </PageContent>
       </MotionConfig>
+
+      <AnimatePresence>
+        {founderVideoOpen && <FounderVideoModal video={FOUNDER_VIDEO} onClose={() => setFounderVideoOpen(false)} />}
+      </AnimatePresence>
 
       <PartnershipFooter />
     </main>

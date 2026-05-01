@@ -104,11 +104,16 @@ export function SiteHeader() {
       <header className="sticky top-0 z-50 border-b border-[rgba(72,72,72,0.15)] bg-[#0E0E0E]/92 backdrop-blur-md supports-[backdrop-filter]:bg-[#0E0E0E]/88">
         <div ref={headerBarRef} className="mx-auto flex w-full max-w-[1280px] items-center justify-between gap-3 px-4 py-4 sm:gap-6 sm:px-8 sm:py-5">
           <Link
-            to="/"
-            className="shrink-0 text-[13px] font-bold uppercase tracking-[0.18em] text-white transition-colors duration-200 hover:text-[#AFA2FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7459F7]"
-          >
-            JVO LABS
-          </Link>
+  to="/"
+  className="flex h-10 w-10 shrink-0 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7459F7]"
+  aria-label="JVO Labs home"
+>
+  <img
+    src="/logo/logo.svg"
+    alt="JVO Labs"
+    className="block h-full w-full object-contain"
+  />
+</Link>
 
           <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 lg:flex lg:gap-8 xl:gap-10" aria-label="Primary">
             {items.map(({ to, label, match }) => (
