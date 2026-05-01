@@ -4,21 +4,21 @@ import { EASE, fadeUp, staggerContainer, viewportOnce } from './homeMotion'
 
 const MEMBERS = [
   {
-    name: 'Ari Voss',
-    role: 'AI Engineer',
-    img: '/figma/engineer-1.png',
+    name: 'Sufyan Iftekhar',
+    role: 'Founder / CEO',
+    img: '/figma/imagesuf.webp',
     bio: 'Battle-tested specialist with production experience in high-stakes AI systems.',
   },
   {
-    name: 'Mira Chen',
-    role: 'Tech Lead',
-    img: '/figma/engineer-2.png',
+    name: 'Muhammad Faizan',
+    role: 'Co-Founder / COO',
+    img: '/figma/imagefaizan.webp',
     bio: 'Battle-tested specialist with production experience in high-stakes AI systems.',
   },
   {
-    name: 'Noah Kim',
+    name: 'Ahmad Ashfaq',
     role: 'Cloud Architect',
-    img: '/figma/engineer-3.png',
+    img: '/figma/imageahm.webp',
     bio: 'Battle-tested specialist with production experience in high-stakes AI systems.',
   },
 ]
