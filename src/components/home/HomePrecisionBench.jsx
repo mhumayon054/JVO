@@ -17,7 +17,7 @@ const MEMBERS = [
   },
   {
     name: 'Ahmad Ashfaq',
-    role: 'Cloud Architect',
+    role: 'CTO',
     img: '/figma/imageahm.webp',
     bio: 'Battle-tested specialist with production experience in high-stakes AI systems.',
   },
