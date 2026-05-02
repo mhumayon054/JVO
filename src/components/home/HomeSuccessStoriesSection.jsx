@@ -8,8 +8,9 @@ const STORIES = [
     category: 'Strategy Execution Plateform',
     subtitle: 'Project management, KPI tracking, and execution visibility for growing teams.',
     alt: 'Strategy Execution MVP',
-    fallbackImage: '/figma/project1a.jpg',
+    fallbackImage: '/figma/project1thumbnail.png',
     images: [
+      '/figma/project1thumbnail.png',
       '/figma/project1a.jpg',
       '/figma/project1b.jpg',
       '/figma/project1c.jpg',
@@ -20,8 +21,9 @@ const STORIES = [
     category: 'AI Vehicle Intelligence MVP',
     subtitle: 'Structured vehicle reports combining history, visual inspection, and AI-driven recommendations.',
     alt: 'AI Vehicle Intelligence MVP',
-    fallbackImage: '/figma/project2a.jpg',
+    fallbackImage: '/figma/project2thumbnail.png',
     images: [
+      '/figma/project2thumbnail.png',
       '/figma/project2a.jpg',
       '/figma/project2b.jpg',
       '/figma/project2c.jpg',
