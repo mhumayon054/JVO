@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 
-const SPRING = { stiffness: 88, damping: 28, mass: 0.48 }
-
-const SCROLL_RANGE = 560
-
-const VIDEO_SRC = '/videos/hero-ai.mp4'
+const VIDEO_SRC = '/videos/hero-ai-pingpong.mp4'
 const POSTER_SRC = '/images/hero-ai-poster.jpg'
 const FALLBACK_IMG = '/figma/hero-chip.png'
 
@@ -13,21 +8,11 @@ const FALLBACK_IMG = '/figma/hero-chip.png'
 const REVERSE_SPEED = 1
 
 export function HomeHeroVisual() {
-  const { scrollY } = useScroll()
-  const [isMobile, setIsMobile] = useState(false)
   const [videoFailed, setVideoFailed] = useState(false)
   const videoRef = useRef(null)
   const isReversingRef = useRef(false)
   const rafRef = useRef(0)
   const lastFrameRef = useRef(0)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)')
-    const sync = () => setIsMobile(mq.matches)
-    sync()
-    mq.addEventListener('change', sync)
-    return () => mq.removeEventListener('change', sync)
-  }, [])
 
   useEffect(() => {
     const v = videoRef.current
@@ -72,10 +57,12 @@ export function HomeHeroVisual() {
     const beginReverse = () => {
       cancelReverseRaf()
       v.pause()
+
       const dur = v.duration
       if (Number.isFinite(dur) && dur > 0 && v.currentTime < dur - 0.02) {
         v.currentTime = dur
       }
+
       isReversingRef.current = true
       lastFrameRef.current = performance.now()
       rafRef.current = requestAnimationFrame(reverseTick)
@@ -93,6 +80,7 @@ export function HomeHeroVisual() {
 
     v.addEventListener('ended', onEnded)
     v.addEventListener('loadeddata', onLoadedData)
+
     if (v.readyState >= 2) {
       v.play().catch(() => {})
     }
@@ -106,47 +94,22 @@ export function HomeHeroVisual() {
     }
   }, [videoFailed])
 
-  const m = isMobile ? 0.45 : 1
-
-  const yRaw = useTransform(scrollY, [0, SCROLL_RANGE], [0, -44 * m])
-  const scaleRaw = useTransform(scrollY, [0, SCROLL_RANGE], [1, 1 + 0.045 * m])
-  const rotateZRaw = useTransform(scrollY, [0, SCROLL_RANGE], [0, -1.1 * m])
-  const rotateXRaw = useTransform(scrollY, [0, SCROLL_RANGE], [0, 1.4 * m])
-  const rotateYRaw = useTransform(scrollY, [0, SCROLL_RANGE], [0, 0.85 * m])
-
-  const y = useSpring(yRaw, SPRING)
-  const scale = useSpring(scaleRaw, SPRING)
-  const rotateZ = useSpring(rotateZRaw, SPRING)
-  const rotateX = useSpring(rotateXRaw, SPRING)
-  const rotateY = useSpring(rotateYRaw, SPRING)
-
   return (
-    <div className="relative [perspective:1100px]">
+    <div className="relative">
       <div className="pointer-events-none absolute left-8 top-8 h-[360px] w-[360px] rounded-full bg-[#7459F7] opacity-20 blur-[120px]" />
 
-      <motion.div
-        className="relative h-[460px] w-full max-md:h-[320px] will-change-transform"
-        style={{
-          y,
-          scale,
-          rotateX,
-          rotateY,
-          rotateZ,
-          transformStyle: 'preserve-3d',
-          transformOrigin: 'center center',
-        }}
-      >
-        <div className="relative h-full w-full overflow-hidden rounded-2xl border border-[rgba(72,72,72,0.15)] bg-[#0a0a0a] shadow-[0_24px_80px_rgba(0,0,0,0.4)]">
+      <div className="relative h-[460px] w-full max-md:h-[320px]">
+        <div className="relative h-full w-full overflow-hidden rounded-[32px] bg-[#08080B] shadow-[0_35px_110px_rgba(175,162,255,0.12)]">
           {!videoFailed ? (
             <video
               ref={videoRef}
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover opacity-80 mix-blend-screen"
               src={VIDEO_SRC}
               poster={POSTER_SRC}
               autoPlay
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               aria-label="AI product visual"
               onError={() => setVideoFailed(true)}
             />
@@ -160,11 +123,21 @@ export function HomeHeroVisual() {
           )}
 
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0E0E0E]/40 via-transparent to-[#0E0E0E]/15"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(175,162,255,0.16),transparent_56%)]"
+            aria-hidden
+          />
+
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#AFA2FF]/10 via-transparent to-black/55"
+            aria-hidden
+          />
+
+          <div
+            className="pointer-events-none absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.88)]"
             aria-hidden
           />
         </div>
-      </motion.div>
+      </div>
     </div>
   )
 }
