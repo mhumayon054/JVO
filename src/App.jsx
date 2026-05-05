@@ -6,7 +6,8 @@ import HomePage from './pages/HomePage'
 import StartupPartnershipPage from './pages/StartupPartnershipPage'
 import AboutUsPage from './pages/AboutUsPage'
 import ContactPage from './pages/ContactPage'
-import InsightsPage from './pages/InsightsPage'
+// TEMP DISABLED: Insights page hidden for now. Uncomment this import and route when ready to relaunch Insights.
+// import InsightsPage from './pages/InsightsPage'
 import ServicesPage from './pages/ServicesPage'
 import CaseStudiesPage from './pages/CaseStudiesPage'
 import BuildSquadPage from './pages/BuildSquadPage'
@@ -30,7 +31,8 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/partnership" element={<StartupPartnershipPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
-        <Route path="/insights" element={<InsightsPage />} />
+        {/* TEMP DISABLED: Insights page hidden for now. Uncomment this route when ready to relaunch Insights. */}
+        {/* <Route path="/insights" element={<InsightsPage />} /> */}
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/case-studies" element={<CaseStudiesPage />} />

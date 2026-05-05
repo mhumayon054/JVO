@@ -9,7 +9,8 @@ const items = [
   { to: '/case-studies', label: 'Case Studies', match: (p) => p === '/case-studies' },
   { to: '/partnership', label: 'Partnership', match: (p) => p === '/partnership' },
   { to: '/about-us', label: 'About', match: (p) => p === '/about-us' },
-  { to: '/insights', label: 'Insights', match: (p) => p === '/insights' },
+  // TEMP DISABLED: Insights page hidden for now. Uncomment this item when ready to relaunch Insights.
+  // { to: '/insights', label: 'Insights', match: (p) => p === '/insights' },
   { to: '/contact', label: 'Contact', match: (p) => p === '/contact' },
 ]
 
