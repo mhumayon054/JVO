@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { motion } from 'framer-motion'
 import { EASE, fadeUp, staggerContainer, viewportOnce } from './homeMotion'
 
-const MEMBERS = [
+export const PRECISION_BENCH_MEMBERS = [
   {
     name: 'Sufyan Iftekhar',
     role: 'Founder / CEO',
@@ -130,7 +130,7 @@ function BenchCard({ member }) {
 
 export function HomePrecisionBench() {
   const [index, setIndex] = useState(0)
-  const n = MEMBERS.length
+  const n = PRECISION_BENCH_MEMBERS.length
 
   const go = useCallback(
     (delta) => {
@@ -160,7 +160,7 @@ export function HomePrecisionBench() {
             className="hidden grid-cols-3 gap-6 lg:grid"
             variants={staggerContainer(0.06, 0.14)}
           >
-            {MEMBERS.map((m) => (
+            {PRECISION_BENCH_MEMBERS.map((m) => (
               <motion.article key={m.name} variants={fadeUp(22)}>
                 <BenchCard member={m} />
               </motion.article>
@@ -173,7 +173,7 @@ export function HomePrecisionBench() {
                 className="flex transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
                 style={{ transform: `translateX(-${index * 100}%)` }}
               >
-                {MEMBERS.map((m) => (
+                {PRECISION_BENCH_MEMBERS.map((m) => (
                   <article key={m.name} className="w-full shrink-0 px-1">
                     <BenchCard member={m} />
                   </article>
@@ -190,7 +190,7 @@ export function HomePrecisionBench() {
                 <Chevron dir="prev" />
               </button>
               <div className="flex gap-2" role="tablist" aria-label="Team slides">
-                {MEMBERS.map((m, i) => (
+                {PRECISION_BENCH_MEMBERS.map((m, i) => (
                   <button
                     key={m.name}
                     type="button"

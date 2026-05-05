@@ -17,7 +17,8 @@ import { MotionLink, fadeUp, staggerContainer, viewportOnce, EASE } from '../com
 
 const FOUNDER_VIDEO = {
   thumbnail: '/figma/founder_thumbnail.png',
-  videoSrc: '/videos/founder-message.mp4',
+  provider: 'youtube',
+  youtubeEmbedUrl: 'https://www.youtube.com/embed/XUg0IuOdEP4?autoplay=1&rel=0&modestbranding=1&playsinline=1',
   title: 'A Message from Our Founders',
   label: "Founder’s Message",
 }
@@ -74,17 +75,27 @@ function FounderVideoModal({ video, onClose }) {
         </div>
 
         <div className="relative flex max-h-[82vh] min-h-[280px] w-full items-center justify-center bg-[#070707] p-2 sm:min-h-[420px] sm:p-4">
-          <video
-            src={video.videoSrc}
-            poster={video.thumbnail}
-            className="max-h-[78vh] w-full rounded-2xl object-contain"
-            controls
-            autoPlay
-            playsInline
-            preload="metadata"
-          >
-            Your browser does not support the video tag.
-          </video>
+          {video.provider === 'youtube' ? (
+            <iframe
+              src={video.youtubeEmbedUrl}
+              title={video.title}
+              className="aspect-video max-h-[78vh] w-full rounded-2xl"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <video
+              src={video.videoSrc}
+              poster={video.thumbnail}
+              className="max-h-[78vh] w-full rounded-2xl object-contain"
+              controls
+              autoPlay
+              playsInline
+              preload="metadata"
+            >
+              Your browser does not support the video tag.
+            </video>
+          )}
         </div>
       </motion.div>
     </motion.div>
