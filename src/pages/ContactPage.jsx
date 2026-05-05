@@ -330,7 +330,7 @@ export default function ContactPage() {
                   <div className="overflow-hidden rounded border border-[rgba(72,72,72,0.2)] bg-black">
                     <div className="h-[289.38px] w-full overflow-hidden">
                       <motion.img
-                        src="/figma/contact/office-broadway-7bfe37.png"
+                        src="/figma/contact/officeImage.png"
                         alt="JVO Labs office at 799 Broadway"
                         className="h-full w-full object-cover opacity-80"
                         {...hoverMediaKen}
@@ -341,7 +341,7 @@ export default function ContactPage() {
               </motion.div>
 
               <motion.div variants={fadeUp(14)} className="h-[192px] w-full overflow-hidden rounded-lg opacity-40">
-                <motion.img src="/figma/contact/map-texture-299a83.png" alt="" className="h-full w-full object-cover" {...hoverMediaKen} />
+                <motion.img src="/figma/contact/map-texture.png" alt="" className="h-full w-full object-cover" {...hoverMediaKen} />
               </motion.div>
               </motion.aside>
             </motion.div>

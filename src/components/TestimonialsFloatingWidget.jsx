@@ -1,13 +1,16 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useCallback, useEffect, useState } from 'react'
+import saburMortazawiImage from '../assets/testimonials/sabur-mortazawi.jpg'
 
 const TESTIMONIALS = [
   {
     quote:
-      'JVO Labs helped us move from rough AI concept to a production-ready SaaS platform without the usual engineering chaos.',
-    name: 'Marcus Vale',
-    role: 'Founder, Quantive AI',
-    metric: 'MVP shipped in 6 weeks',
+      "Faizan and his team don't just execute; they think along with you, understand your goals, and deliver smart solutions with flexibility, reliability, and genuine care for the end result.",
+    fullQuote: `Faizan and his team have been a pleasure to work with. They don't just execute, they think along with you, truly understand your goals, and come up with smart solutions on their own initiative. What stands out most is their flexibility and reliability; no matter how tight the deadline or how often priorities shifted, they consistently delivered on time and at a high standard. Communication is smooth, feedback is taken seriously, and you always feel like you're working with people who genuinely care about the end result. I'd highly recommend Faizan to anyone looking for a dependable, solution-oriented team.`,
+    name: 'Sabur Mortazawi',
+    role: 'CEO bij Taxionspot',
+    metric: 'Client recommendation',
+    image: saburMortazawiImage,
   },
   {
     quote:
@@ -44,11 +47,11 @@ const DRAG_THRESHOLD = 55
 const VELOCITY_THRESHOLD = 450
 
 export function TestimonialsFloatingWidget() {
-    function getInitialWidgetState() {
-        if (typeof window === 'undefined') return true
-        return window.matchMedia('(min-width: 768px)').matches
-      }
-      const [isOpen, setIsOpen] = useState(getInitialWidgetState)
+  function getInitialWidgetState() {
+    if (typeof window === 'undefined') return true
+    return window.matchMedia('(min-width: 768px)').matches
+  }
+  const [isOpen, setIsOpen] = useState(getInitialWidgetState)
   const [[activeIndex, direction], setSlide] = useState([0, 1])
   const [isHovered, setIsHovered] = useState(false)
   const shouldReduceMotion = useReducedMotion()
@@ -75,7 +78,7 @@ export function TestimonialsFloatingWidget() {
 
     const timer = window.setInterval(() => {
       paginate(1)
-    }, 3800)
+    }, 10000)
 
     return () => window.clearInterval(timer)
   }, [isOpen, isHovered, paginate])
@@ -107,35 +110,35 @@ export function TestimonialsFloatingWidget() {
               shouldReduceMotion
                 ? { opacity: 0 }
                 : {
-                    opacity: 0,
-                    scale: 0.82,
-                    x: 48,
-                    y: 72,
-                    filter: 'blur(18px)',
-                  }
+                  opacity: 0,
+                  scale: 0.82,
+                  x: 48,
+                  y: 72,
+                  filter: 'blur(18px)',
+                }
             }
             animate={
               shouldReduceMotion
                 ? { opacity: 1 }
                 : {
-                    opacity: 1,
-                    scale: 1,
-                    x: 0,
-                    y: 0,
-                    filter: 'blur(0px)',
-                  }
+                  opacity: 1,
+                  scale: 1,
+                  x: 0,
+                  y: 0,
+                  filter: 'blur(0px)',
+                }
             }
             exit={
               shouldReduceMotion
                 ? { opacity: 0 }
                 : {
-                    opacity: 0,
-                    scale: 0.18,
-                    x: 208,
-                    y: 136,
-                    rotate: 2,
-                    filter: 'blur(26px)',
-                  }
+                  opacity: 0,
+                  scale: 0.18,
+                  x: 208,
+                  y: 136,
+                  rotate: 2,
+                  filter: 'blur(26px)',
+                }
             }
             transition={{ duration: shouldReduceMotion ? 0.2 : 0.55, ease: EASE }}
             onMouseEnter={() => setIsHovered(true)}
@@ -185,28 +188,28 @@ export function TestimonialsFloatingWidget() {
                       shouldReduceMotion
                         ? { opacity: 0 }
                         : {
-                            opacity: 0,
-                            x: direction >= 0 ? 38 : -38,
-                            filter: 'blur(8px)',
-                          }
+                          opacity: 0,
+                          x: direction >= 0 ? 38 : -38,
+                          filter: 'blur(8px)',
+                        }
                     }
                     animate={
                       shouldReduceMotion
                         ? { opacity: 1 }
                         : {
-                            opacity: 1,
-                            x: 0,
-                            filter: 'blur(0px)',
-                          }
+                          opacity: 1,
+                          x: 0,
+                          filter: 'blur(0px)',
+                        }
                     }
                     exit={
                       shouldReduceMotion
                         ? { opacity: 0 }
                         : {
-                            opacity: 0,
-                            x: direction >= 0 ? -38 : 38,
-                            filter: 'blur(8px)',
-                          }
+                          opacity: 0,
+                          x: direction >= 0 ? -38 : 38,
+                          filter: 'blur(8px)',
+                        }
                     }
                     transition={{ duration: shouldReduceMotion ? 0.18 : 0.42, ease: EASE }}
                     drag={shouldReduceMotion ? false : 'x'}
@@ -215,27 +218,45 @@ export function TestimonialsFloatingWidget() {
                     onDragEnd={handleDragEnd}
                     className="flex h-full cursor-grab select-none touch-pan-y flex-col justify-between active:cursor-grabbing"
                   >
-                    <div>
+                    <div className="min-h-0 overflow-hidden">
                       <div className="mb-3 inline-flex rounded-full border border-[rgba(116,89,247,0.24)] bg-[rgba(116,89,247,0.1)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF]">
                         {activeTestimonial.metric}
                       </div>
 
-                      <p className="max-w-[540px] text-[13px] leading-[1.5] text-[#E7E7E7] sm:text-[16px]">
+                      <p
+                        className="max-w-[540px] overflow-hidden text-[13px] leading-[1.5] text-[#E7E7E7] sm:text-[16px]"
+                        style={{
+                          display: '-webkit-box',
+                          WebkitLineClamp: 4,
+                          WebkitBoxOrient: 'vertical',
+                        }}
+                      >
                         “{activeTestimonial.quote}”
                       </p>
                     </div>
 
-                    <div className="mt-4 flex items-end justify-between gap-4">
-                      <div>
-                        <p className="text-[14px] font-bold text-white">
-                          {activeTestimonial.name}
-                        </p>
-                        <p className="mt-1 text-[12px] leading-tight text-[#757575]">
-                          {activeTestimonial.role}
-                        </p>
+                    <div className="mt-4 flex shrink-0 items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div>
+                          <p className="text-[14px] font-bold text-white">
+                            {activeTestimonial.name}
+                          </p>
+                          <p className="mt-1 text-[12px] leading-tight text-[#757575]">
+                            {activeTestimonial.role}
+                          </p>
+                        </div>
+
+                        {activeTestimonial.image ? (
+                          <img
+                            src={activeTestimonial.image}
+                            alt={activeTestimonial.name}
+                            loading="lazy"
+                            className="h-11 w-11 shrink-0 rounded-[14px] border border-[rgba(175,162,255,0.22)] object-cover shadow-[0_10px_28px_rgba(0,0,0,0.35)]"
+                          />
+                        ) : null}
                       </div>
 
-                      <div className="flex items-center gap-1.5" aria-label="Testimonials navigation">
+                      <div className="flex shrink-0 items-center gap-1.5" aria-label="Testimonials navigation">
                         {TESTIMONIALS.map((testimonial, index) => (
                           <button
                             key={testimonial.name}
@@ -243,11 +264,10 @@ export function TestimonialsFloatingWidget() {
                             aria-label={`Show testimonial ${index + 1}`}
                             aria-current={activeIndex === index}
                             onClick={() => goToIndex(index)}
-                            className={`h-2 cursor-pointer rounded-full transition-all duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7459F7] ${
-                              activeIndex === index
-                                ? 'w-6 bg-[#AFA2FF]'
-                                : 'w-2 bg-[#484848] hover:bg-[#7459F7]'
-                            }`}
+                            className={`h-2 cursor-pointer rounded-full transition-all duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7459F7] ${activeIndex === index
+                              ? 'w-6 bg-[#AFA2FF]'
+                              : 'w-2 bg-[#484848] hover:bg-[#7459F7]'
+                              }`}
                           />
                         ))}
                       </div>

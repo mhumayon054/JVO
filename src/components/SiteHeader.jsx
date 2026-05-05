@@ -109,7 +109,7 @@ export function SiteHeader() {
   aria-label="JVO Labs home"
 >
   <img
-    src="/logo/logo_web_jvo.svg"
+    src="/logo/logo jvolabs.svg"
     alt="JVO Labs"
     className="block h-full w-full object-contain"
   />
