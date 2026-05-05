@@ -152,7 +152,7 @@ export function SiteHeader() {
         role="dialog"
         aria-modal="true"
         aria-label="Navigation"
-        {...(!menuOpen ? { inert: '' } : {})}
+        {...(!menuOpen ? { inert: true } : {})}
         className={`fixed inset-x-0 z-[60] overflow-y-auto transition-[opacity,visibility] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] lg:hidden ${
           menuOpen ? 'visible opacity-100' : 'invisible pointer-events-none opacity-0'
         }`}

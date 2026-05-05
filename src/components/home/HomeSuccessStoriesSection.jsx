@@ -94,6 +94,14 @@ function StoryCard({ story, index, onOpen }) {
 
   const goNext = () => setActiveIndex((current) => getNextIndex(current, images.length))
   const goPrevious = () => setActiveIndex((current) => getPreviousIndex(current, images.length))
+  const openStory = () => onOpen(index, activeIndex)
+  const handleCardKeyDown = (event) => {
+    if (event.target !== event.currentTarget) return
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      openStory()
+    }
+  }
 
   return (
     <motion.article
@@ -104,9 +112,11 @@ function StoryCard({ story, index, onOpen }) {
         transition: { duration: 0.35, ease: EASE },
       }}
     >
-      <button
-        type="button"
-        onClick={() => onOpen(index, activeIndex)}
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={openStory}
+        onKeyDown={handleCardKeyDown}
         className="block w-full cursor-pointer text-left outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]/60"
         aria-label={`Open ${story.title} project gallery`}
       >
@@ -163,7 +173,7 @@ function StoryCard({ story, index, onOpen }) {
             </p>
           </div>
         </div>
-      </button>
+      </div>
     </motion.article>
   )
 }
