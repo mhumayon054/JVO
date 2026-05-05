@@ -5,7 +5,7 @@ import saburMortazawiImage from '../assets/testimonials/sabur-mortazawi.jpg'
 const TESTIMONIALS = [
   {
     quote:
-      "Faizan and his team don't just execute; they think along with you, understand your goals, and deliver smart solutions with flexibility, reliability, and genuine care for the end result.",
+      "Faizan and his team don't just execute; they think along with you, understand your goals, and deliver smart solutions with flexibility.",
     fullQuote: `Faizan and his team have been a pleasure to work with. They don't just execute, they think along with you, truly understand your goals, and come up with smart solutions on their own initiative. What stands out most is their flexibility and reliability; no matter how tight the deadline or how often priorities shifted, they consistently delivered on time and at a high standard. Communication is smooth, feedback is taken seriously, and you always feel like you're working with people who genuinely care about the end result. I'd highly recommend Faizan to anyone looking for a dependable, solution-oriented team.`,
     name: 'Sabur Mortazawi',
     role: 'CEO bij Taxionspot',
@@ -14,31 +14,19 @@ const TESTIMONIALS = [
   },
   {
     quote:
+      'Very professional team — they always keep their word, think in solutions, and avoid the usual excuses or extra charges. 10 out of 10.',
+    fullQuote: `Very profesional team always keeping their word thinking slutions instead of we can not do that or extra money 10 out of 10.`,
+    name: 'Anonymous Client',
+    role: 'WordPress cancellation service MVP',
+    metric: '5.0 review · Jan 15 – Feb 22, 2026',
+    image: null,
+  },
+  {
+    quote:
       'Their biggest strength is not just writing code. They think through architecture, scale, and product risk before building.',
     name: 'Elena Brooks',
     role: 'CEO, SignalForge',
     metric: 'Architecture-first delivery',
-  },
-  {
-    quote:
-      'We needed senior execution without hiring a full in-house team. JVO gave us exactly that: fast, technical, and accountable.',
-    name: 'Daniel Hart',
-    role: 'Co-Founder, NeuralDock',
-    metric: 'Senior squad on demand',
-  },
-  {
-    quote:
-      'The platform was clean, fast, and built with long-term maintainability in mind. No messy prototype code.',
-    name: 'Avery Collins',
-    role: 'Product Lead, StackPilot',
-    metric: 'Production-grade build',
-  },
-  {
-    quote:
-      'They understood the business case and turned it into a technical roadmap we could actually execute.',
-    name: 'Noah Sterling',
-    role: 'Managing Partner, VentureGrid',
-    metric: 'Roadmap to launch',
   },
 ]
 
@@ -46,14 +34,52 @@ const EASE = [0.22, 1, 0.36, 1]
 const DRAG_THRESHOLD = 55
 const VELOCITY_THRESHOLD = 450
 
+function TestimonialAvatar({ testimonial, size = 'sm' }) {
+  const sizeClass = size === 'md' ? 'h-12 w-12' : 'h-11 w-11'
+
+  if (testimonial.image) {
+    return (
+      <img
+        src={testimonial.image}
+        alt={testimonial.name}
+        loading="lazy"
+        className={`${sizeClass} shrink-0 rounded-[14px] border border-[rgba(175,162,255,0.22)] object-cover shadow-[0_10px_28px_rgba(0,0,0,0.35)]`}
+      />
+    )
+  }
+
+  return (
+    <div
+      className={`${sizeClass} flex shrink-0 items-center justify-center rounded-[14px] border border-[rgba(175,162,255,0.22)] bg-[linear-gradient(135deg,rgba(116,89,247,0.22),rgba(175,162,255,0.08))] text-[#CFC7FF] shadow-[0_10px_28px_rgba(0,0,0,0.35)]`}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-5 w-5"
+        aria-hidden="true"
+      >
+        <path d="M20 21a8 8 0 0 0-16 0" />
+        <circle cx="12" cy="8" r="4" />
+      </svg>
+    </div>
+  )
+}
+
 export function TestimonialsFloatingWidget() {
   function getInitialWidgetState() {
     if (typeof window === 'undefined') return true
     return window.matchMedia('(min-width: 768px)').matches
   }
+
   const [isOpen, setIsOpen] = useState(getInitialWidgetState)
   const [[activeIndex, direction], setSlide] = useState([0, 1])
   const [isHovered, setIsHovered] = useState(false)
+  const [selectedFullReview, setSelectedFullReview] = useState(null)
   const shouldReduceMotion = useReducedMotion()
 
   const paginate = useCallback((nextDirection) => {
@@ -74,14 +100,14 @@ export function TestimonialsFloatingWidget() {
   }, [])
 
   useEffect(() => {
-    if (!isOpen || isHovered) return undefined
+    if (!isOpen || isHovered || selectedFullReview) return undefined
 
     const timer = window.setInterval(() => {
       paginate(1)
     }, 10000)
 
     return () => window.clearInterval(timer)
-  }, [isOpen, isHovered, paginate])
+  }, [isOpen, isHovered, selectedFullReview, paginate])
 
   const handleDragEnd = (_, info) => {
     const swipeOffset = info.offset.x
@@ -98,6 +124,7 @@ export function TestimonialsFloatingWidget() {
   }
 
   const activeTestimonial = TESTIMONIALS[activeIndex]
+  const modalTestimonial = selectedFullReview
 
   return (
     <div className="fixed bottom-7 right-4 z-[90] flex items-end justify-end sm:right-7">
@@ -110,35 +137,35 @@ export function TestimonialsFloatingWidget() {
               shouldReduceMotion
                 ? { opacity: 0 }
                 : {
-                  opacity: 0,
-                  scale: 0.82,
-                  x: 48,
-                  y: 72,
-                  filter: 'blur(18px)',
-                }
+                    opacity: 0,
+                    scale: 0.82,
+                    x: 48,
+                    y: 72,
+                    filter: 'blur(18px)',
+                  }
             }
             animate={
               shouldReduceMotion
                 ? { opacity: 1 }
                 : {
-                  opacity: 1,
-                  scale: 1,
-                  x: 0,
-                  y: 0,
-                  filter: 'blur(0px)',
-                }
+                    opacity: 1,
+                    scale: 1,
+                    x: 0,
+                    y: 0,
+                    filter: 'blur(0px)',
+                  }
             }
             exit={
               shouldReduceMotion
                 ? { opacity: 0 }
                 : {
-                  opacity: 0,
-                  scale: 0.18,
-                  x: 208,
-                  y: 136,
-                  rotate: 2,
-                  filter: 'blur(26px)',
-                }
+                    opacity: 0,
+                    scale: 0.18,
+                    x: 208,
+                    y: 136,
+                    rotate: 2,
+                    filter: 'blur(26px)',
+                  }
             }
             transition={{ duration: shouldReduceMotion ? 0.2 : 0.55, ease: EASE }}
             onMouseEnter={() => setIsHovered(true)}
@@ -188,28 +215,28 @@ export function TestimonialsFloatingWidget() {
                       shouldReduceMotion
                         ? { opacity: 0 }
                         : {
-                          opacity: 0,
-                          x: direction >= 0 ? 38 : -38,
-                          filter: 'blur(8px)',
-                        }
+                            opacity: 0,
+                            x: direction >= 0 ? 38 : -38,
+                            filter: 'blur(8px)',
+                          }
                     }
                     animate={
                       shouldReduceMotion
                         ? { opacity: 1 }
                         : {
-                          opacity: 1,
-                          x: 0,
-                          filter: 'blur(0px)',
-                        }
+                            opacity: 1,
+                            x: 0,
+                            filter: 'blur(0px)',
+                          }
                     }
                     exit={
                       shouldReduceMotion
                         ? { opacity: 0 }
                         : {
-                          opacity: 0,
-                          x: direction >= 0 ? -38 : 38,
-                          filter: 'blur(8px)',
-                        }
+                            opacity: 0,
+                            x: direction >= 0 ? -38 : 38,
+                            filter: 'blur(8px)',
+                          }
                     }
                     transition={{ duration: shouldReduceMotion ? 0.18 : 0.42, ease: EASE }}
                     drag={shouldReduceMotion ? false : 'x'}
@@ -227,7 +254,7 @@ export function TestimonialsFloatingWidget() {
                         className="max-w-[540px] overflow-hidden text-[13px] leading-[1.5] text-[#E7E7E7] sm:text-[16px]"
                         style={{
                           display: '-webkit-box',
-                          WebkitLineClamp: 4,
+                          WebkitLineClamp: 3,
                           WebkitBoxOrient: 'vertical',
                         }}
                       >
@@ -236,40 +263,55 @@ export function TestimonialsFloatingWidget() {
                     </div>
 
                     <div className="mt-4 flex shrink-0 items-center justify-between gap-4">
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <p className="text-[14px] font-bold text-white">
+                      <div className="flex min-w-0 items-center gap-3">
+                        <div className="min-w-0">
+                          <p className="truncate text-[14px] font-bold text-white">
                             {activeTestimonial.name}
                           </p>
-                          <p className="mt-1 text-[12px] leading-tight text-[#757575]">
+                          <p className="mt-1 truncate text-[12px] leading-tight text-[#757575]">
                             {activeTestimonial.role}
                           </p>
                         </div>
 
-                        {activeTestimonial.image ? (
-                          <img
-                            src={activeTestimonial.image}
-                            alt={activeTestimonial.name}
-                            loading="lazy"
-                            className="h-11 w-11 shrink-0 rounded-[14px] border border-[rgba(175,162,255,0.22)] object-cover shadow-[0_10px_28px_rgba(0,0,0,0.35)]"
-                          />
-                        ) : null}
+                        <TestimonialAvatar testimonial={activeTestimonial} />
                       </div>
 
-                      <div className="flex shrink-0 items-center gap-1.5" aria-label="Testimonials navigation">
-                        {TESTIMONIALS.map((testimonial, index) => (
+                      <div className="flex shrink-0 items-center gap-3">
+                        {activeTestimonial.fullQuote ? (
                           <button
-                            key={testimonial.name}
                             type="button"
-                            aria-label={`Show testimonial ${index + 1}`}
-                            aria-current={activeIndex === index}
-                            onClick={() => goToIndex(index)}
-                            className={`h-2 cursor-pointer rounded-full transition-all duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7459F7] ${activeIndex === index
-                              ? 'w-6 bg-[#AFA2FF]'
-                              : 'w-2 bg-[#484848] hover:bg-[#7459F7]'
+                            onPointerDown={(event) => event.stopPropagation()}
+                            onClick={(event) => {
+                              event.preventDefault()
+                              event.stopPropagation()
+                              setSelectedFullReview(activeTestimonial)
+                            }}
+                            className="cursor-pointer whitespace-nowrap rounded-full border border-[rgba(175,162,255,0.24)] bg-[rgba(116,89,247,0.1)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#AFA2FF] transition-colors duration-200 hover:border-[rgba(175,162,255,0.46)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7459F7]"
+                          >
+                            Full review
+                          </button>
+                        ) : null}
+
+                        <div className="flex shrink-0 items-center gap-1.5" aria-label="Testimonials navigation">
+                          {TESTIMONIALS.map((testimonial, index) => (
+                            <button
+                              key={testimonial.name}
+                              type="button"
+                              aria-label={`Show testimonial ${index + 1}`}
+                              aria-current={activeIndex === index}
+                              onPointerDown={(event) => event.stopPropagation()}
+                              onClick={(event) => {
+                                event.stopPropagation()
+                                goToIndex(index)
+                              }}
+                              className={`h-2 cursor-pointer rounded-full transition-all duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7459F7] ${
+                                activeIndex === index
+                                  ? 'w-6 bg-[#AFA2FF]'
+                                  : 'w-2 bg-[#484848] hover:bg-[#7459F7]'
                               }`}
-                          />
-                        ))}
+                            />
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </motion.article>
@@ -334,6 +376,81 @@ export function TestimonialsFloatingWidget() {
           </>
         ) : null}
       </motion.button>
+
+      <AnimatePresence>
+        {modalTestimonial ? (
+          <motion.div
+            key="full-review-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: EASE }}
+            className="fixed inset-0 z-[999] flex items-center justify-center bg-black/75 px-4 backdrop-blur-sm"
+            onClick={() => setSelectedFullReview(null)}
+          >
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Full client review"
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.94, y: 24, filter: 'blur(10px)' }
+              }
+              animate={
+                shouldReduceMotion
+                  ? { opacity: 1 }
+                  : { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }
+              }
+              exit={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.94, y: 24, filter: 'blur(10px)' }
+              }
+              transition={{ duration: shouldReduceMotion ? 0.18 : 0.34, ease: EASE }}
+              onClick={(event) => event.stopPropagation()}
+              className="relative w-full max-w-[620px] overflow-hidden rounded-[24px] border border-[rgba(175,162,255,0.22)] bg-[#0E0E0E]/95 p-5 shadow-[0_30px_100px_rgba(0,0,0,0.75),0_0_70px_rgba(116,89,247,0.22)] backdrop-blur-2xl sm:p-7"
+            >
+              <div
+                className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-[#7459F7]/20 blur-[80px]"
+                aria-hidden="true"
+              />
+
+              <button
+                type="button"
+                aria-label="Close full review"
+                onClick={() => setSelectedFullReview(null)}
+                className="absolute right-4 top-4 inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-[rgba(72,72,72,0.28)] bg-[#131313]/90 text-[#ABABAB] transition-colors duration-200 hover:border-[rgba(116,89,247,0.42)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7459F7]"
+              >
+                ×
+              </button>
+
+              <div className="relative pr-10">
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#AFA2FF]">
+                  Full client review
+                </p>
+
+                <div className="mt-5 flex items-center gap-3">
+                  <TestimonialAvatar testimonial={modalTestimonial} size="md" />
+
+                  <div>
+                    <h3 className="text-[17px] font-bold text-white">
+                      {modalTestimonial.name}
+                    </h3>
+                    <p className="mt-1 text-[13px] text-[#8A8A8A]">
+                      {modalTestimonial.role}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="mt-5 max-h-[52vh] overflow-y-auto pr-2 text-[15px] leading-[1.75] text-[#E7E7E7] sm:text-[16px]">
+                  “{modalTestimonial.fullQuote || modalTestimonial.quote}”
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   )
 }
