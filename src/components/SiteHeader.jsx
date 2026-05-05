@@ -127,7 +127,7 @@ export function SiteHeader() {
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <Link
               to="/contact"
-              className="hidden rounded-[6px] border border-[rgba(72,72,72,0.15)] px-3 py-2 text-[11px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF] transition-[border-color,background-color,color] duration-200 ease-out hover:border-[rgba(116,89,247,0.4)] hover:bg-[rgba(116,89,247,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7459F7] sm:px-4 sm:text-[12px] md:inline-flex"
+              className="hidden rounded-[6px] border border-[#AFA2FF]/25 bg-gradient-to-r from-[#7459F7] to-[#AFA2FF] px-3 py-2 text-[11px] font-bold uppercase tracking-[0.1em] text-black shadow-[0_14px_34px_-22px_rgba(116,89,247,0.75)] transition-[border-color,filter,box-shadow] duration-200 ease-out hover:border-[#AFA2FF]/45 hover:brightness-110 hover:shadow-[0_18px_42px_-24px_rgba(175,162,255,0.9)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7459F7] sm:px-4 sm:text-[12px] md:inline-flex"
             >
               Book Call
             </Link>

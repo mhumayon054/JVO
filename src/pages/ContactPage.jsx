@@ -299,16 +299,16 @@ export default function ContactPage() {
               <motion.div variants={fadeUp(16)} className="grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 sm:gap-8 sm:px-4 md:gap-x-16">
                 <div className="flex flex-col gap-[16.5px] pb-[17.5px]">
                   <span className="text-[12px] font-bold uppercase leading-[1.33] tracking-[0.1em] text-[#AFA2FF]">Email</span>
-                  <a href="mailto:hello@jvolabs.ai" className="text-[20px] font-medium leading-[1.4] tracking-[-0.025em] text-white hover:text-[#AFA2FF]">
-                    hello@jvolabs.ai
+                  <a href="mailto:sufyan@jvolabs.co" className="text-[20px] font-medium leading-[1.4] tracking-[-0.025em] text-white hover:text-[#AFA2FF]">
+                    sufyan@jvolabs.co
                   </a>
                 </div>
                 <div className="flex flex-col gap-[15.375px]">
                   <span className="text-[12px] font-bold uppercase leading-[1.33] tracking-[0.1em] text-[#AFA2FF]">Studio</span>
                   <p className="text-[14px] font-normal leading-[1.625] text-[#ABABAB]">
-                    799 Broadway, 11th Floor
+                    Islamabad, Pakistan
                     <br />
-                    Greenwich Village, NY 10003
+                    I-8 Markaz
                   </p>
                 </div>
               </motion.div>

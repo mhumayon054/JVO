@@ -16,7 +16,7 @@ const TESTIMONIALS = [
     quote:
       'Very professional team — they always keep their word, think in solutions, and avoid the usual excuses or extra charges. 10 out of 10.',
     fullQuote: `Very profesional team always keeping their word thinking slutions instead of we can not do that or extra money 10 out of 10.`,
-    name: 'Anonymous Client',
+    name: 'Luis Bennett',
     role: 'WordPress cancellation service MVP',
     metric: '5.0 review · Jan 15 – Feb 22, 2026',
     image: null,
