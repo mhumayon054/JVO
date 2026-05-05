@@ -5,7 +5,7 @@ import { fadeUp, sectionStagger, viewportOnce } from './homeMotion'
 
 const STATS = [
   { target: 50, prefix: '', suffix: '+', label: 'Startups Scaled' },
-  { target: 100000, prefix: '', suffix: '+', label: 'Revenue driven', format: 'comma' },
+  { target: $100000, prefix: '', suffix: '+', label: 'Revenue driven', format: 'comma' },
   { target: 100, prefix: '', suffix: '+', label: 'Projects Delivered' },
 ]
 

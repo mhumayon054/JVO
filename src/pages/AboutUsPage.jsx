@@ -98,7 +98,7 @@ export default function AboutUsPage() {
                   {...hoverCardBorderGlow}
                 >
                   <motion.img
-                    src="/figma/about/hero-mission-56586a.png"
+                    src="/figma/jvo-brand/about-innovation-core.png"
                     alt="JVO Labs mission"
                     className="h-full w-full object-cover opacity-60"
                     {...hoverMediaKen}

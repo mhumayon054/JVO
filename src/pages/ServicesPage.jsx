@@ -128,7 +128,7 @@ export default function ServicesPage() {
                 <motion.div variants={fadeUp(24)} className="relative mx-auto flex h-[373.33px] w-full max-w-[373.33px] shrink-0 justify-end lg:mx-0">
                   <div className="relative h-full w-full overflow-hidden rounded-lg bg-[rgba(38,38,38,0.4)] backdrop-blur-[20px]">
                     <motion.img
-                      src="/figma/services/hero-glass-56586a.png"
+                      src="/figma/jvo-brand/services-engineering-core.png"
                       alt=""
                       className="h-full w-full object-cover"
                       {...hoverMediaKen}
