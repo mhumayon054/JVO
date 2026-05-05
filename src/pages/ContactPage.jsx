@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { MotionConfig, motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
 import {
   EASE,
   fadeUp,
@@ -22,7 +22,7 @@ function IconBolt() {
 
 function IconCalendar() {
   return (
-    <svg className="h-10 w-9 shrink-0 text-[#757575]" viewBox="0 0 36 40" fill="none" aria-hidden>
+    <svg className="h-10 w-9 shrink-0 text-[#AFA2FF]" viewBox="0 0 36 40" fill="none" aria-hidden>
       <rect x="4" y="8" width="28" height="28" rx="2" stroke="currentColor" strokeWidth="2" />
       <path d="M4 16h28M12 4v6M24 4v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
@@ -61,7 +61,14 @@ const budgetOptions = [
 const inputBase =
   'w-full border-0 border-b-2 border-[rgba(72,72,72,0.3)] bg-[#131313] px-[12px] text-[16px] text-white outline-none transition-colors placeholder:text-[#757575] focus-visible:border-[#AFA2FF]'
 
+const CALENDLY_URL =
+  'https://calendly.com/mohammed-jvolabs/30min?hide_gdpr_banner=1&background_color=0e0e0e&text_color=ffffff&primary_color=7459f7'
+const CALENDLY_FALLBACK_URL = 'https://calendly.com/mohammed-jvolabs/30min'
+const CALENDLY_SCRIPT_SRC = 'https://assets.calendly.com/assets/external/widget.js'
+const CALENDLY_CSS_HREF = 'https://assets.calendly.com/assets/external/widget.css'
+
 export default function ContactPage() {
+  const calendlyRef = useRef(null)
   const [budget, setBudget] = useState('10k-25k')
   const [form, setForm] = useState({
     name: '',
@@ -71,7 +78,84 @@ export default function ContactPage() {
   })
   const [submitState, setSubmitState] = useState('idle')
   const [submitMessage, setSubmitMessage] = useState('')
-  const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || ''
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false)
+
+  useEffect(() => {
+    if (!isCalendlyOpen) return undefined
+
+    const parentElement = calendlyRef.current
+    if (!parentElement) return undefined
+
+    let cancelled = false
+    let retryTimer = null
+    parentElement.innerHTML = ''
+
+    if (!document.querySelector(`link[href="${CALENDLY_CSS_HREF}"]`)) {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = CALENDLY_CSS_HREF
+      document.head.appendChild(link)
+    }
+
+    const initCalendly = () => {
+      if (cancelled || !window.Calendly || !calendlyRef.current) return
+      calendlyRef.current.innerHTML = ''
+      window.Calendly.initInlineWidget({
+        url: CALENDLY_URL,
+        parentElement: calendlyRef.current,
+        prefill: {},
+        utm: {},
+      })
+    }
+
+    if (window.Calendly) {
+      initCalendly()
+    } else {
+      const existingScript = document.querySelector(`script[src="${CALENDLY_SCRIPT_SRC}"]`)
+
+      if (existingScript) {
+        const waitForCalendly = () => {
+          if (cancelled) return
+          if (window.Calendly) {
+            initCalendly()
+            return
+          }
+          retryTimer = window.setTimeout(waitForCalendly, 120)
+        }
+        waitForCalendly()
+      } else {
+        const script = document.createElement('script')
+        script.src = CALENDLY_SCRIPT_SRC
+        script.async = true
+        script.onload = initCalendly
+        document.body.appendChild(script)
+      }
+    }
+
+    return () => {
+      cancelled = true
+      if (retryTimer) window.clearTimeout(retryTimer)
+      if (parentElement) parentElement.innerHTML = ''
+    }
+  }, [isCalendlyOpen])
+
+  useEffect(() => {
+    if (!isCalendlyOpen) return undefined
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setIsCalendlyOpen(false)
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isCalendlyOpen])
 
   function updateField(key, value) {
     setForm((prev) => ({ ...prev, [key]: value }))
@@ -102,11 +186,6 @@ export default function ContactPage() {
       setSubmitState('error')
       setSubmitMessage(error.message || 'Unable to submit your brief right now.')
     }
-  }
-
-  function onScheduleSession() {
-    if (!calendlyUrl) return
-    window.open(calendlyUrl, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -271,21 +350,27 @@ export default function ContactPage() {
                     Prefer a direct conversation? Select a time that works for your team and our lead engineer will join you for a
                     technical deep-dive.
                   </p>
-                  <div className="mt-10 flex flex-col items-center justify-center rounded border border-[rgba(72,72,72,0.2)] bg-black px-8 py-[92px] sm:py-[92.69px]">
-                    <div className="flex flex-col items-center gap-4 text-center">
-                      <IconCalendar />
-                      <p className="text-[14px] font-normal leading-[1.43] text-[#757575]">
-                        Calendly Integration Interface
-                        <br />
-                        Available slots sync in real-time
-                      </p>
+                  <div className="relative mt-10 overflow-hidden rounded-xl border border-white/[0.06] bg-black/70 px-8 py-[72px] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:py-[82px]">
+                    <div
+                      className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7459F7]/14 blur-[90px]"
+                      aria-hidden
+                    />
+                    <div className="relative flex flex-col items-center gap-4 text-center">
+                      <span className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#AFA2FF]/20 bg-[#AFA2FF]/10">
+                        <IconCalendar />
+                      </span>
+                      <div>
+                        <p className="text-[15px] font-bold leading-[1.4] text-white">Calendly booking</p>
+                        <p className="mt-2 text-[14px] font-normal leading-[1.5] text-[#ABABAB]">
+                          Select a time that works for your team
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <motion.button
                     type="button"
                     className="mt-8 flex w-full items-center justify-center gap-2 rounded-md bg-white py-4 text-[16px] font-bold leading-[1.5] text-black"
-                    onClick={onScheduleSession}
-                    disabled={!calendlyUrl}
+                    onClick={() => setIsCalendlyOpen(true)}
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.985 }}
                     transition={{ duration: 0.28, ease: EASE }}
@@ -293,6 +378,14 @@ export default function ContactPage() {
                     Schedule Session
                     <IconArrowUpRight />
                   </motion.button>
+                  <a
+                    href={CALENDLY_FALLBACK_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 text-center text-[12px] font-bold uppercase tracking-[0.12em] text-[#AFA2FF] transition-colors hover:text-white"
+                  >
+                    Open Calendly in new tab
+                  </a>
                 </div>
               </motion.div>
 
@@ -350,6 +443,70 @@ export default function ContactPage() {
       </main>
 
       <PartnershipFooter />
+
+      <AnimatePresence>
+        {isCalendlyOpen ? (
+          <motion.div
+            key="calendly-modal"
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 px-3 py-4 backdrop-blur-md sm:px-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.24, ease: EASE }}
+            onClick={() => setIsCalendlyOpen(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Schedule a strategy call"
+          >
+            <motion.div
+              className="relative flex h-[85vh] w-full max-w-[980px] flex-col overflow-hidden rounded-[24px] border border-[rgba(175,162,255,0.2)] bg-[#0E0E0E] shadow-[0_30px_100px_rgba(0,0,0,0.75),0_0_70px_rgba(116,89,247,0.18)]"
+              initial={{ y: 24, scale: 0.96, opacity: 0 }}
+              animate={{ y: 0, scale: 1, opacity: 1 }}
+              exit={{ y: 18, scale: 0.97, opacity: 0 }}
+              transition={{ duration: 0.32, ease: EASE }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div
+                className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-[#7459F7]/16 blur-[100px]"
+                aria-hidden
+              />
+              <div className="relative flex items-center justify-between gap-4 border-b border-white/[0.06] px-4 py-4 sm:px-6">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#AFA2FF]">Calendly booking</p>
+                  <h2 className="mt-1 text-[18px] font-bold leading-tight tracking-[-0.02em] text-white sm:text-[20px]">
+                    Schedule your strategy call
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  aria-label="Close Calendly booking"
+                  onClick={() => setIsCalendlyOpen(false)}
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[rgba(72,72,72,0.28)] bg-[#131313]/90 text-xl leading-none text-[#ABABAB] transition-colors duration-200 hover:border-[rgba(116,89,247,0.42)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7459F7]"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="relative flex min-h-0 flex-1 flex-col overflow-y-auto bg-black">
+                <div
+                  ref={calendlyRef}
+                  className="min-h-[650px] shrink-0 overflow-hidden bg-[#0E0E0E] sm:min-h-[720px]"
+                />
+                <div className="border-t border-white/[0.06] bg-[#0E0E0E] px-4 py-3 text-center sm:px-6">
+                  <a
+                    href={CALENDLY_FALLBACK_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#AFA2FF] transition-colors hover:text-white"
+                  >
+                    Open Calendly in new tab
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   )
 }
