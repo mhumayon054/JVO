@@ -245,16 +245,16 @@ export function TestimonialsFloatingWidget() {
                     onDragEnd={handleDragEnd}
                     className="flex h-full cursor-grab select-none touch-pan-y flex-col justify-between active:cursor-grabbing"
                   >
-                    <div className="min-h-0 overflow-hidden">
+                    <div className="min-h-0 overflow-visible">
                       <div className="mb-3 inline-flex rounded-full border border-[rgba(116,89,247,0.24)] bg-[rgba(116,89,247,0.1)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-[#AFA2FF]">
                         {activeTestimonial.metric}
                       </div>
 
                       <p
-                        className="max-w-[540px] overflow-hidden text-[13px] leading-[1.5] text-[#E7E7E7] sm:text-[16px]"
+                        className="max-w-[540px] overflow-hidden pb-1 text-[13px] leading-[1.65] text-[#E7E7E7] sm:text-[15px] sm:leading-[1.65]"
                         style={{
                           display: '-webkit-box',
-                          WebkitLineClamp: 3,
+                          WebkitLineClamp: 2,
                           WebkitBoxOrient: 'vertical',
                         }}
                       >

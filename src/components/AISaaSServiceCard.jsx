@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion'
-import { hoverCardBorderGlow } from './home/homeMotion'
 
 function ServiceIconAI() {
   return (
-    <svg className="text-[#AFA2FF]" width={26} height={26} viewBox="0 0 26 26" fill="none" aria-hidden>
+    <svg className="h-7 w-7 text-[#AFA2FF]" viewBox="0 0 26 26" fill="none" aria-hidden>
       <rect x="4" y="4" width="18" height="18" rx="4" stroke="currentColor" strokeWidth="1.5" />
       <path d="M9 10h8M9 13h5M9 16h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
@@ -11,7 +10,7 @@ function ServiceIconAI() {
 }
 
 function ListBullet() {
-  return <span className="h-[11px] w-[11px] shrink-0 rounded-full bg-[#AFA2FF]" aria-hidden />
+  return <span className="mt-[0.42em] h-2 w-2 shrink-0 rounded-full bg-[#AFA2FF]" aria-hidden />
 }
 
 function ArrowIcon() {
@@ -41,36 +40,35 @@ export function AISaaSServiceCard({ title = 'AI SaaS Development', description, 
     'Transform your business logic into intelligent automation. We specialize in custom LLM orchestrations, agentic workflows, and production-grade RAG pipelines.'
   return (
     <motion.article
-      className="relative flex min-h-0 min-w-0 flex-col justify-center overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] bg-[#131313] p-6 sm:p-10 lg:min-h-[518px]"
-      {...hoverCardBorderGlow}
+      className="relative flex h-full min-h-[420px] min-w-0 flex-col overflow-hidden rounded-[18px] border border-white/[0.06] bg-[#131313]/80 p-6 transition-[border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-[#7459F7]/30 hover:shadow-[0_20px_60px_rgba(116,89,247,0.10)] sm:p-7 lg:min-h-[452px] lg:p-8"
     >
       <div
-        className="pointer-events-none absolute h-[256px] w-[256px] rounded-full bg-[rgba(175,162,255,0.1)] blur-[100px] max-lg:right-[-80px] max-lg:top-0 lg:left-[543px] lg:top-px"
+        className="pointer-events-none absolute -right-24 -top-24 h-[280px] w-[280px] rounded-full bg-[rgba(175,162,255,0.08)] blur-[100px]"
         aria-hidden
       />
-      <div className="relative z-[1] flex min-h-0 flex-col justify-between self-stretch">
-        <div className="relative min-h-[380px]">
-          <div className="absolute left-[5px] top-[7px]">
+      <div className="relative z-[1] flex h-full min-h-0 flex-col">
+        <div className="flex flex-1 flex-col">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03]">
             <ServiceIconAI />
           </div>
-          <h3 className="absolute left-0 top-16 max-w-[718px] text-[36px] font-bold leading-[1.1111111111111112] tracking-[-0.025em] text-white">
+          <h3 className="mt-7 max-w-[720px] text-[30px] font-bold leading-[1.12] tracking-[-0.025em] text-white sm:text-[34px] lg:text-[36px]">
             {title}
           </h3>
-          <p className="absolute left-0 top-[120px] max-w-[576px] text-[18px] font-normal leading-[1.5555555555555556] text-[#ABABAB]">
+          <p className="mt-5 max-w-[620px] text-[16px] font-normal leading-[1.65] text-[#ABABAB] sm:text-[17px]">
             {summary}
           </p>
-          <ul className="absolute left-0 top-[236px] flex max-w-[718px] flex-col gap-3">
+          <ul className="mt-7 grid max-w-[720px] grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
             {bullets.map((t) => (
-              <li key={t} className="flex items-center gap-3 text-[16px] font-normal leading-[1.5] text-white">
+              <li key={t} className="flex items-start gap-3 text-[14px] font-medium leading-[1.5] text-white/90">
                 <ListBullet />
-                {t}
+                <span>{t}</span>
               </li>
             ))}
           </ul>
         </div>
         <button
           type="button"
-          className="relative z-[1] mt-auto flex w-fit items-center gap-2 bg-transparent pt-0 text-left text-[16px] font-bold leading-[1.5] text-[#AFA2FF] transition-opacity hover:opacity-90"
+          className="relative z-[1] mt-9 flex w-fit items-center gap-2 bg-transparent text-left text-[15px] font-bold leading-[1.5] text-[#AFA2FF] transition-opacity hover:opacity-90"
         >
           Explore AI Capabilities
           <ArrowIcon />

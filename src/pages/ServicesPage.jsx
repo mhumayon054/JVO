@@ -99,7 +99,7 @@ export default function ServicesPage() {
         <SiteHeader />
 
         <MotionConfig reducedMotion="user">
-          <PageContent>
+          <PageContent gapClass="gap-16 lg:gap-24">
             {/* Hero */}
             <section>
               <motion.div
@@ -146,75 +146,69 @@ export default function ServicesPage() {
             </section>
 
             {/* Bento grid */}
-            <section>
+            <section className="pt-2">
               <motion.div
-                className="mx-auto flex w-full max-w-[1216px] flex-col gap-8 lg:gap-0"
+                className="mx-auto flex w-full max-w-[1120px] flex-col gap-5"
                 variants={staggerContainer(0.08, 0.12)}
                 initial="hidden"
                 whileInView="visible"
                 viewport={viewportOnce}
               >
-              <motion.div
-  variants={staggerContainer(0.06, 0.11)}
-  className="grid min-w-0 grid-cols-1 gap-8 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] xl:gap-0"
->
-  <motion.div
-    variants={fadeUp(22)}
-    className="min-w-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] xl:rounded-r-none xl:border-r-0"
-  >
-    <AISaaSServiceCard
-      title={bigService.title}
-      description={bigService.shortDescription}
-      bullets={bigService.bullets}
-    />
-  </motion.div>
+                <motion.div
+                  variants={staggerContainer(0.06, 0.11)}
+                  className="grid min-w-0 grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
+                >
+                  <motion.div variants={fadeUp(22)} className="min-w-0 md:col-span-2">
+                    <AISaaSServiceCard
+                      title={bigService.title}
+                      description={bigService.shortDescription}
+                      bullets={bigService.bullets}
+                    />
+                  </motion.div>
 
-  <motion.div
-    variants={fadeUp(22)}
-    className="min-w-0 overflow-hidden rounded-lg border border-[rgba(72,72,72,0.1)] xl:rounded-l-none xl:border-l-0"
-  >
-    <ServiceSmallCard
-      mvpLayout
-      variant="mvp"
-      title={smallServices[0].title}
-      description={smallServices[0].shortDescription}
-      footerLabel={smallServices[0].footerLabel || 'Ideal for'}
-      footerValue={smallServices[0].footerValue || 'Pre-seed & Seed Stage Startups'}
-    />
-  </motion.div>
-</motion.div>
-<motion.div
-  variants={staggerContainer(0.06, 0.11)}
-  className="grid min-w-0 grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3"
->
-                <motion.div variants={fadeUp(22)} className="min-w-0">
-                  <ServiceSmallCard
-                    variant="saas"
-                    title={smallServices[1].title}
-                    description={smallServices[1].shortDescription}
-                    footerLabel={smallServices[1].footerLabel || 'Capabilities'}
-                    footerValue={smallServices[1].footerValue || 'AWS/GCP, Kubernetes, Auto-scaling'}
-                  />
+                  <motion.div variants={fadeUp(22)} className="min-w-0 md:col-span-2 xl:col-span-1">
+                    <ServiceSmallCard
+                      mvpLayout
+                      variant="mvp"
+                      title={smallServices[0].title}
+                      description={smallServices[0].shortDescription}
+                      footerLabel={smallServices[0].footerLabel || 'Ideal for'}
+                      footerValue={smallServices[0].footerValue || 'Pre-seed & Seed Stage Startups'}
+                    />
+                  </motion.div>
                 </motion.div>
-                <motion.div variants={fadeUp(22)} className="w-full lg:w-[384px] lg:shrink-0">
-                  <ServiceSmallCard
-                    variant="crm"
-                    title={smallServices[2].title}
-                    description={smallServices[2].shortDescription}
-                    footerLabel={smallServices[2].footerLabel || 'Focus'}
-                    footerValue={smallServices[2].footerValue || 'Workflow Automation & Data Intelligence'}
-                  />
+                <motion.div
+                  variants={staggerContainer(0.06, 0.11)}
+                  className="grid min-w-0 grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
+                >
+                  <motion.div variants={fadeUp(22)} className="min-w-0">
+                    <ServiceSmallCard
+                      variant="saas"
+                      title={smallServices[1].title}
+                      description={smallServices[1].shortDescription}
+                      footerLabel={smallServices[1].footerLabel || 'Capabilities'}
+                      footerValue={smallServices[1].footerValue || 'AWS/GCP, Kubernetes, Auto-scaling'}
+                    />
+                  </motion.div>
+                  <motion.div variants={fadeUp(22)} className="min-w-0">
+                    <ServiceSmallCard
+                      variant="crm"
+                      title={smallServices[2].title}
+                      description={smallServices[2].shortDescription}
+                      footerLabel={smallServices[2].footerLabel || 'Focus'}
+                      footerValue={smallServices[2].footerValue || 'Workflow Automation & Data Intelligence'}
+                    />
+                  </motion.div>
+                  <motion.div variants={fadeUp(22)} className="min-w-0 md:col-span-2 xl:col-span-1">
+                    <ServiceSmallCard
+                      variant="mobile"
+                      title={smallServices[3].title}
+                      description={smallServices[3].shortDescription}
+                      footerLabel={smallServices[3].footerLabel || 'Tech Stack'}
+                      footerValue={smallServices[3].footerValue || 'React Native, Flutter, Swift'}
+                    />
+                  </motion.div>
                 </motion.div>
-                <motion.div variants={fadeUp(22)} className="w-full lg:w-[384px] lg:shrink-0">
-                  <ServiceSmallCard
-                    variant="mobile"
-                    title={smallServices[3].title}
-                    description={smallServices[3].shortDescription}
-                    footerLabel={smallServices[3].footerLabel || 'Tech Stack'}
-                    footerValue={smallServices[3].footerValue || 'React Native, Flutter, Swift'}
-                  />
-                </motion.div>
-              </motion.div>
               </motion.div>
             </section>
             {serviceState.loading ? <p className="text-center text-sm text-[#ABABAB]">Loading services...</p> : null}

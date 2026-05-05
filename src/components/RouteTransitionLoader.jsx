@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-const FAVICON_SRC = '/favicon.svg'
+const SITE_LOGO_SRC = '/logo/logo jvolabs.svg'
 const MIN_VISIBLE_MS = 480
 const FADE_OUT_MS = 320
 
@@ -67,13 +67,13 @@ export function RouteTransitionLoader() {
             aria-hidden
           />
           <img
-            src={FAVICON_SRC}
+            src={SITE_LOGO_SRC}
             alt=""
             width={48}
-            height={46}
+            height={48}
             decoding="async"
             fetchPriority="low"
-            className="jvo-route-loader__mark relative z-[1] h-[46px] w-[48px] select-none object-contain drop-shadow-[0_0_28px_rgba(175,162,255,0.35)]"
+            className="jvo-route-loader__mark relative z-[1] h-12 w-12 select-none object-contain drop-shadow-[0_0_28px_rgba(175,162,255,0.35)]"
           />
         </div>
         <div className="h-px w-16 bg-gradient-to-r from-transparent via-[rgba(175,162,255,0.5)] to-transparent" aria-hidden />
