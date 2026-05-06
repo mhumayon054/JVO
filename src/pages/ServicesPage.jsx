@@ -14,6 +14,7 @@ import { PartnershipFooter } from '../components/PartnershipFooter'
 import { PageContent } from '../components/PageContent'
 import { ServiceSmallCard } from '../components/ServiceSmallCard'
 import { AISaaSServiceCard } from '../components/AISaaSServiceCard'
+import { ServicesHeroAmbientVisual } from '../components/services/ServicesHeroAmbientVisual'
 import { getServices } from '../lib/strapi'
 
 const fallbackServices = [
@@ -127,19 +128,7 @@ export default function ServicesPage() {
                 </motion.div>
                 <motion.div variants={fadeUp(24)} className="relative mx-auto flex h-[373.33px] w-full max-w-[373.33px] shrink-0 justify-end lg:mx-0">
                   <div className="relative h-full w-full overflow-hidden rounded-lg bg-[rgba(38,38,38,0.4)] backdrop-blur-[20px]">
-                    <motion.img
-                      src="/figma/jvo-brand/services-engineering-core.png"
-                      alt=""
-                      className="h-full w-full object-cover"
-                      {...hoverMediaKen}
-                    />
-                    <div
-                      className="pointer-events-none absolute inset-0 rounded-lg"
-                      style={{
-                        background: 'linear-gradient(135deg, rgba(116, 89, 247, 1) 0%, rgba(175, 162, 255, 1) 100%)',
-                        opacity: 0.1,
-                      }}
-                    />
+                    <ServicesHeroAmbientVisual />
                   </div>
                 </motion.div>
               </motion.div>
