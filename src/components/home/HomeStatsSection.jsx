@@ -4,9 +4,25 @@ import { animateCounter } from '../../utils/animateCounter'
 import { fadeUp, sectionStagger, viewportOnce } from './homeMotion'
 
 const STATS = [
-  { target: 50, prefix: '', suffix: '+', label: 'Startups Scaled' },
-  { target: 100000, prefix: '', suffix: '+', label: 'Revenue Driven', format: 'comma' },
-  { target: 100, prefix: '', suffix: '+', label: 'Projects Delivered' },
+  {
+    target: 50,
+    prefix: '',
+    suffix: '+',
+    label: 'Startups Scaled',
+  },
+  {
+    target: 100000,
+    prefix: '$',
+    suffix: '+',
+    label: 'Revenue Driven',
+    format: 'comma',
+  },
+  {
+    target: 100,
+    prefix: '',
+    suffix: '+',
+    label: 'Projects Delivered',
+  },
 ]
 
 export function HomeStatsSection() {
@@ -26,21 +42,27 @@ export function HomeStatsSection() {
         observer.disconnect()
 
         const nodes = section.querySelectorAll('[data-counter]')
+
         nodes.forEach((node) => {
           if (!(node instanceof HTMLElement)) return
+
           const raw = node.getAttribute('data-target')
           const target = raw != null ? Number(raw) : NaN
+
           if (Number.isNaN(target)) return
 
           const prefix = node.getAttribute('data-prefix') ?? ''
           const suffix = node.getAttribute('data-suffix') ?? ''
-          const format = node.getAttribute('data-format')
+          const format = node.getAttribute('data-format') ?? ''
 
           animateCounter(node, target, {
             duration: 1800,
             prefix,
             suffix,
-            format: format === 'comma' ? (value) => Math.round(value).toLocaleString('en-US') : undefined,
+            format:
+              format === 'comma'
+                ? (value) => Math.round(value).toLocaleString('en-US')
+                : undefined,
           })
         })
       },
@@ -71,14 +93,17 @@ export function HomeStatsSection() {
               className="counter tabular-nums"
               data-counter
               data-target={String(s.target)}
-              data-prefix={s.prefix}
-              data-suffix={s.suffix}
+              data-prefix={s.prefix ?? ''}
+              data-suffix={s.suffix ?? ''}
               data-format={s.format ?? ''}
             >
-              {`${s.prefix}0${s.suffix}`}
+              {`${s.prefix ?? ''}0${s.suffix ?? ''}`}
             </span>
           </p>
-          <p className="mt-2 text-[14px] font-normal uppercase tracking-[0.1em] text-[#ABABAB]">{s.label}</p>
+
+          <p className="mt-2 text-[14px] font-normal uppercase tracking-[0.1em] text-[#ABABAB]">
+            {s.label}
+          </p>
         </motion.div>
       ))}
     </motion.section>
