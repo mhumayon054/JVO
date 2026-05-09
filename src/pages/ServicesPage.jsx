@@ -3,7 +3,6 @@ import { MotionConfig, motion } from 'framer-motion'
 import {
   MotionLink,
   fadeUp,
-  hoverMediaKen,
   hoverPrimaryCta,
   hoverTapSoft,
   staggerContainer,
@@ -14,7 +13,6 @@ import { PartnershipFooter } from '../components/PartnershipFooter'
 import { PageContent } from '../components/PageContent'
 import { ServiceSmallCard } from '../components/ServiceSmallCard'
 import { AISaaSServiceCard } from '../components/AISaaSServiceCard'
-import { ServicesHeroAmbientVisual } from '../components/services/ServicesHeroAmbientVisual'
 import { getServices } from '../lib/strapi'
 
 const fallbackServices = [
@@ -126,9 +124,13 @@ export default function ServicesPage() {
                     </p>
                   </motion.div>
                 </motion.div>
-                <motion.div variants={fadeUp(24)} className="relative mx-auto flex h-[373.33px] w-full max-w-[373.33px] shrink-0 justify-end lg:mx-0">
-                  <div className="relative h-full w-full overflow-hidden rounded-lg bg-[rgba(38,38,38,0.4)] backdrop-blur-[20px]">
-                    <ServicesHeroAmbientVisual />
+                <motion.div variants={fadeUp(24)} className="relative mx-auto flex w-full max-w-[520px] shrink-0 justify-end lg:mx-0 lg:max-w-[460px] xl:max-w-[520px]">
+                  <div className="relative aspect-[3/2] w-full overflow-hidden rounded-lg border border-[rgba(175,162,255,0.14)] bg-[rgba(10,10,14,0.95)] backdrop-blur-[20px]">
+                    <motion.img
+                      src="/figma/services/servicePgae1.png"
+                      alt="Precision engineering visual"
+                      className="h-full w-full object-contain"
+                    />
                   </div>
                 </motion.div>
               </motion.div>
@@ -239,13 +241,12 @@ export default function ServicesPage() {
                     </div>
                   </motion.div>
                 </motion.div>
-                <motion.div variants={fadeUp(22)} className="relative z-[1] flex w-full flex-1 flex-col lg:max-w-none">
-                  <div className="mt-4 aspect-square w-full overflow-hidden rounded">
+                <motion.div variants={fadeUp(22)} className="relative z-[1] flex w-full flex-1 flex-col lg:max-w-[560px]">
+                  <div className="mt-4 aspect-[3/2] w-full overflow-hidden rounded bg-[rgba(10,10,14,0.95)]">
                     <motion.img
-                      src="/figma/services/consult-1-56586a.png"
+                      src="/figma/services/servicePgae2.png"
                       alt=""
-                      className="h-[240px] w-full object-cover sm:h-full sm:min-h-[240px]"
-                      {...hoverMediaKen}
+                      className="h-full w-full object-contain"
                     />
                   </div>
                   {/* <div className="pt-8">
