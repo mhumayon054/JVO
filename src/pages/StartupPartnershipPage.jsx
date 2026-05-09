@@ -75,7 +75,7 @@ export default function StartupPartnershipPage() {
                   {...hoverCardBorderGlow}
                 >
                   <motion.img
-                    src="/figma/jvo-brand/partnership-hero-architecture.png"
+                    src="/figma/partnership/partnershipD.png"
                     alt=""
                     className="h-full w-full object-cover opacity-60"
                     {...hoverMediaKen}
@@ -131,7 +131,7 @@ export default function StartupPartnershipPage() {
                     </div>
                     <div className="relative flex min-h-[200px] items-stretch overflow-hidden bg-[#262626] lg:min-h-[301px]">
                       <motion.img
-                        src="/figma/jvo-brand/partnership-product-systems.png"
+                        src="/figma/partnership/partnershipC.png"
                         alt=""
                         className="h-full w-full object-cover opacity-40"
                         {...hoverMediaKen}
@@ -145,7 +145,7 @@ export default function StartupPartnershipPage() {
                   <div className="grid grid-cols-1 lg:grid-cols-2">
                     <div className="relative order-2 flex min-h-[200px] items-stretch overflow-hidden bg-[#262626] lg:order-1 lg:min-h-[301px]">
                       <motion.img
-                        src="/figma/jvo-brand/partnership-teams-infrastructure.png"
+                        src="/figma/partnership/partnershipB.png"
                         alt=""
                         className="h-full w-full object-cover opacity-40"
                         {...hoverMediaKen}
@@ -196,7 +196,7 @@ export default function StartupPartnershipPage() {
                     </div>
                     <div className="relative flex min-h-[200px] items-stretch overflow-hidden bg-[#262626] lg:min-h-[301px]">
                       <motion.img
-                        src="/figma/jvo-brand/partnership-advisory-network.png"
+                        src="/figma/partnership/partnershipA.png"
                         alt=""
                         className="h-full w-full object-cover opacity-40"
                         {...hoverMediaKen}
