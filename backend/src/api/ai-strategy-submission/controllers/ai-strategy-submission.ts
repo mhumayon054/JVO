@@ -14,40 +14,32 @@ const strategySchema = {
     type: 'object',
     additionalProperties: false,
     required: [
+      'reality_check',
       'executive_summary',
-      'implementation_design',
-      'architecture_blueprint',
+      'recommended_lean_team',
       'technical_roadmap',
+      'smart_technical_suggestions',
+      'monthly_cost_estimate',
       'technical_specs',
       'risks_and_mitigations',
       'strengths',
       'weaknesses',
       'assumptions',
-      'next_steps',
     ],
     properties: {
+      reality_check: { type: 'string' },
       executive_summary: { type: 'string' },
-      implementation_design: {
-        type: 'object',
-        additionalProperties: false,
-        required: ['domain_model', 'services', 'api_contracts', 'data_model', 'background_jobs', 'testing_and_quality'],
-        properties: {
-          domain_model: { type: 'array', items: { type: 'string' } },
-          services: { type: 'array', items: { type: 'string' } },
-          api_contracts: { type: 'array', items: { type: 'string' } },
-          data_model: { type: 'array', items: { type: 'string' } },
-          background_jobs: { type: 'array', items: { type: 'string' } },
-          testing_and_quality: { type: 'array', items: { type: 'string' } },
-        },
-      },
-      architecture_blueprint: {
-        type: 'object',
-        additionalProperties: false,
-        required: ['overview', 'components', 'data_flow'],
-        properties: {
-          overview: { type: 'string' },
-          components: { type: 'array', items: { type: 'string' } },
-          data_flow: { type: 'array', items: { type: 'string' } },
+      recommended_lean_team: {
+        type: 'array',
+        items: {
+          type: 'object',
+          additionalProperties: false,
+          required: ['role', 'monthly_cost_usd', 'why'],
+          properties: {
+            role: { type: 'string' },
+            monthly_cost_usd: { type: 'number' },
+            why: { type: 'string' },
+          },
         },
       },
       technical_roadmap: {
@@ -61,6 +53,31 @@ const strategySchema = {
             timeline: { type: 'string' },
             outcomes: { type: 'array', items: { type: 'string' } },
           },
+        },
+      },
+      smart_technical_suggestions: {
+        type: 'array',
+        items: { type: 'string' },
+      },
+      monthly_cost_estimate: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['currency', 'line_items', 'total_monthly_cost'],
+        properties: {
+          currency: { type: 'string' },
+          line_items: {
+            type: 'array',
+            items: {
+              type: 'object',
+              additionalProperties: false,
+              required: ['label', 'amount'],
+              properties: {
+                label: { type: 'string' },
+                amount: { type: 'number' },
+              },
+            },
+          },
+          total_monthly_cost: { type: 'number' },
         },
       },
       technical_specs: {
@@ -89,7 +106,6 @@ const strategySchema = {
       strengths: { type: 'array', items: { type: 'string' } },
       weaknesses: { type: 'array', items: { type: 'string' } },
       assumptions: { type: 'array', items: { type: 'string' } },
-      next_steps: { type: 'array', items: { type: 'string' } },
     },
   },
 }
@@ -253,12 +269,15 @@ async function buildStrategy(openai: OpenAI, payload: { ideaText: string; mode: 
       [
         'You are a senior software engineer and solution architect.',
         'Produce practical, execution-ready output focused on software system design and implementation.',
+        'Output must include a business-friendly advisory layer with: Reality Check, Recommended Lean Team, Smart Technical Suggestions, and Estimated Monthly Cost.',
         'Be explicit about assumptions and constraints. Avoid hype and unknown claims.',
         'Default to cloud-agnostic recommendations and avoid cloud-vendor-specific services unless the user explicitly requests a specific provider.',
-        'Prioritize application architecture details: domain boundaries, modules/services, data model, API contracts, background jobs, event flows, security controls, testing strategy, and delivery sequencing.',
+        'Prioritize practical product build details with execution clarity, but do not include dedicated Architecture Overview or Core Components sections in output.',
         'For stack recommendations, prioritize frameworks, languages, databases, queues, caching, and observability tooling in vendor-neutral terms.',
         'If retrieved context is cloud-skewed, do not mirror that bias; keep the final output implementation-centric and software-engineering focused.',
         'Never make the response primarily about Azure, AWS, or GCP unless the user asked for it.',
+        'Roadmap timeline must be dynamic based on project scope and complexity; do not default to a fixed 90-day plan.',
+        'Support any software product type (AI and non-AI). Use AI-specific recommendations only when relevant to the project idea.',
       ].join(' '),
   }
 
@@ -272,7 +291,10 @@ async function buildStrategy(openai: OpenAI, payload: { ideaText: string; mode: 
     payload.answers ? `Questionnaire answers:\n${JSON.stringify(payload.answers, null, 2)}` : '',
     ragContext.length ? `Knowledge context:\n${ragContext.join('\n\n')}` : 'Knowledge context: unavailable',
     'Return grounded strategy. If uncertain, state assumptions clearly.',
-    'The implementation_design section is mandatory and must be concrete, implementation-ready, and specific to the product idea.',
+    'The response must feel like a practical startup technical proposal, not only an architecture memo.',
+    'Keep the team recommendation lean unless enterprise complexity is explicitly requested.',
+    'Team pricing must be realistic, slightly cost-conscious, and dynamically based on project scope; never use a fixed static estimate across projects.',
+    'The technical_roadmap timelines must be project-specific (for example 4-6 weeks, 3-4 months, 6-9 months, etc.) and not hardcoded.',
   ]
     .filter(Boolean)
     .join('\n\n')
@@ -322,45 +344,39 @@ async function renderStrategyPdf(strategy: any, meta: { ideaText: string; mode: 
     doc.fontSize(10).text(strategy.executive_summary || '')
 
     doc.moveDown(0.6)
-    doc.fontSize(13).text('Implementation Design')
-    const impl = strategy.implementation_design || {}
-    doc.fontSize(11).text('Domain Model')
-    for (const item of impl.domain_model || []) doc.fontSize(10).text(`- ${item}`)
-    doc.moveDown(0.2)
-    doc.fontSize(11).text('Services')
-    for (const item of impl.services || []) doc.fontSize(10).text(`- ${item}`)
-    doc.moveDown(0.2)
-    doc.fontSize(11).text('API Contracts')
-    for (const item of impl.api_contracts || []) doc.fontSize(10).text(`- ${item}`)
-    doc.moveDown(0.2)
-    doc.fontSize(11).text('Data Model')
-    for (const item of impl.data_model || []) doc.fontSize(10).text(`- ${item}`)
-    doc.moveDown(0.2)
-    doc.fontSize(11).text('Background Jobs')
-    for (const item of impl.background_jobs || []) doc.fontSize(10).text(`- ${item}`)
-    doc.moveDown(0.2)
-    doc.fontSize(11).text('Testing and Quality')
-    for (const item of impl.testing_and_quality || []) doc.fontSize(10).text(`- ${item}`)
+    doc.fontSize(13).text('Reality Check')
+    doc.fontSize(10).text(strategy.reality_check || '')
 
     doc.moveDown(0.6)
-    doc.fontSize(13).text('Architecture Overview')
-    doc.fontSize(10).text(strategy.architecture_blueprint?.overview || '')
+    doc.fontSize(13).text('Recommended Lean Team')
+    for (const member of strategy.recommended_lean_team || []) {
+      doc.fontSize(11).text(`${member.role} - $${Number(member.monthly_cost_usd || 0).toLocaleString('en-US')}/mo`)
+      doc.fontSize(10).text(member.why || '')
+      doc.moveDown(0.2)
+    }
 
     doc.moveDown(0.6)
-    doc.fontSize(13).text('Core Components')
-    for (const item of strategy.architecture_blueprint?.components || []) doc.fontSize(10).text(`- ${item}`)
-
-    doc.moveDown(0.5)
-    doc.fontSize(13).text('Data Flow')
-    for (const item of strategy.architecture_blueprint?.data_flow || []) doc.fontSize(10).text(`- ${item}`)
-
-    doc.moveDown(0.6)
-    doc.fontSize(13).text('Technical Roadmap')
+    doc.fontSize(13).text('Project Roadmap')
     for (const phase of strategy.technical_roadmap || []) {
       doc.fontSize(11).text(`${phase.phase} (${phase.timeline})`)
       for (const outcome of phase.outcomes || []) doc.fontSize(10).text(`- ${outcome}`)
       doc.moveDown(0.2)
     }
+
+    doc.moveDown(0.4)
+    doc.fontSize(13).text('Smart Technical Suggestions')
+    for (const item of strategy.smart_technical_suggestions || []) doc.fontSize(10).text(`- ${item}`)
+
+    doc.moveDown(0.4)
+    doc.fontSize(13).text('Estimated Monthly Cost (Lean Mode)')
+    for (const item of strategy.monthly_cost_estimate?.line_items || []) {
+      doc.fontSize(10).text(`${item.label}: ${(strategy.monthly_cost_estimate?.currency || '$')}${Number(item.amount || 0).toLocaleString('en-US')}`)
+    }
+    doc
+      .fontSize(11)
+      .text(
+        `Total: ${(strategy.monthly_cost_estimate?.currency || '$')}${Number(strategy.monthly_cost_estimate?.total_monthly_cost || 0).toLocaleString('en-US')}/mo`,
+      )
 
     doc.moveDown(0.4)
     doc.fontSize(13).text('Risks and Mitigations')

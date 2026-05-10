@@ -1,24 +1,24 @@
 # AI Strategy Knowledge Fetch Report
 
 - Total attempted: 40
-- Success: 19
-- Failed: 21
+- Success: 31
+- Failed: 9
 
 ## Details
 - FAIL: https://platform.openai.com/docs/quickstart -> HTTP 403
-- FAIL: https://platform.openai.com/docs/api-reference/responses -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/structured-outputs -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/function-calling -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/tools-file-search -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/retrieval -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/text -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/images -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/audio -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/embeddings -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/safety-best-practices -> HTTP 403
-- FAIL: https://platform.openai.com/docs/guides/prompt-engineering -> HTTP 403
-- FAIL: https://platform.openai.com/docs/models -> HTTP 403
-- FAIL: https://platform.openai.com/docs/pricing -> HTTP 403
+- FAIL: https://platform.openai.com/docs/api-reference/responses -> HTTP 404
+- OK: https://platform.openai.com/docs/guides/structured-outputs -> knowledge\sources\003-developers-openai-com-api-docs-guides-structured-outputs.md
+- OK: https://platform.openai.com/docs/guides/function-calling -> knowledge\sources\004-developers-openai-com-api-docs-guides-function-calling.md
+- OK: https://platform.openai.com/docs/guides/tools-file-search -> knowledge\sources\005-developers-openai-com-api-docs-guides-tools-file-search.md
+- OK: https://platform.openai.com/docs/guides/retrieval -> knowledge\sources\006-developers-openai-com-api-docs-guides-retrieval.md
+- OK: https://platform.openai.com/docs/guides/text -> knowledge\sources\007-developers-openai-com-api-docs-guides-text.md
+- OK: https://platform.openai.com/docs/guides/images -> knowledge\sources\008-developers-openai-com-api-docs-guides-images-vision.md
+- OK: https://platform.openai.com/docs/guides/audio -> knowledge\sources\009-developers-openai-com-api-docs-guides-audio.md
+- OK: https://platform.openai.com/docs/guides/embeddings -> knowledge\sources\010-developers-openai-com-api-docs-guides-embeddings.md
+- OK: https://platform.openai.com/docs/guides/safety-best-practices -> knowledge\sources\011-developers-openai-com-api-docs-guides-safety-best-practices.md
+- OK: https://platform.openai.com/docs/guides/prompt-engineering -> knowledge\sources\012-developers-openai-com-api-docs-guides-prompt-engineering.md
+- OK: https://platform.openai.com/docs/models -> knowledge\sources\013-developers-openai-com-api-docs-models.md
+- OK: https://platform.openai.com/docs/pricing -> knowledge\sources\014-developers-openai-com-api-docs-pricing.md
 - OK: https://github.com/openai/openai-node -> knowledge\sources\015-github-com-openai-openai-node.md
 - OK: https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html -> knowledge\sources\016-docs-aws-amazon-com-wellarchitected-latest-framework-welcome-html.md
 - OK: https://docs.aws.amazon.com/wellarchitected/latest/framework/definitions.html -> knowledge\sources\017-docs-aws-amazon-com-wellarchitected-latest-framework-definitions-html.md

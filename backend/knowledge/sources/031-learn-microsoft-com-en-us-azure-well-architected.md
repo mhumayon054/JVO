@@ -43,8 +43,6 @@ Software as a service (SaaS)
 Key insights for Startups and mature independent software vendors (ISVs) to build scalable, performant, reliable, and secure SaaS solutions.
 Oracle on IaaS
 Host Oracle workloads on Azure, which includes not only Oracle Databases, but also applications such as Siebel, Peoplesoft, JD Edwards.
-SAP
-Evaluate, design, and optimize an SAP workload from premigration to operations.
 Mission-critical
 Design and operationalize workloads that are expected to be always available and resilient to failures.
 HPC

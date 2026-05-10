@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { fadeUp } from './homeMotion'
 import { resendAIStrategyEmail, startAIStrategySubmission, submitAIStrategyQuestionnaire } from '../../lib/strapi'
+import { downloadAIStrategyPdf } from '../../utils/aiStrategyPdf'
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -235,28 +236,24 @@ export function AIStrategyBuilderSection() {
             ) : (
               <div className="space-y-4">
                 <p className="text-[12px] uppercase tracking-[0.1em] text-[#AFA2FF]">Generated Blueprint</p>
+                <h3 className="text-[22px] font-bold">Reality Check</h3>
+                <p className="text-[14px] leading-[1.6] text-[#ABABAB]">{result.reality_check}</p>
+
                 <h3 className="text-[22px] font-bold">Executive Summary</h3>
                 <p className="text-[14px] leading-[1.6] text-[#ABABAB]">{result.executive_summary}</p>
 
-                <h4 className="text-[16px] font-bold text-white">Implementation Design</h4>
-                <p className="text-[12px] uppercase tracking-[0.08em] text-[#8f8f8f]">Domain Model</p>
-                <ResultList items={result.implementation_design?.domain_model} />
-                <p className="text-[12px] uppercase tracking-[0.08em] text-[#8f8f8f]">Services</p>
-                <ResultList items={result.implementation_design?.services} />
-                <p className="text-[12px] uppercase tracking-[0.08em] text-[#8f8f8f]">API Contracts</p>
-                <ResultList items={result.implementation_design?.api_contracts} />
-                <p className="text-[12px] uppercase tracking-[0.08em] text-[#8f8f8f]">Data Model</p>
-                <ResultList items={result.implementation_design?.data_model} />
-                <p className="text-[12px] uppercase tracking-[0.08em] text-[#8f8f8f]">Background Jobs</p>
-                <ResultList items={result.implementation_design?.background_jobs} />
-                <p className="text-[12px] uppercase tracking-[0.08em] text-[#8f8f8f]">Testing and Quality</p>
-                <ResultList items={result.implementation_design?.testing_and_quality} />
-
-                <h4 className="text-[16px] font-bold text-white">Architecture Overview</h4>
-                <p className="text-[14px] leading-[1.6] text-[#ABABAB]">{result.architecture_blueprint?.overview}</p>
-
-                <h4 className="text-[16px] font-bold text-white">Core Components</h4>
-                <ResultList items={result.architecture_blueprint?.components} />
+                <h4 className="text-[16px] font-bold text-white">Recommended Lean Team</h4>
+                <ul className="space-y-2 text-[14px] text-[#ABABAB]">
+                  {(result.recommended_lean_team || []).map((member, index) => (
+                    <li key={`team-${index}`} className="rounded-md bg-[#151515] px-3 py-2">
+                      <strong className="text-white">
+                        {member.role} (${Number(member.monthly_cost_usd || 0).toLocaleString('en-US')}/mo)
+                      </strong>
+                      <br />
+                      {member.why}
+                    </li>
+                  ))}
+                </ul>
 
                 <h4 className="text-[16px] font-bold text-white">Risks and Mitigations</h4>
                 <ul className="space-y-2 text-[14px] text-[#ABABAB]">
@@ -275,7 +272,7 @@ export function AIStrategyBuilderSection() {
                 <h4 className="text-[16px] font-bold text-white">Weaknesses</h4>
                 <ResultList items={result.weaknesses} />
 
-                <h4 className="text-[16px] font-bold text-white">Technical Roadmap</h4>
+                <h4 className="text-[16px] font-bold text-white">Project Roadmap</h4>
                 <ul className="space-y-2 text-[14px] text-[#ABABAB]">
                   {(result.technical_roadmap || []).map((phase, index) => (
                     <li key={`phase-${index}`} className="rounded-md bg-[#151515] px-3 py-2">
@@ -285,10 +282,33 @@ export function AIStrategyBuilderSection() {
                   ))}
                 </ul>
 
-                <h4 className="text-[16px] font-bold text-white">Next Steps</h4>
-                <ResultList items={result.next_steps} />
+                <h4 className="text-[16px] font-bold text-white">Smart Technical Suggestions</h4>
+                <ResultList items={result.smart_technical_suggestions} />
+
+                <h4 className="text-[16px] font-bold text-white">Estimated Monthly Cost (Lean Mode)</h4>
+                <ul className="space-y-2 text-[14px] text-[#ABABAB]">
+                  {(result.monthly_cost_estimate?.line_items || []).map((item, index) => (
+                    <li key={`cost-${index}`} className="rounded-md bg-[#151515] px-3 py-2">
+                      {item.label}: {(result.monthly_cost_estimate?.currency || '$')}
+                      {Number(item.amount || 0).toLocaleString('en-US')}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[14px] font-semibold text-white">
+                  Total: {(result.monthly_cost_estimate?.currency || '$')}
+                  {Number(result.monthly_cost_estimate?.total_monthly_cost || 0).toLocaleString('en-US')}/mo
+                </p>
 
                 {emailMessage ? <p className="rounded-md bg-[#151515] px-3 py-2 text-[13px] text-[#AFA2FF]">{emailMessage}</p> : null}
+                {submissionId ? (
+                  <button
+                    type="button"
+                    onClick={() => downloadAIStrategyPdf({ result, ideaText, submissionId })}
+                    className="mr-3 rounded-md bg-gradient-to-r from-[#7459F7] to-[#AFA2FF] px-4 py-2 text-[13px] font-semibold text-black"
+                  >
+                    Download Plan (PDF)
+                  </button>
+                ) : null}
                 {submissionId ? (
                   <button
                     type="button"

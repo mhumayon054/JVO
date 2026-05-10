@@ -133,9 +133,9 @@ Star
 10.9k
 Code
 Issues
-122
+123
 Pull requests
-105
+108
 Discussions
 Actions
 Security and quality
@@ -161,8 +161,8 @@ Last commit message
 Last commit date
 ## Latest commit
 ## History
-1,562 Commits
-1,562 Commits
+1,599 Commits
+1,599 Commits
 .devcontainer
 .devcontainer
 .github
@@ -782,11 +782,11 @@ forks
 Report repository
 ##
 Releases
-343
-v6.35.0
+345
+v6.37.0
 Latest
-Apr 28, 2026
-+ 342 releases
+May 7, 2026
++ 344 releases
 ## Uh oh!
 There was an error while loading. Please reload this page .
 ##
@@ -795,9 +795,9 @@ Contributors
 There was an error while loading. Please reload this page .
 ## Languages
 TypeScript
-98.4%
+98.5%
 Other
-1.6%
+1.5%
 ## Footer
 &copy; 2026 GitHub, Inc.
 ## Footer navigation
