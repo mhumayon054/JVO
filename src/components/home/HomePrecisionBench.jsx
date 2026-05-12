@@ -1,32 +1,34 @@
 import { useCallback, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { EASE, fadeUp, staggerContainer, viewportOnce } from './homeMotion'
 
 export const PRECISION_BENCH_MEMBERS = [
   {
     name: 'Sufyan Iftekhar',
-    role: 'Founder / CEO',
+    role: 'Founder & CEO',
     img: '/figma/imagesuf.webp',
-    bio: 'Battle-tested specialist with production experience in high-stakes AI systems.',
+    bio: 'Sufyan is the driving force behind JVO Labs — a business and technology consultant with a sharp eye for scaling SaaS products and startups through strategic partnerships and high-performance offshore teams.',
     linkedinUrl: 'https://www.linkedin.com/in/sufyan-iftekhar/',
     upworkUrl: 'https://www.upwork.com/freelancers/~01617abe4257f896dd?mp_source=share',
     githubUrl: 'https://github.com/SufyanIftekhar',
   },
   {
     name: 'Muhammad Faizan',
-    role: 'Co-Founder / COO',
+    role: 'Co-Founder & COO',
     img: '/figma/imagefaizan.webp',
-    bio: 'Battle-tested specialist with production experience in high-stakes AI systems.',
+    bio: "Faizan leads JVO Labs' operations with a focus on building elite offshore engineering teams across South Asia. A hands-on technology partner, he bridges the gap between global businesses and world-class South Asian talent.",
     linkedinUrl: 'https://www.linkedin.com/in/faizanjvo/',
   },
   {
     name: 'Ahmad Ashfaq',
     role: 'CTO',
     img: '/figma/imageahm.webp',
-    bio: 'Battle-tested specialist with production experience in high-stakes AI systems.',
+    bio: 'Ahmad is the technical backbone of JVO Labs — a full-stack architect with 8+ years of expertise in ERP systems, POS, CRM, hotel management, and custom business software. He leads engineering with precision, building scalable solutions in PHP, React, and Next.js.',
     linkedinUrl: 'https://www.linkedin.com/in/ahmad-ashfaq-25aab419a/',
   },
 ]
+
 
 
 function LinkedInIcon() {
@@ -108,7 +110,15 @@ function BenchCard({ member }) {
           {member.name}
         </h3>
         <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#AFA2FF]">{member.role}</p>
-        <p className="mt-4 text-[14px] leading-[1.5] text-[#ABABAB]">{member.bio}</p>
+        <p className="mt-4 text-[14px] leading-[1.5] text-[#ABABAB]">
+          {member.bio.length > 110 ? `${member.bio.substring(0, 110)}...` : member.bio}
+          <Link
+            to="/about-us"
+            className="ml-1 inline-block font-semibold text-[#AFA2FF] transition-colors hover:text-white"
+          >
+            Read More
+          </Link>
+        </p>
 
         {hasSocialLinks ? (
           <div className="absolute bottom-6 right-6 flex items-center gap-4 text-[#ABABAB]">

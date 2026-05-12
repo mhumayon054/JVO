@@ -94,20 +94,13 @@ export default function AboutUsPage() {
                 </motion.div>
                 <motion.div
                   variants={fadeUp(26)}
-                  className="relative mx-auto aspect-square w-full max-w-[479px] overflow-hidden rounded-lg border border-[rgba(72,72,72,0.15)] bg-[#131313] lg:mx-0 lg:max-w-none lg:justify-self-end"
-                  {...hoverCardBorderGlow}
+                  className="relative mx-auto w-full max-w-[460px] lg:mx-0 lg:max-w-[420px] xl:max-w-[460px] lg:justify-self-end"
                 >
                   <motion.img
                     src="/figma/about/aboutpagehero.png"
                     alt="JVO Labs mission"
-                    className="h-full w-full object-cover opacity-60"
+                    className="w-full object-contain filter drop-shadow-[0_0_80px_rgba(116,89,247,0.15)] drop-shadow-[0_0_140px_rgba(116,89,247,0.1)]"
                     {...hoverMediaKen}
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0 rounded-lg"
-                    style={{
-                      background: 'linear-gradient(0deg, #0E0E0E 0%, rgba(14, 14, 14, 0) 100%)',
-                    }}
                   />
                 </motion.div>
               </motion.div>

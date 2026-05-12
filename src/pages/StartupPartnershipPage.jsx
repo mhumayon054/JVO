@@ -71,20 +71,13 @@ export default function StartupPartnershipPage() {
                 </motion.div>
                 <motion.div
                   variants={fadeUp(26)}
-                  className="relative mx-auto aspect-square max-w-[373px] overflow-hidden rounded-lg border border-[rgba(72,72,72,0.15)] bg-[#131313] lg:mx-0 lg:max-w-none lg:justify-self-end"
-                  {...hoverCardBorderGlow}
+                  className="relative mx-auto w-full max-w-[640px] lg:mx-0 lg:max-w-[600px] xl:max-w-[640px] lg:justify-self-end"
                 >
                   <motion.img
                     src="/figma/partnership/partnershipD.png"
                     alt=""
-                    className="h-full w-full object-cover opacity-60"
+                    className="w-full object-contain"
                     {...hoverMediaKen}
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0 rounded-lg"
-                    style={{
-                      background: 'linear-gradient(0deg, #0E0E0E 0%, rgba(14, 14, 14, 0) 50%, rgba(14, 14, 14, 0) 100%)',
-                    }}
                   />
                 </motion.div>
               </motion.div>

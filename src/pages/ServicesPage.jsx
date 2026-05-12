@@ -124,12 +124,12 @@ export default function ServicesPage() {
                     </p>
                   </motion.div>
                 </motion.div>
-                <motion.div variants={fadeUp(24)} className="relative mx-auto flex w-full max-w-[520px] shrink-0 justify-end lg:mx-0 lg:max-w-[460px] xl:max-w-[520px]">
-                  <div className="relative aspect-[3/2] w-full overflow-hidden rounded-lg border border-[rgba(175,162,255,0.14)] bg-[rgba(10,10,14,0.95)] backdrop-blur-[20px]">
+                <motion.div variants={fadeUp(24)} className="relative mx-auto flex w-full max-w-[680px] shrink-0 justify-end lg:mx-0 lg:max-w-[600px] xl:max-w-[680px]">
+                  <div className="relative w-full">
                     <motion.img
                       src="/figma/services/servicePgae1.png"
                       alt="Precision engineering visual"
-                      className="h-full w-full object-contain"
+                      className="w-full object-contain"
                     />
                   </div>
                 </motion.div>
@@ -241,12 +241,12 @@ export default function ServicesPage() {
                     </div>
                   </motion.div>
                 </motion.div>
-                <motion.div variants={fadeUp(22)} className="relative z-[1] flex w-full flex-1 flex-col lg:max-w-[560px]">
-                  <div className="mt-4 aspect-[3/2] w-full overflow-hidden rounded bg-[rgba(10,10,14,0.95)]">
+                <motion.div variants={fadeUp(22)} className="relative z-[1] flex w-full flex-1 flex-col lg:max-w-[680px]">
+                  <div className="mt-4 w-full">
                     <motion.img
                       src="/figma/services/servicePgae2.png"
                       alt=""
-                      className="h-full w-full object-contain"
+                      className="w-full object-contain filter drop-shadow-[0_25px_45px_rgba(116,89,247,0.22)]"
                     />
                   </div>
                   {/* <div className="pt-8">

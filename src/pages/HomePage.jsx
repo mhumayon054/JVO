@@ -111,53 +111,61 @@ export default function HomePage() {
 
       <MotionConfig reducedMotion="user">
         <PageContent gapClass="gap-0">
-          <section>
+          <section className="relative">
+            {/* Soft background glow for blending */}
+            <div className="pointer-events-none absolute -left-20 -top-20 h-[600px] w-[600px] rounded-full bg-[#7459F7] opacity-[0.07] blur-[140px]" />
+
             <motion.div
-              className="grid grid-cols-1 gap-8 lg:grid-cols-2"
+              className="relative overflow-hidden rounded-[8px] border border-white/[0.05] bg-gradient-to-b from-[#121212] to-[#0E0E0E] p-8 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.5),0_0_80px_rgba(116,89,247,0.06)] lg:p-16"
               variants={staggerContainer(0.1, 0.17)}
               initial="hidden"
               animate="visible"
             >
-              <motion.div className="pt-4" variants={staggerContainer(0.04, 0.1)}>
-                <motion.h1
-                  variants={fadeUp(22)}
-                  className="whitespace-pre-line text-[96px] leading-[1] font-bold tracking-[-0.04em] max-lg:text-[56px] max-md:text-[42px]"
-                >
-                  Build Your{'\n'}AI SaaS
-                </motion.h1>
-                <motion.p
-                  variants={fadeUp(18)}
-                  className="mt-6 max-w-[575px] text-[24px] leading-[1.333] text-[#ABABAB] max-md:text-[18px]"
-                >
-                  Precision engineering for the AI era. We partner with founders to architect, build, and scale
-                  high-performance intelligence platforms.
-                </motion.p>
-                <motion.div className="mt-8 flex flex-wrap gap-4" variants={staggerContainer(0, 0.08)}>
-                  <MotionLink
-                    variants={fadeUp(14)}
-                    to="/build-squad"
-                    className="rounded-[6px] bg-gradient-to-r from-[#7459F7] to-[#AFA2FF] px-8 py-5 text-[18px] font-bold text-black"
-                    whileTap={{ scale: 0.985 }}
-                    transition={{ duration: 0.16, ease: EASE }}
+              <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+                <motion.div variants={staggerContainer(0.04, 0.1)}>
+                  <motion.h1
+                    variants={fadeUp(22)}
+                    className="whitespace-pre-line text-[96px] font-bold leading-[1] tracking-[-0.04em] max-lg:text-[56px] max-md:text-[42px]"
                   >
-                    Build Your Squad
-                  </MotionLink>
-                  <MotionLink
-                    variants={fadeUp(14)}
-                    to="/case-studies"
-                    className="rounded-[6px] border border-[rgba(72,72,72,0.15)] px-8 py-5 text-[18px] font-bold text-[#AFA2FF]"
-                    whileTap={{ scale: 0.985 }}
-                    transition={{ duration: 0.16, ease: EASE }}
+                    Build Your{'\n'}AI SaaS
+                  </motion.h1>
+                  <motion.p
+                    variants={fadeUp(18)}
+                    className="mt-6 max-w-[575px] text-[24px] leading-[1.333] text-[#ABABAB] max-md:text-[18px]"
                   >
-                    View Our Work
-                  </MotionLink>
+                    Precision engineering for the AI era. We partner with founders to architect, build, and scale
+                    high-performance intelligence platforms.
+                  </motion.p>
+                  <motion.div className="mt-8 flex flex-wrap gap-4" variants={staggerContainer(0, 0.08)}>
+                    <MotionLink
+                      variants={fadeUp(14)}
+                      to="/build-squad"
+                      className="rounded-[6px] bg-gradient-to-r from-[#7459F7] to-[#AFA2FF] px-8 py-5 text-[18px] font-bold text-black"
+                      whileTap={{ scale: 0.985 }}
+                      transition={{ duration: 0.16, ease: EASE }}
+                    >
+                      Build Your Squad
+                    </MotionLink>
+                    <MotionLink
+                      variants={fadeUp(14)}
+                      to="/case-studies"
+                      className="rounded-[6px] border border-[rgba(72,72,72,0.15)] px-8 py-5 text-[18px] font-bold text-[#AFA2FF]"
+                      whileTap={{ scale: 0.985 }}
+                      transition={{ duration: 0.16, ease: EASE }}
+                    >
+                      View Our Work
+                    </MotionLink>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-              <motion.div variants={fadeUp(28)} className="relative">
-                <HomeHeroVisual />
-              </motion.div>
+
+                <motion.div variants={fadeUp(28)} className="relative h-[480px] w-full max-w-[520px] overflow-hidden rounded-[32px] justify-self-center lg:justify-self-end max-md:h-[320px]">
+                  <HomeHeroVisual />
+                </motion.div>
+              </div>
             </motion.div>
           </section>
+
+
 
           <HomeStatsSection />
 

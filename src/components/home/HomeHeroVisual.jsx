@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-const VIDEO_SRC = '/videos/hero-ai-pingpong.mp4'
+const VIDEO_SRC = '/videos/hero-ai-pingpong.webm'
 const POSTER_SRC = '/images/hero-ai-poster.jpg'
 const FALLBACK_IMG = '/figma/hero-chip.png'
 
@@ -95,49 +95,33 @@ export function HomeHeroVisual() {
   }, [videoFailed])
 
   return (
-    <div className="relative">
-      <div className="pointer-events-none absolute left-8 top-8 h-[360px] w-[360px] rounded-full bg-[#7459F7] opacity-20 blur-[120px]" />
-
-      <div className="relative h-[460px] w-full max-md:h-[320px]">
-        <div className="relative h-full w-full overflow-hidden rounded-[32px] bg-[#08080B] shadow-[0_35px_110px_rgba(175,162,255,0.12)]">
-          {!videoFailed ? (
-            <video
-              ref={videoRef}
-              className="absolute inset-0 h-full w-full object-cover opacity-80 mix-blend-screen"
-              src={VIDEO_SRC}
-              poster={POSTER_SRC}
-              autoPlay
-              muted
-              playsInline
-              preload="metadata"
-              aria-label="AI product visual"
-              onError={() => setVideoFailed(true)}
-            />
-          ) : (
-            <img
-              className="absolute inset-0 h-full w-full object-cover"
-              src={FALLBACK_IMG}
-              alt="AI product visual"
-              loading="lazy"
-            />
-          )}
-
-          <div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(175,162,255,0.16),transparent_56%)]"
-            aria-hidden
-          />
-
-          <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#AFA2FF]/10 via-transparent to-black/55"
-            aria-hidden
-          />
-
-          <div
-            className="pointer-events-none absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.88)]"
-            aria-hidden
-          />
-        </div>
-      </div>
+    <div className="relative h-full w-full">
+      {!videoFailed ? (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 h-full w-full object-cover"
+          src={VIDEO_SRC}
+          poster={POSTER_SRC}
+          autoPlay
+          muted
+          playsInline
+          loop
+          preload="metadata"
+          aria-label="AI product visual"
+          onError={() => setVideoFailed(true)}
+        />
+      ) : (
+        <img
+          className="absolute inset-0 h-full w-full object-cover"
+          src={FALLBACK_IMG}
+          alt="AI product visual"
+          loading="lazy"
+        />
+      )}
     </div>
+
+
+
+
   )
 }
