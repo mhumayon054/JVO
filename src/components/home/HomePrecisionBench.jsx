@@ -14,13 +14,6 @@ export const PRECISION_BENCH_MEMBERS = [
     githubUrl: 'https://github.com/SufyanIftekhar',
   },
   {
-    name: 'Muhammad Faizan',
-    role: 'Co-Founder & COO',
-    img: '/figma/imagefaizan.webp',
-    bio: "Faizan leads JVO Labs' operations with a focus on building elite offshore engineering teams across South Asia. A hands-on technology partner, he bridges the gap between global businesses and world-class South Asian talent.",
-    linkedinUrl: 'https://www.linkedin.com/in/faizanjvo/',
-  },
-  {
     name: 'Ahmad Ashfaq',
     role: 'CTO',
     img: '/figma/imageahm.webp',
@@ -167,7 +160,7 @@ export function HomePrecisionBench() {
 
         <motion.div className="mt-12 md:mt-14" variants={fadeUp(20)}>
           <motion.div
-            className="hidden grid-cols-3 gap-6 lg:grid"
+            className="mx-auto hidden max-w-[820px] grid-cols-2 gap-6 lg:grid"
             variants={staggerContainer(0.06, 0.14)}
           >
             {PRECISION_BENCH_MEMBERS.map((m) => (

@@ -5,8 +5,8 @@ import saburMortazawiImage from '../assets/testimonials/sabur-mortazawi.jpg'
 const TESTIMONIALS = [
   {
     quote:
-      "Faizan and his team don't just execute; they think along with you, understand your goals, and deliver smart solutions with flexibility.",
-    fullQuote: `Faizan and his team have been a pleasure to work with. They don't just execute, they think along with you, truly understand your goals, and come up with smart solutions on their own initiative. What stands out most is their flexibility and reliability; no matter how tight the deadline or how often priorities shifted, they consistently delivered on time and at a high standard. Communication is smooth, feedback is taken seriously, and you always feel like you're working with people who genuinely care about the end result. I'd highly recommend Faizan to anyone looking for a dependable, solution-oriented team.`,
+      "JVO and their team don't just execute; they think along with you, understand your goals, and deliver smart solutions with flexibility.",
+    fullQuote: `JVO and their team have been a pleasure to work with. They don't just execute, they think along with you, truly understand your goals, and come up with smart solutions on their own initiative. What stands out most is their flexibility and reliability; no matter how tight the deadline or how often priorities shifted, they consistently delivered on time and at a high standard. Communication is smooth, feedback is taken seriously, and you always feel like you're working with people who genuinely care about the end result. I'd highly recommend JVO to anyone looking for a dependable, solution-oriented team.`,
     name: 'Sabur Mortazawi',
     role: 'CEO bij Taxionspot',
     metric: 'Client recommendation',
