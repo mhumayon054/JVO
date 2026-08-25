@@ -188,7 +188,7 @@ export default function AboutUsPage() {
                 <motion.h2 variants={fadeUp(18)} className="text-[28px] font-bold leading-[1.11] tracking-[-0.025em] sm:text-[36px]">
                   Leadership Team
                 </motion.h2>
-                <motion.div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-8" variants={staggerContainer(0.06, 0.12)}>
+                <motion.div className="mx-auto grid max-w-[820px] grid-cols-1 gap-8 md:grid-cols-2 lg:gap-8" variants={staggerContainer(0.06, 0.12)}>
                   {teamMembers.map((l) => (
                     <motion.article
                       key={l.name}
